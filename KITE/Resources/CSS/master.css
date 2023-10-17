@@ -1,0 +1,284 @@
+﻿body
+{
+	font-family:Arial;
+	min-width : 860px;
+}
+
+.bodyWarehouse
+{
+	font-family:Arial;
+	min-width : 0px;
+	}
+
+#header
+{
+	text-align:left;	
+	background-color: #fb5c5d;
+	margin-bottom: 5px;
+	min-width : 860px
+}
+
+
+.footer
+{
+	text-align:center;
+	font-family:Arial;
+	font-weight:bold;
+	font-size:10px;
+	margin-top: 40px;
+	min-width : 860px;
+}
+
+#left-content
+{
+	width : 15%;	
+	float : left;
+	height : 300px;
+	border : solid 1pt red;
+}
+
+#right-content
+{
+	width : 83%;
+	margin-left : 17%;
+	margin-top : 20px;
+	padding-top : 0px;
+}
+
+.rc-title
+{
+	font-size : large;
+	font-weight : bold;
+	background-color : #c4ceff;
+	padding : 10px 10px 10px 10px;
+}
+
+.rc-bc
+{
+	font-size : 8pt;
+	border-top : solid 1pt #c4ceff;
+	border-bottom : solid 1pt #c4ceff;
+	padding : 2px 0px 2px 0px;
+}
+
+.rc-content
+{
+
+}
+
+#reportsArea
+{
+	min-height : 395px;
+	margin-top : 5px;
+	background-image: url('../Images/map.png');
+	background-repeat : no-repeat;
+	background-position : center;
+}
+
+#mainArea
+{
+	min-height : 380px;
+	margin-top : 5px;
+}
+
+.loginContent
+{
+	background-image: url('../Images/map.png');
+	background-repeat : no-repeat;
+	background-position:right;
+	margin-right : 2%;
+	height:380px;
+	vertical-align :top;	
+	margin-bottom : 35px;
+}
+
+.loginImage
+{
+	height: 16px;
+	margin-top : 9px;
+	margin-right: 5px;	
+}
+
+.loginForm
+{
+	background-image: url('../Images/loginbox.png');
+	background-repeat : no-repeat;
+	background-position:right;
+	text-align:right;
+	vertical-align : middle;
+	margin-top: 10px;
+	height: 138px;
+	width: 100%;
+}
+
+.loginLabel
+{
+	font-size:12px;
+	vertical-align:middle;
+	margin-top:5px;
+	margin-bottom:20px;
+}
+
+.loginButton
+{
+	margin-right: 100px;
+	margin-top: 10px;	
+}
+
+.loginFooter
+{
+	vertical-align:middle;
+	margin-top: 20px;
+	background-color: #fb5c5d;
+	min-width : 860px;
+}
+
+.versionFooter
+{
+	vertical-align:middle;
+	margin-top: 40px;
+	min-width : 860px;
+}
+
+.loginBox
+{
+	vertical-align:middle;
+	width: 150px;
+	margin-right:5px;
+}
+
+.loginError
+{
+	color: Red;
+	font-weight: bold;	
+	text-align:right;
+	font-size:12px;
+	margin-top: 10px;
+}
+
+#userheader
+{
+	text-align:right;
+	font-size: 13px;	
+	font-weight:bold;
+	vertical-align:middle;
+	margin-top: 20px;
+	min-width : 860px;
+}
+
+.logoutImage
+{
+	vertical-align: middle;
+	float:left;
+	margin-right: 5px;
+}
+
+.logoutLabel
+{
+	font-size:12px;	
+}
+
+#logoutArea
+{
+	float:right;
+}
+
+#main-content
+{
+	margin-top: 8px;	
+}
+
+#tbChangePassword
+{
+	font-size: 12px;	
+	font-weight: bold;
+}
+
+#changePassword
+{
+	margin-top: 40px;	
+}
+
+.gridViewRow
+{
+	font-size: 11px;	
+}
+
+.gridViewHeader
+{
+	font-size: 11px;
+	font-weight: bold;
+	color:White;
+	background-color: Black;	
+}
+
+#criteria
+{
+	font-size: 11px;	
+}
+
+#breadcrump
+{
+	margin-top:5px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.breadcrumpLink
+{
+	color: black;
+	text-decoration: none;			
+}
+
+.labelNoData
+{
+	font-size: 11px;
+	font-weight : bold;
+	margin-bottom : 10px;	
+}
+
+#reportTitle
+{
+	font-weight		: bold;
+	font-style		: italic;
+	font-size		: 14pt;
+	padding-top		: 3px;
+	padding-left	: 8px;
+	padding-bottom	: 3px;
+	margin-top		: -10px;
+	background-color: #c4ceff;
+	color			: Black;
+}
+
+.lblGridTitle
+{
+	font-weight		: bold;
+	font-size		: 14pt;
+	padding-top		: 3px;
+	padding-left	: 8px;
+	padding-bottom	: 3px;
+	padding-right	: 8px;
+	margin-top		: -10px;
+	background-color: #c4ceff;
+	color			: Black;
+}
+
+.gridTitle
+{
+	width			: 100%;
+}
+
+.searchBox
+{
+	font-size		: 10pt;
+	font-weight		: bold;
+}
+
+.copyright
+{
+	font : normal 12px "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+	color : White;
+	font-weight : bold;
+	letter-spacing: 0.2px;
+	line-height:1.5em;
+}

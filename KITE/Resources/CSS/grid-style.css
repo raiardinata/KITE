@@ -1,0 +1,325 @@
+.gridStyle
+{
+	border: none 1px #999999;
+	background-color: White;
+	padding: 3;
+}
+
+.alternatingrowstyle
+{
+	background-color: #fcfdfd;
+	height:21px;
+	color: #000000;
+}
+
+.rowstyle
+{
+	background-color:#FFFFFF;
+	height:21px;
+	color: #000000;
+}
+
+.headerstyleblue th
+{
+	background: #336799;
+	cursor: default;
+	zoom: 1;
+	padding: 1px 0 0 0;
+	border-color: #989898 #cbcbcb #989898 #989898;
+	border-style: solid solid solid none;
+	border-width: 1px 1px 1px medium;
+	color: #fff;
+	text-align: left;
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+	font: bold 11px  tahoma,arial,verdana,sans-serif;
+}
+
+
+.headerstyle th
+{
+	/*border: 1px solid #4297d7; background: #5c9ccc url(123.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold;*/
+	background:#E7EFFE url(../Images/grad.gif) repeat-x 0 bottom;cursor:default;zoom:1;padding:1px 0 0 0;
+	border-color: #989898 #cbcbcb #989898 #989898;
+	border-style: solid solid solid none;
+	border-width: 1px 0px 1px 1px ;
+	color: #000;
+	text-align: left;
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+	font: bold 11px  tahoma,arial,verdana,sans-serif;
+	height:18px;
+}
+
+.headerstyle th a
+{
+	text-align: left;
+	color: #000;
+	display: block;
+	padding-right: 10px;
+	text-decoration:none;
+}
+
+tr.rowstyle td, tr.alternatingrowstyle td
+{
+   border-bottom: 1px solid #CCCCCC;
+	color: #000000;
+}
+
+.rowstyle input,.rowstyle select
+{
+	font-family: Tahoma, Verdana;
+	font-size: 11px;
+	vertical-align: middle;
+	border-width:1px;
+	color: #000000;
+}
+
+.rowstyle .sortalternatingrowstyle, .alternatingrowstyle .sortalternatingrowstyle
+{
+	/*background-image: url(../images/bg.gif);*/
+	background-repeat: repeat;
+	color: #000000;
+}
+
+.rowstyle .sortrowstyle, .alternatingrowstyle .sortrowstyle
+{
+	/*background-image: url(../images/bg.gif);*/
+	background-repeat: repeat;
+	color: #000000;
+}
+
+
+.rowstyle td, .alternatingrowstyle td
+{
+	cursor:default;
+	border:1px solid #ededed;
+	border-top-color:#fff;
+	font: 11px tahoma,arial,verdana,sans-serif;
+	padding:0px 5px 0px 5px;
+	color: #000000;
+}
+
+.headerstyle .sortascheaderstyle
+{
+	/*background: url(../Client/Ext/Images/default/grid/grid-blue-hd.gif) repeat-x 0px -100px;*/
+}
+
+.headerstyle .sortascheaderstyle a
+{
+	background: url(../../Images/collapse_blue.jpg) no-repeat right 90%;
+}
+
+.headerstyle .sortdescheaderstyle
+{
+}
+
+.headerstyle .sortdescheaderstyle a
+{
+	background: url(../../Images/expand_blue.jpg) no-repeat right 90%;
+}
+
+.gridContent
+{
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	border-style:none;
+	padding-bottom: 12px;
+}
+
+.totalRecords
+{
+	font-family:  Tahoma, Verdana;
+	font-size: 11px;
+	font-weight: bold;
+	color: Black;
+	float: left;
+	text-align: left;
+	vertical-align: middle;
+	padding-top: 3px;
+	padding-left: 5px;
+}
+
+.gridContainer
+{
+	width:100%;
+	background-color:#FEEED3;
+	background-color:#f8f8f8;
+}
+
+.gridTitle
+{
+	background-color:Transparent;
+	color: #444444;
+	width: 100%;
+	text-align: left;
+	vertical-align: middle;
+	padding-bottom: 8px;
+}
+
+.empty
+{
+	color: Blue;
+	border: solid 1px White;
+	background-color: White;
+	font-weight: bold;
+	text-align: center;
+	font-size: 16px;
+}
+
+.pagerstyle
+{
+	background:#FFFFFF url(../Client/Ext/Images/default/grid/grid3-hrow.gif) repeat-x 0 bottom;cursor:default;zoom:1;padding:1px 0 0 0;
+	border-color: #989898 #cbcbcb #989898 #989898;
+	border-style: solid solid solid none;
+	border-width: 1px 1px 1px medium;
+	color: #000;
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+	font: 11px  tahoma,arial,verdana,sans-serif;
+	text-align: right;
+}
+
+.pagerstyle select
+{
+	font-size: x-small;
+}
+
+.previous
+{
+	background-image: url("../../Resources/Images/prev-icon.gif");
+	background-repeat: no-repeat;
+	background-color:White;
+	height: 22px;
+	width: 20px;
+	border: solid 1px white;
+	cursor:pointer;
+	vertical-align: middle;
+}
+
+.previous_disable
+{
+	background-image: url("../../Resources/Images/prev-icon-disable.gif");
+	background-repeat: no-repeat;
+	background-color:White;
+	height: 22px;
+	width: 20px;
+	border: solid 1px white;
+	cursor:pointer;
+	vertical-align: middle;
+}
+
+.next
+{
+	background-image: url("../../Resources/Images/next-icon.gif");
+	background-repeat: no-repeat;
+	background-color:White;
+	height: 22px;
+	width: 20px;
+	border: solid 1px white;
+	cursor:pointer;
+	vertical-align: middle;
+}
+
+.next_disable
+{
+	background-image: url("../../Resources/Images/next-icon-disable.gif");
+	background-repeat: no-repeat;
+	background-color:White;
+	height: 22px;
+	width: 20px;
+	border: solid 1px white;
+	cursor:pointer;
+	vertical-align: middle;
+}
+
+.gotopage
+{
+	font-size: x-small;
+	width: 20px;
+}
+
+.freeze-left
+{
+	position: relative;
+	left: -1px;
+	border-style: solid;
+	border-bottom-style: none;
+}
+
+.freeze-header
+{
+	border-top: none;
+}
+
+.searchBox
+{
+	font-family:  Tahoma, Verdana;
+	font-size: x-small;
+	width: 100%;
+	text-align:left;
+}
+
+.searchBox select, .searchBox input
+{
+	font-family: Tahoma, Verdana;
+	font-size:11px;
+	vertical-align: middle;
+	border-style:solid;
+	border-width:1px;
+}
+
+fieldset
+{
+	padding: 0px 5px 5px 5px;
+	margin-bottom: 10px;
+}
+
+legend
+{
+	color: #0046dc;
+	padding: 4px;
+	padding-left: 5px;
+}
+
+.footerstyle
+{
+	background:#f9f9f9 url(../Client/Ext/Images/default/grid/mso-hd.gif) repeat-x 0 bottom;cursor:default;zoom:1;padding:1px 0 0 0;
+	cursor:default;border:1px solid #ededed;border-top-color:#fff;width:100%;
+	font: 11px tahoma,arial,verdana,sans-serif;
+}
+
+.footerstyle input, .footerstyle select 
+{
+	font-family:  Tahoma, Verdana;
+	font-size: 11px;
+	vertical-align: middle;
+	border-style:solid;
+	border-width:1px;
+}
+
+.selectedrowstyle
+{
+	background-color:#008A8C;
+	font-weight:bold;
+	color:White; 
+}
+
+.lblGridTitle
+{
+	font-family: Tahoma, Verdana;
+	font-size: 15px;
+	font-weight: bold;
+	color: Black;
+	text-align: left;
+	vertical-align: middle;
+	padding-left: 8px;
+}
+

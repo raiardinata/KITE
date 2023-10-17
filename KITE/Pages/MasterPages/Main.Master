@@ -1,0 +1,181 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="KITE.Pages.MasterPages.Main" %>
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KITE PROJECT</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+
+
+    <script type="text/javascript" src="../../Script/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="../../Script/jquery-3.1.1.min.js"></script>
+
+
+
+    <link href="../../CSS/uicss.css" rel="stylesheet" type="text/css" />
+    <link href="../../CSS/Theme/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="../../CSS/NavMenu.css" rel="stylesheet" type="text/css" />
+
+    <link href="../../CSS/MainMaster.css" rel="stylesheet" type="text/css" />
+    <link href="../../CSS/GridView.css" rel="stylesheet" type="text/css" />
+
+
+    <script type="text/javascript" src="../../Script/jquery-1.12.1-ui.js"></script>
+    <script type="text/javascript" src="../../Script/jquery-1.12.1-ui.min.js"></script>
+    <script type="text/javascript" src="../../Script/NavMenu.js"></script>
+    <script src="../../Scripts/bootstrap.min.js"></script>
+
+
+
+
+    <style>
+        footer {
+            max-width: 100%;
+            width: auto;
+            margin: 0 auto;
+            bottom: 0;
+            left: 0;
+        }
+
+        body {
+           
+            width: 100%;
+            margin: 0 auto;
+            padding: 0px;
+         
+
+            background-image: url(../../Images/Aji-Logo-Oppacity-40.png);
+            background-size:100%;
+        }
+
+    </style>
+</head>
+<body>
+    <form runat="server">
+
+
+
+        <!-- FIx oNe -->
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" href="../ContentPages/Home.aspx" style="font-weight: bold">Home</a>
+                    <%--<a class="navbar-brand" runat="server" href="~/" style="font-weight: bold">Report</a>--%>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown" runat="server">
+                             <a class="dropdown-toggle" id="master" visible="false" runat="server" data-toggle="dropdown">Master
+                            <span class="caret"></span></a>
+                            
+                            <ul class="dropdown-menu">
+                                <li><a href="../ContentPages/Master_UserApp2.aspx" id="master_userapp" visible="false" runat="server">User App</a></li>
+                                <li><a href="../ContentPages/MaterialConfiguration.aspx" id="master_matcon" visible="false" runat="server">Material Configuration</a></li>
+                                <li><a href="../ContentPages/SlocConfiguration.aspx" id="master_slocconf" visible="false" runat="server">Storage Location Configuration</a></li>
+                            </ul>
+
+
+                        </li>
+                        
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" id="report" visible="false" data-toggle="dropdown" runat="server">Report
+                            <span class="caret"></span></a>
+                           
+                            <ul class="dropdown-menu">
+                                <li><a href="../ContentPages/Input_KITEA.aspx" id="report_kitea" visible="false" runat="server">A. Laporan Pemasukan Bahan Baku</a></li>
+                                <li><a href="../ContentPages/Input_KITEB.aspx"   id="report_kiteb" visible="false" runat="server">B. Laporan Pemakaian Bahan Baku</a></li>
+                                <li><a href="../ContentPages/Input_KITEC.aspx"  id="report_kitec" visible="false" runat="server">C. Laporan Pemakaian Barang Dalam Proses Dalam Rangka Kegiatan Subkontrak</a></li>
+                                <li><a href="../ContentPages/Input_KITED.aspx" id="report_kited" visible="false" runat="server">D. Laporan Pemasukan Hasil Produksi</a></li>
+                                <li><a href="../ContentPages/Input_KITEE.aspx"     id="report_kitee" visible="false" runat="server">E. Laporan Pengeluaran Hasil Produksi</a></li>
+                                <li><a href="../ContentPages/Input_KITEF.aspx" id="report_kitef" visible="false" runat="server">F. Laporan Mutasi Bahan Baku</a></li>
+                                <li><a href="../ContentPages/Input_KITEG.aspx" id="report_kiteg" visible="false" runat="server">G. Laporan Mutasi Hasil Produksi</a></li>
+                                <li><a href="../ContentPages/Input_KITEH.aspx" id="report_kiteh" visible="false" runat="server">H. Laporan Penyelesaian Waste/Scrap</a></li>
+                                <li><a href="../ContentPages/Input_KITEB2.aspx" id="report_kiteb2" visible="false" runat="server">B. Laporan Pemakaian Bahan Baku</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li><a href="~/Pages/ContentPages/LogActivities.aspx" id="logactivities" visible="false" runat="server">Log Activities</a></li>                        
+                         
+                         &nbsp;&nbsp;
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <asp:Label ID="label1" runat="server" Text="">
+                                
+                                </asp:Label>
+                                <span class="glyphicon glyphicon-log-in"></span>
+                            </a>
+                            <%--<button class=" dropdown-toggle btn  navbar-btn" data-toggle="dropdown">
+                                <asp:Label ID="label1" runat="server" Text="">
+                                
+                                </asp:Label>
+                                <span class="glyphicon glyphicon-log-in"></span>
+                            </button>--%>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <asp:LinkButton ID="lnLogout" runat="server" CssClass="logoutLabel" OnClick="lnLogout_Click">Logout User</asp:LinkButton>
+                                    <a href="~/Pages/ContentPages/ChangePassword.aspx" runat="server">Change Password</a>                   
+                        
+                                    <%--PostBackUrl="~/Pages/ContentPages/Login"--%>
+                                </li>
+
+
+                            </ul>
+
+
+                        </li>
+                        
+                    </ul>
+
+                </div>
+                
+
+            </div>
+        </div>
+
+
+        <br />
+        <br />
+        <br />
+        <!--coba tambah div -->
+        <div id="main-content">
+            <div id="mainArea" class="mainArea">
+                <!--coba tambah div -->
+                <div class="container body-content">
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+
+                <!--coba tambah div -->
+            </div>
+        </div>
+        <!--coba tambah div -->
+
+
+        <!-- Footer -->
+        <footer class="text-center">
+
+            <br>
+            <br>
+            <p style="width: 100%; display: block; background-color: red; color: whitesmoke; text-decoration-color: white; text-decoration-style: solid">PT AJINEX INTERNATIONAL @ 2019 - KITE PORTAL - Support Application</p>
+
+        </footer>
+
+
+    </form>
+</body>
+</html>

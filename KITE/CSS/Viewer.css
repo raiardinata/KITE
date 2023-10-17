@@ -1,0 +1,11 @@
+﻿#ctl00_MainContent_rViewer_ctl05_ctl06_ctl00 {
+display:none;
+}
+
+ #ctl00_MainContent_rViewer_print {
+border: 1px solid transparent; background-color: transparent; cursor:default;
+}
+
+#ctl00_MainContent_rViewer_print:hover {
+border: 1px solid rgb(51,102,153); background-color: rgb(221,238,247); cursor:pointer;
+}

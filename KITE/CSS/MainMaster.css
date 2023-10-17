@@ -1,0 +1,111 @@
+﻿body {
+background:url(../Images/Backgroud.png) no-repeat center center fixed;
+margin:0;
+background-size: cover;
+}
+#Header {
+    background-color: #3e3e3e;
+    opacity:0.5;
+    margin-bottom: 0px;
+    min-width: 100%;
+    text-align: left;
+    height:70px;
+    position:absolute;
+}
+.HeaderImage {
+padding : 10px 50px;
+position:relative;
+z-index:1;
+Height:40px;
+top:10px;
+}
+#userheader {
+top:0px;
+margin-left:10px;
+position:relative;
+margin-top:10px;
+
+}
+.AppName {
+    position:relative;
+    top:40px;
+    margin-left:10px;
+}
+
+#NameArea {
+    float: right;
+    margin-top: 5px;
+}
+.AppUser {
+    /*position:relative;
+    top:0px;
+    
+    float:right;  
+    text-align:right;
+    margin-right:10px;*/
+    color:#3399ff;
+}
+#logoutArea {
+    float: right;
+    margin-top: 5px;
+}
+#logoutArea > a{
+    top:10px;
+}
+
+#logoutArea > a:hover{
+    color:blue;
+    text-decoration:none;
+}
+
+.logoutImage
+{
+	vertical-align: middle;
+	float:left;
+	margin-right: 5px;
+}
+
+
+#main-content
+{
+	margin-top: 8px;	
+}
+
+#mainArea
+{
+	min-height : 500px;
+	/*margin : 25px 25px 25px 25px;*/
+}
+
+.loginFooter
+{
+    padding-top: 10px;
+	vertical-align:middle;
+	background-color: #2991D6;
+	min-width : 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+@font-face {
+    font-family: 'LatoWebSemibold';
+    src: url('../fonts/Lato-Semibold.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/Lato-Semibold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/Lato-Semibold.woff2') format('woff2'), /* Modern Browsers */
+         url('../fonts/Lato-Semibold.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/Lato-Semibold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+.copyright
+{
+   
+	font : normal 14px "LatoWebSemibold";
+    padding:0px 20px;
+	color : white;
+	letter-spacing: 0.2px;
+	line-height:1.5em;
+}
+
