@@ -1,0 +1,243 @@
+﻿using CsvHelper;
+using KITE.Models;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace KITE.Pages.ContentPages
+{
+    public partial class GIRawMaterialUpload : System.Web.UI.Page
+    {
+        public List<GIRawMaterialViewModel> CsvDataList;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack && CsvDataGridView.DataSource == null)
+            {
+                btnUpload.Enabled = false;
+            }
+        }
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            errorLabel.Text = "";
+            GIRawMaterialFunctionModel giRawMaterialFunction = new GIRawMaterialFunctionModel();
+            Tuple<Exception, string, List<GIRawMaterialViewModel>> fileResult = giRawMaterialFunction.GIRawMaterialReadCsvFile(fileUpload);
+            if (fileResult.Item1.Message != "null")
+            {
+                UtilityModel errorHandler = new UtilityModel();
+                Exception loadCsvException = new Exception("There is some problem when submit the csv. Please check again the data is a match for McFrame Upload process.<br/> Detail : " + fileResult.Item1.Message);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+            }
+            else if (fileResult.Item2 != null && fileResult.Item3 != null)
+            {
+                btnUpload.Enabled = true;
+                CsvDataList = fileResult.Item3;
+                Session["FilePath"] = fileResult.Item2;
+                GIRawMaterialBindGridView();
+            }
+        }
+
+        protected void CsvDataGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int pageIndex = CsvDataGridView.PageIndex;
+                int pageSize = CsvDataGridView.PageSize;
+
+                // Calculate the sequence number based on the current page and row index
+                int sequenceNumber = pageIndex * pageSize + e.Row.RowIndex + 1;
+
+                Label lblSequence = (Label)e.Row.FindControl("lblSequenceNo");
+                lblSequence.Text = sequenceNumber.ToString();
+            }
+        }
+
+        protected void CsvDataGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            CsvDataGridView.PageIndex = e.NewPageIndex;
+            LoadCsvData();
+            GIRawMaterialBindGridView();
+        }
+
+        protected void CsvPageSizeDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedPageSize = Convert.ToInt32(CsvPageSizeDropDown.SelectedValue);
+            CsvDataGridView.PageSize = selectedPageSize;
+
+            LoadCsvData();
+            GIRawMaterialBindGridView();
+        }
+
+        private void GIRawMaterialBindGridView()
+        {
+            CsvDataGridView.PageSize = int.Parse(CsvPageSizeDropDown.SelectedValue);
+            ViewState["Row"] = 0;
+
+            CsvDataGridView.DataSource = CsvDataList;
+            CsvDataGridView.DataBind();
+
+            if (CsvDataList.Count() > 0)
+            {
+                if (ViewState["Row"].ToString().Trim() == "0")
+                {
+                    ViewState["grandtotal"] = CsvDataList.Count;
+                    ViewState["Row"] = 1;
+                    lblTotalRecords.Text = String.Format("Total Records : {0}", ViewState["grandtotal"]);
+
+                    int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["grandtotal"]) / CsvDataGridView.PageSize));
+                    lblTotalNumberOfPages.Text = pageCount.ToString();
+                    txtGoToPage.Text = (CsvDataGridView.PageIndex + 1).ToString();
+                }
+
+            }
+            else
+            {
+                ViewState["grandtotal"] = 0;
+            }
+        }
+
+        protected void GoToPage_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int pageNumber;
+                int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["grandtotal"]) / CsvDataGridView.PageSize));
+                if (int.TryParse(txtGoToPage.Text.Trim(), out pageNumber) && pageNumber > 0 && pageNumber <= pageCount)
+                {
+                    LoadPage(pageNumber - 1);
+                }
+                else
+                {
+                    LoadPage(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                UtilityModel errorHandler = new UtilityModel();
+                Exception loadCsvException = new Exception("There is some problem when going to page " + txtGoToPage.Text.Trim() + ". Detail : " + ex.Message);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+            }
+        }
+
+        protected void btnPrev_OnClick(object sender, EventArgs e)
+        {
+            try
+            {
+                int pageNumber;
+                if (int.TryParse(txtGoToPage.Text.Trim(), out pageNumber) && pageNumber > 1)
+                {
+                    LoadPage(pageNumber - 2);
+                }
+                else
+                {
+                    LoadPage(CsvDataGridView.PageIndex);
+                }
+            }
+            catch (Exception ex)
+            {
+                UtilityModel errorHandler = new UtilityModel();
+                Exception loadCsvException = new Exception("There is some problem when previous button triggered. Detail : " + ex.Message);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+            }
+        }
+
+        protected void btnNext_OnClick(object sender, EventArgs e)
+        {
+            try
+            {
+                int pageNumber;
+                int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["grandtotal"]) / CsvDataGridView.PageSize));
+                if (int.TryParse(txtGoToPage.Text.Trim(), out pageNumber) && pageNumber < pageCount)
+                {
+                    LoadPage(pageNumber);
+                }
+                else
+                {
+                    LoadPage(CsvDataGridView.PageIndex);
+                }
+            }
+            catch (Exception ex)
+            {
+                UtilityModel errorHandler = new UtilityModel();
+                Exception loadCsvException = new Exception("There is some problem when next button triggered. Detail : " + ex.Message);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+            }
+        }
+
+        private void LoadPage(int pageNumber)
+        {
+            GridViewPageEventArgs e = new GridViewPageEventArgs(pageNumber);
+            CsvDataGridView_PageIndexChanging(this, e);
+        }
+
+        public void LoadCsvData()
+        {
+            try
+            {
+                // Load your CSV data here
+                ReadCsvModel readCsv = new ReadCsvModel();
+                CsvReader csvData = readCsv.ReadCsvFile((string)Session["FilePath"], ";");
+                CsvDataList = csvData.GetRecords<GIRawMaterialViewModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                UtilityModel errorHandler = new UtilityModel();
+                Exception loadCsvException = new Exception("There is some problem when load the csv. Please check again the data is a match for McFrame Upload process. Detail : " + ex.Message);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+            }
+        }
+
+        protected void btnUpload_Click(object sender, EventArgs e)
+        {
+            int index = 0;
+            int yearPeriod = 0;
+            int monthPeriod = 0;
+            string tableName = "GI_Raw_Material";
+            DatabaseModel databaseModel = new DatabaseModel();
+            UtilityModel errorHandler = new UtilityModel();
+            Exception loadCsvException;
+
+            try
+            {
+                LoadCsvData();
+                GIRawMaterialFunctionModel csvDataProcess = new GIRawMaterialFunctionModel();
+                Tuple<string, ArrayList> columnNameAndData = csvDataProcess.GIRawMaterialGenerateColumnAndCsvData(CsvDataList);
+                foreach (object csvDataObject in (List<object>)columnNameAndData.Item2[0])
+                {
+                    if (index == 0) { yearPeriod = (int)csvDataObject; }
+                    if (index == 1) { monthPeriod = (int)csvDataObject; break; }
+                    index++;
+                }
+
+                Exception checkPeriodResult = databaseModel.PeriodCheck(tableName, yearPeriod, monthPeriod, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (checkPeriodResult.Message != "Data Period Aman.")
+                {
+                    loadCsvException = new Exception(checkPeriodResult.Message);
+                    errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                }
+
+                Exception insertResult = databaseModel.InsertIntoTable(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (insertResult.Message != $"Insert Into Table {tableName} Berhasil.")
+                {
+                    loadCsvException = new Exception($"Gagal dalam penulisan ke database. Detail : {insertResult.Message}");
+                    errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                }
+
+                if (checkPeriodResult.Message == "Data Period Aman." && insertResult.Message == $"Insert Into Table {tableName} Berhasil.")
+                {
+                    Session["FilePath"] = "";
+                    string script = $"alert('{insertResult.Message}'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/GIRawMaterialUpload.aspx")}';";
+                    ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                loadCsvException = new Exception(ex.Message);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+            }
+        }
+    }
+}

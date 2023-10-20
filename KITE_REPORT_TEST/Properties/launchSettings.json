@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "KITE_REPORT_TEST": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "connectionString": "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=KITE;Data Source=RAI-KGP\\MSSQLSERVER01"
+      }
+    }
+  }
+}

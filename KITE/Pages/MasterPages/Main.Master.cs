@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Web;
-using System.Web.Security;
-using System.Web.UI;
 //using System.Web.UI. 
-using System.Web.UI.WebControls;
 
 namespace KITE.Pages.MasterPages
 {
@@ -14,16 +8,18 @@ namespace KITE.Pages.MasterPages
     {
         Controllers.MasterController MC = new Controllers.MasterController();
         Controllers.LoginController login = new Controllers.LoginController();
-   
+
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-            if (!string.IsNullOrEmpty(Session["UserType"] + string.Empty))
+            if (!IsPostBack)
             {
-                //lblName.Text = ConfigurationManager.AppSettings["ServerName"].ToString();
-                foreach (var MenuLink in MC.Menu_Select(Session["UserType"].ToString()))
+                if (!string.IsNullOrEmpty(Session["UserType"] + string.Empty))
                 {
-                    this.FindControl(MenuLink.MenuLink.ToLower()).Visible = true;
+                    //lblName.Text = ConfigurationManager.AppSettings["ServerName"].ToString();
+                    foreach (var MenuLink in MC.Menu_Select(Session["UserType"].ToString()))
+                    {
+                        this.FindControl(MenuLink.MenuLink.ToLower()).Visible = true;
+                    }
                 }
             }
 

@@ -7,209 +7,164 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KITE.Pages.MasterPages
+namespace KITE.Pages.ContentPages
 {
 
 
-    public partial class Main
+    public partial class GRFinishGoods
     {
 
         /// <summary>
-        /// master control.
+        /// btnSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master;
+        protected global::System.Web.UI.WebControls.Button btnSubmit;
 
         /// <summary>
-        /// master_userapp control.
+        /// fileUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_userapp;
+        protected global::System.Web.UI.WebControls.FileUpload fileUpload;
 
         /// <summary>
-        /// master_matcon control.
+        /// errorLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_matcon;
+        protected global::System.Web.UI.WebControls.Label errorLabel;
 
         /// <summary>
-        /// A1 control.
+        /// checkDataWarning control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor A1;
+        protected global::System.Web.UI.WebControls.Label checkDataWarning;
 
         /// <summary>
-        /// master_slocconf control.
+        /// CsvScriptManager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_slocconf;
+        protected global::System.Web.UI.ScriptManager CsvScriptManager;
 
         /// <summary>
-        /// master_cusgroup control.
+        /// CsvUpdatePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_cusgroup;
+        protected global::System.Web.UI.UpdatePanel CsvUpdatePanel;
 
         /// <summary>
-        /// master_mcframeupload control.
+        /// CsvPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_mcframeupload;
+        protected global::System.Web.UI.WebControls.Panel CsvPanel;
 
         /// <summary>
-        /// master_girawmaterialupload control.
+        /// CsvDataGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_girawmaterialupload;
+        protected global::System.Web.UI.WebControls.GridView CsvDataGridView;
 
         /// <summary>
-        /// report control.
+        /// dataPager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dataPager;
 
         /// <summary>
-        /// report_kitea control.
+        /// lblTotalRecords control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kitea;
+        protected global::System.Web.UI.WebControls.Label lblTotalRecords;
 
         /// <summary>
-        /// report_kiteb control.
+        /// lblShowRows control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kiteb;
+        protected global::System.Web.UI.WebControls.Label lblShowRows;
 
         /// <summary>
-        /// report_kitec control.
+        /// CsvPageSizeDropDown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kitec;
+        protected global::System.Web.UI.WebControls.DropDownList CsvPageSizeDropDown;
 
         /// <summary>
-        /// report_kited control.
+        /// txtGoToPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kited;
+        protected global::System.Web.UI.WebControls.TextBox txtGoToPage;
 
         /// <summary>
-        /// report_kitee control.
+        /// lblTotalNumberOfPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kitee;
+        protected global::System.Web.UI.WebControls.Label lblTotalNumberOfPages;
 
         /// <summary>
-        /// report_kitef control.
+        /// btnPrev control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kitef;
+        protected global::System.Web.UI.WebControls.Button btnPrev;
 
         /// <summary>
-        /// report_kiteg control.
+        /// btnNext control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kiteg;
+        protected global::System.Web.UI.WebControls.Button btnNext;
 
         /// <summary>
-        /// report_kiteh control.
+        /// btnUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kiteh;
-
-        /// <summary>
-        /// report_kiteb2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kiteb2;
-
-        /// <summary>
-        /// logactivities control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor logactivities;
-
-        /// <summary>
-        /// label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label1;
-
-        /// <summary>
-        /// lnLogout control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnLogout;
-
-        /// <summary>
-        /// MainContent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Button btnUpload;
     }
 }

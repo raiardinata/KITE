@@ -125,7 +125,7 @@
                     </span>
                     <%--<input class="form-control" placeholder="Password" name="password" type="password" value="" required="">--%>
 
-                    <asp:TextBox ID="txtUserName" class="form-control" placeholder="User Name" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtUserName" Text="admin" class="form-control" placeholder="User Name" runat="server"></asp:TextBox>
 
                 </div>
 

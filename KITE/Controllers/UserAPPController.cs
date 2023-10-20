@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 
 namespace KITE.Controllers
 {
-    public class UserAPPController 
+    public class UserAPPController
     {
         //
         // GET: /UserAPP/
@@ -39,26 +37,26 @@ namespace KITE.Controllers
             return Result;
         }
 
-        public List<Models.InsertAndUpdate> InsertUpdateUser(string commandname, string userappid, string username, string fullname, string password, string email, string registeruser, string usertype)
+        public List<Models.CatchExeptions> InsertUpdateUser(string commandname, string userappid, string username, string fullname, string password, string email, string registeruser, string usertype)
         {
             object[] param = new[] { commandname, userappid, username, fullname, password, email, registeruser, usertype };
-            List<Models.InsertAndUpdate> Result = dc.ExecuteQuery<Models.InsertAndUpdate>("Exec UserApp_InsertUpdateUser @commandname={0} , @userappid={1} , @username={2}, @fulllname={3} , @password={4} , @email={5} , @registeruser={6} , @usertype={7} ", param).ToList<Models.InsertAndUpdate>();
+            List<Models.CatchExeptions> Result = dc.ExecuteQuery<Models.CatchExeptions>("Exec UserApp_InsertUpdateUser @commandname={0} , @userappid={1} , @username={2}, @fulllname={3} , @password={4} , @email={5} , @registeruser={6} , @usertype={7} ", param).ToList<Models.CatchExeptions>();
             return Result;
 
         }
 
-        public List<Models.InsertAndUpdate> UpdatePassword(string username, string password)
+        public List<Models.CatchExeptions> UpdatePassword(string username, string password)
         {
-            object[] param = new[] { username,password};
-            List<Models.InsertAndUpdate> Result = dc.ExecuteQuery<Models.InsertAndUpdate>("Exec UserApp_updatepass @username={0}, @password={1}", param).ToList<Models.InsertAndUpdate>();
+            object[] param = new[] { username, password };
+            List<Models.CatchExeptions> Result = dc.ExecuteQuery<Models.CatchExeptions>("Exec UserApp_updatepass @username={0}, @password={1}", param).ToList<Models.CatchExeptions>();
             return Result;
 
         }
 
-        public List<Models.InsertAndUpdate> DeleteUser(string userappid)
+        public List<Models.CatchExeptions> DeleteUser(string userappid)
         {
             object[] param = new[] { userappid };
-            List<Models.InsertAndUpdate> Result = dc.ExecuteQuery<Models.InsertAndUpdate>("Exec UserApp_DeleteUser  @userappid={0} ", param).ToList<Models.InsertAndUpdate>();
+            List<Models.CatchExeptions> Result = dc.ExecuteQuery<Models.CatchExeptions>("Exec UserApp_DeleteUser  @userappid={0} ", param).ToList<Models.CatchExeptions>();
             return Result;
 
         }
@@ -77,5 +75,5 @@ namespace KITE.Controllers
             return Result;
         }
 
-	}
+    }
 }
