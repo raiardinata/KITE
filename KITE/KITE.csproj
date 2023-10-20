@@ -729,6 +729,9 @@
     </Compile>
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\DatabaseModel.cs" />
+    <Compile Include="Models\GRFinishGoodsModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\CatchExceptions.cs" />
     <Compile Include="Models\Kite.cs" />

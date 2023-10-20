@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="GRFinishGoods.aspx.cs" Inherits="KITE.Pages.ContentPages.GRFinishGoods" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="GRFinishGoods.aspx.cs" Inherits="KITE.Pages.ContentPages.GRFinishGoodsUpload" %>
+<asp:Content ID="GRFinishGoodsUploadPage" ContentPlaceHolderID="MainContent" runat="server">
     <style>
         .custom-pager {
             display: none;

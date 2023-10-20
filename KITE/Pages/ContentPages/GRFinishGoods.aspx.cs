@@ -9,9 +9,9 @@ using System.Web.UI.WebControls;
 
 namespace KITE.Pages.ContentPages
 {
-    public partial class McFrameUpload : System.Web.UI.Page
+    public partial class GRFinishGoodsUpload : System.Web.UI.Page
     {
-        private List<McFrameViewModel> CsvDataList;
+        private List<GRFinishGoodsViewModel> CsvDataList;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack && CsvDataGridView.DataSource == null)
@@ -23,8 +23,8 @@ namespace KITE.Pages.ContentPages
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             errorLabel.Text = "";
-            McFrameFunctionModel mcFrameFunction = new McFrameFunctionModel();
-            Tuple<Exception, string, List<McFrameViewModel>> fileResult = mcFrameFunction.McFrameReadCsvFile(fileUpload);
+            GRFinishGoodsFunctionModel grFinishGoodsFunction = new GRFinishGoodsFunctionModel();
+            Tuple<Exception, string, List<GRFinishGoodsViewModel>> fileResult = grFinishGoodsFunction.McFrameReadCsvFile(fileUpload);
             if (fileResult.Item1.Message != "null")
             {
                 UtilityModel errorHandler = new UtilityModel();
@@ -180,7 +180,7 @@ namespace KITE.Pages.ContentPages
                 // Load your CSV data here
                 ReadCsvModel readCsv = new ReadCsvModel();
                 CsvReader csvData = readCsv.ReadCsvFile((string)Session["FilePath"], ";");
-                CsvDataList = csvData.GetRecords<McFrameViewModel>().ToList();
+                CsvDataList = csvData.GetRecords<GRFinishGoodsViewModel>().ToList();
             }
             catch (Exception ex)
             {
@@ -203,7 +203,7 @@ namespace KITE.Pages.ContentPages
             try
             {
                 LoadCsvData();
-                McFrameFunctionModel csvDataProcess = new McFrameFunctionModel();
+                GRFinishGoodsFunctionModel csvDataProcess = new GRFinishGoodsFunctionModel();
                 Tuple<string, ArrayList> columnNameAndData = csvDataProcess.McFrameGenerateColumnAndCsvData(CsvDataList);
                 foreach (object csvDataObject in (List<object>)columnNameAndData.Item2[0])
                 {

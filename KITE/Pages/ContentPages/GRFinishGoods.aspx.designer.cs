@@ -11,7 +11,7 @@ namespace KITE.Pages.ContentPages
 {
 
 
-    public partial class GRFinishGoods
+    public partial class GRFinishGoodsUpload
     {
 
         /// <summary>
