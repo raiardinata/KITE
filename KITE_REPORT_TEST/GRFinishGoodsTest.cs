@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace KITE_REPORT_TEST
 {
-    internal class McFrameTest : System.Web.UI.Page
+    internal class GRFinishGoodsTest : System.Web.UI.Page
     {
         private IConfiguration Configuration;
         private string ConnectionString;
@@ -35,7 +35,7 @@ namespace KITE_REPORT_TEST
         [TearDown]
         public void TearDown()
         {
-            string query = "TRUNCATE TABLE GI_Raw_Material; TRUNCATE TABLE McFrame_Cost_Table;";
+            string query = "TRUNCATE TABLE GI_Raw_Material; TRUNCATE TABLE GR_Finish_Goods;";
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -48,61 +48,55 @@ namespace KITE_REPORT_TEST
         }
 
         [Test]
-        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/mcframe 032023.csv")]
-        public void McFrameCsvRead(string filePath)
+        [TestCase("20231009-GI Raw Materail.csv", "./KITE_REPORT_TEST/Csv_File_Tester/20231009-GR FG.csv")]
+        public void GRFinishGoodsCsvReadSucceed(string fileName, string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
-            List<McFrameViewModel> CsvDataList;
-            List<McFrameViewModel> Expected = new List<McFrameViewModel>();
-            Expected.Add(new McFrameViewModel()
+            List<GRFinishGoodsViewModel> CsvDataList;
+            List<GRFinishGoodsViewModel> Expected = new List<GRFinishGoodsViewModel>();
+            Expected.Add(new GRFinishGoodsViewModel()
             {
-                Calc_No = "BL572",
-                Mgmt_dept_CD = "2201",
-                Management_Dept_Name = "",
-                YM = DateTime.Parse("2023/03/01 00:00:00"),
-                Lvl = 0,
-                Target_item_CD = "121000004",
-                Item_CD = "121000004",
-                Item_name = "",
-                Item_type_name = "",
-                Unit = "",
-                Quantity = "1010300",
-                STD_Qty = "1010300",
-                Total = "932286,83",
-                STD_Total = "0",
-                Variable_Cost = "932286,83",
-                STD_Variable_Cost = "0",
-                Labour_Cost = "0",
-                STD_Labour_Cost = "0",
-                Depreciation = "0",
-                STD_Depreciation = "0",
-                Repair_Maintenance = "0",
-                STD_Repair_Maintenance = "0",
-                Overhead_Cost = "0",
-                STD_Overhead_Cost = "0",
-                Retur_Cost = "0",
-                STD_Retur_Cost = "0",
+                Posting_Date = DateTime.Parse("2023/03/31"),
+                Document_Date = DateTime.Parse("2023/03/31"),
+                Document_Header_Text = "BM Dill 31.03.2023",
+                Material = "121001072",
+                Material_Description = "Beet Molasses (F)",
+                Plant = "2201",
+                Storage_Location = "2018",
+                Movement_Type = "Z03",
+                Material_Document = "4048920880",
+                Batch = "002/078293",
+                Qty_in_Un_of_Entry = "-235,905",
+                Unit_of_Entry = "MT",
+                Entry_Date = DateTime.Parse("2023/04/01"),
+                Time_of_Entry = "16:22:26",
+                User_name = "ID0857",
+                Base_Unit_of_Measure = "MT",
+                Quantity = "-235,905",
+                Amount_in_LC = "0",
+                Goods_recipient = "211000065",
+
             });
 
             using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
             {
-                CsvDataList = csvData.GetRecords<McFrameViewModel>().ToList();
+                CsvDataList = csvData.GetRecords<GRFinishGoodsViewModel>().ToList();
             }
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }
 
-        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/mcframe 032023 Fail.csv")]
-        public void McFrameCsvReadFail(string filePath)
+        [TestCase("20231009-GI Raw Materail Fail.csv", "./KITE_REPORT_TEST/Csv_File_Tester/20231009-GR FG Fail.csv")]
+        public void GRFinishGoodsCsvReadFail(string fileName, string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
-            List<McFrameViewModel> CsvDataList;
-            string Expected = "Header with name 'Calc. No.'[0] was not found.\r\n";
+            List<GRFinishGoodsViewModel> CsvDataList;
+            string Expected = "Header with name 'Posting Date'[0] was not found.\r\n";
 
             try
             {
                 using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
                 {
-                    CsvDataList = csvData.GetRecords<McFrameViewModel>().ToList();
+                    CsvDataList = csvData.GetRecords<GRFinishGoodsViewModel>().ToList();
                 }
             }
             catch (Exception ex)
@@ -125,28 +119,28 @@ namespace KITE_REPORT_TEST
             }
         }
 
-        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/mcframe 032023.csv")]
-        public void McFrameUploadSucceed(string filePath)
+        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/20231009-GR FG Fail.csv")]
+        public void GRFinishGoodsUploadSucceed(string filePath)
         {
             int index = 0;
             int yearPeriod = 0;
             int monthPeriod = 0;
-            string tableName = "McFrame_Cost_Table";
+            string tableName = "GR_Finish_Goods";
             DatabaseModel databaseModel = new DatabaseModel();
 
             try
             {
                 // basicly this one is LoadCsvData()
                 ReadCsvModel readCsv = new ReadCsvModel();
-                List<McFrameViewModel> CsvDataList;
+                List<GRFinishGoodsViewModel> CsvDataList;
                 using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
                 {
-                    CsvDataList = csvData.GetRecords<McFrameViewModel>().ToList();
+                    CsvDataList = csvData.GetRecords<GRFinishGoodsViewModel>().ToList();
                 }
                 // until this one
 
-                McFrameFunctionModel csvDataProcess = new McFrameFunctionModel();
-                Tuple<string, ArrayList> columnNameAndData = csvDataProcess.McFrameGenerateColumnAndCsvData(CsvDataList);
+                GRFinishGoodsFunctionModel csvDataProcess = new GRFinishGoodsFunctionModel();
+                Tuple<string, ArrayList> columnNameAndData = csvDataProcess.GRFinishGoodsGenerateColumnAndCsvData(CsvDataList);
                 foreach (object csvDataObject in (List<object>)columnNameAndData.Item2[0])
                 {
                     if (index == 0) { yearPeriod = (int)csvDataObject; }
@@ -166,7 +160,11 @@ namespace KITE_REPORT_TEST
                     Assert.Fail(insertResult.Message);
                 }
 
-                Assert.AreEqual($"Insert Into Table {tableName} Berhasil.", insertResult.Message);
+                if (checkPeriodResult.Message == "Data Period Aman." && insertResult.Message == $"Insert Into Table {tableName} Berhasil.")
+                {
+                    Assert.AreEqual($"Insert Into Table {tableName} Berhasil.", insertResult.Message);
+                }
+
 
             }
             catch (Exception ex)

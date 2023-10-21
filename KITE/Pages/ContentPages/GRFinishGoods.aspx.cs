@@ -24,7 +24,7 @@ namespace KITE.Pages.ContentPages
         {
             errorLabel.Text = "";
             GRFinishGoodsFunctionModel grFinishGoodsFunction = new GRFinishGoodsFunctionModel();
-            Tuple<Exception, string, List<GRFinishGoodsViewModel>> fileResult = grFinishGoodsFunction.McFrameReadCsvFile(fileUpload);
+            Tuple<Exception, string, List<GRFinishGoodsViewModel>> fileResult = grFinishGoodsFunction.GRFinishGoodsReadCsvFile(fileUpload);
             if (fileResult.Item1.Message != "null")
             {
                 UtilityModel errorHandler = new UtilityModel();
@@ -36,7 +36,7 @@ namespace KITE.Pages.ContentPages
                 btnUpload.Enabled = true;
                 CsvDataList = fileResult.Item3;
                 Session["FilePath"] = fileResult.Item2;
-                McFrameBindGridView();
+                GRFinishGoodsBindGridView();
             }
         }
 
@@ -59,7 +59,7 @@ namespace KITE.Pages.ContentPages
         {
             CsvDataGridView.PageIndex = e.NewPageIndex;
             LoadCsvData();
-            McFrameBindGridView();
+            GRFinishGoodsBindGridView();
         }
 
         protected void CsvPageSizeDropDown_SelectedIndexChanged(object sender, EventArgs e)
@@ -68,10 +68,10 @@ namespace KITE.Pages.ContentPages
             CsvDataGridView.PageSize = selectedPageSize;
 
             LoadCsvData();
-            McFrameBindGridView();
+            GRFinishGoodsBindGridView();
         }
 
-        private void McFrameBindGridView()
+        private void GRFinishGoodsBindGridView()
         {
             CsvDataGridView.PageSize = int.Parse(CsvPageSizeDropDown.SelectedValue);
             ViewState["Row"] = 0;
@@ -204,7 +204,7 @@ namespace KITE.Pages.ContentPages
             {
                 LoadCsvData();
                 GRFinishGoodsFunctionModel csvDataProcess = new GRFinishGoodsFunctionModel();
-                Tuple<string, ArrayList> columnNameAndData = csvDataProcess.McFrameGenerateColumnAndCsvData(CsvDataList);
+                Tuple<string, ArrayList> columnNameAndData = csvDataProcess.GRFinishGoodsGenerateColumnAndCsvData(CsvDataList);
                 foreach (object csvDataObject in (List<object>)columnNameAndData.Item2[0])
                 {
                     if (index == 0) { yearPeriod = (int)csvDataObject; }

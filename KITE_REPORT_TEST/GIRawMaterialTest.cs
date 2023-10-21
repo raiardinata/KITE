@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace KITE_REPORT_TEST
 {
-    public class GIRawMaterialTest : System.Web.UI.Page
+    internal class GIRawMaterialTest : System.Web.UI.Page
     {
         private IConfiguration Configuration;
         private string ConnectionString;
