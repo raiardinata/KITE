@@ -1,0 +1,1 @@
+SELECT Year_Period,Month_Period,Target_item_CD,Item_CD,Unit,SUM(Quantity) QuantitySum FROM McFrame_Cost_Table  WHERE Item_CD IN ('121001071','121001072') AND Target_item_CD LIKE '124%' GROUP BY Year_Period , Month_Period ,Target_item_CD, Item_CD, Unit;

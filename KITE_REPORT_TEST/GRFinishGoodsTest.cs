@@ -35,7 +35,7 @@ namespace KITE_REPORT_TEST
         [TearDown]
         public void TearDown()
         {
-            string query = "TRUNCATE TABLE GI_Raw_Material; TRUNCATE TABLE GR_Finish_Goods;";
+            string query = "TRUNCATE TABLE GR_Finish_Goods;";
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -56,25 +56,25 @@ namespace KITE_REPORT_TEST
             List<GRFinishGoodsViewModel> Expected = new List<GRFinishGoodsViewModel>();
             Expected.Add(new GRFinishGoodsViewModel()
             {
-                Posting_Date = DateTime.Parse("2023/03/31"),
-                Document_Date = DateTime.Parse("2023/03/31"),
-                Document_Header_Text = "BM Dill 31.03.2023",
-                Material = "121001072",
-                Material_Description = "Beet Molasses (F)",
+                Posting_Date = DateTime.Parse("2023/03/26"),
+                Document_Date = DateTime.Parse("2023/03/26"),
+                Document_Header_Text = "KIRIM QA PROD 26",
+                Material = "124000012",
+                Material_Description = "RC 800KG C/B Exp NEX",
                 Plant = "2201",
-                Storage_Location = "2018",
-                Movement_Type = "Z03",
-                Material_Document = "4048920880",
-                Batch = "002/078293",
-                Qty_in_Un_of_Entry = "-235,905",
-                Unit_of_Entry = "MT",
-                Entry_Date = DateTime.Parse("2023/04/01"),
-                Time_of_Entry = "16:22:26",
-                User_name = "ID0857",
-                Base_Unit_of_Measure = "MT",
-                Quantity = "-235,905",
-                Amount_in_LC = "0",
-                Goods_recipient = "211000065",
+                Storage_Location = "2021",
+                Movement_Type = "Z72",
+                Material_Document = "4048816493",
+                Batch = "P26032023",
+                Qty_in_Un_of_Entry = "120",
+                Unit_of_Entry = "CB",
+                Entry_Date = DateTime.Parse("2023/03/26"),
+                Time_of_Entry = "15:52:00",
+                User_name = "ID0643",
+                Base_Unit_of_Measure = "CB",
+                Quantity = "120",
+                Amount_in_LC = "0,00",
+                Goods_recipient = "",
 
             });
 
@@ -85,8 +85,8 @@ namespace KITE_REPORT_TEST
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }
 
-        [TestCase("20231009-GI Raw Materail Fail.csv", "./KITE_REPORT_TEST/Csv_File_Tester/20231009-GR FG Fail.csv")]
-        public void GRFinishGoodsCsvReadFail(string fileName, string filePath)
+        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/20231009-GR FG Fail.csv")]
+        public void GRFinishGoodsCsvReadFail(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
             List<GRFinishGoodsViewModel> CsvDataList;
@@ -119,7 +119,7 @@ namespace KITE_REPORT_TEST
             }
         }
 
-        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/20231009-GR FG Fail.csv")]
+        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/20231009-GR FG.csv")]
         public void GRFinishGoodsUploadSucceed(string filePath)
         {
             int index = 0;

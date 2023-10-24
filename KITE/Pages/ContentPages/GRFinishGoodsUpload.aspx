@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="GRFinishGoods.aspx.cs" Inherits="KITE.Pages.ContentPages.GRFinishGoodsUpload" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="GRFinishGoodsUpload.aspx.cs" Inherits="KITE.Pages.ContentPages.GRFinishGoodsUpload" %>
 <asp:Content ID="GRFinishGoodsUploadPage" ContentPlaceHolderID="MainContent" runat="server">
     <style>
         .custom-pager {
@@ -20,6 +20,7 @@
             </tr>
         </table>
         <asp:Label ID="errorLabel" runat="server" Enabled="false" style="color: red; position:relative; width:auto; height:auto;"></asp:Label>
+        <asp:CheckBox ID="forcePushData" runat="server" Text="Overide data sebelumnya" /><br />
         <asp:Label ID="checkDataWarning" runat="server" Text="Pastikan untuk melakukan validasi ulang terhadap data yang di upload." />
 
         <asp:ScriptManager ID="CsvScriptManager" runat="server">
@@ -40,29 +41,25 @@
                                         <asp:Label ID="lblSequenceNo" runat="server" Text=""></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Calc_No" HeaderText="Calc. No." SortExpression="Calc_No" />
-                                <asp:BoundField DataField="Mgmt_dept_CD" HeaderText="Mgmt. Dept. CD" SortExpression="Mgmt_dept_CD" />
-                                <asp:BoundField DataField="Management_Dept_Name" HeaderText="Mgmt. Dept. Name" SortExpression="Management_Dept_Name" />
-                                <asp:BoundField DataField="YM" HeaderText="YM" SortExpression="YM" DataFormatString="{0:dd/MM/yyyy}" />
-                                <asp:BoundField DataField="Lvl" HeaderText="LVL" SortExpression="Lvl" />
-                                <asp:BoundField DataField="Target_item_CD" HeaderText="Target Item CD" SortExpression="Target_item_CD" />
-                                <asp:BoundField DataField="Item_CD" HeaderText="Item CD" SortExpression="Item_CD" />
-                                <asp:BoundField DataField="Item_name" HeaderText="Item Name" SortExpression="Item_name" />
-                                <asp:BoundField DataField="Item_type_name" HeaderText="Item Type Name" SortExpression="Item_type_name" />
-                                <asp:BoundField DataField="Unit" HeaderText="Unit" SortExpression="Unit" />
-                                <asp:BoundField DataField="Quantity" HeaderText="Qty." SortExpression="Quantity" />
-                                <asp:BoundField DataField="STD_Qty" HeaderText="[STD]Qty." SortExpression="STD_Qty" />
-                                <asp:BoundField DataField="Variable_Cost" HeaderText="Variable Cost" SortExpression="Variable_Cost" />
-                                <asp:BoundField DataField="STD_Variable_Cost" HeaderText="[STD]Variable Cost" SortExpression="STD_Variable_Cost" />
-                                <asp:BoundField DataField="Labour_Cost" HeaderText="Labour Cost" SortExpression="Labour_Cost" />
-                                <asp:BoundField DataField="STD_Labour_Cost" HeaderText="[STD]Labour Cost" SortExpression="STD_Labour_Cost" />
-                                <asp:BoundField DataField="Depreciation" HeaderText="Depreciation" SortExpression="Depreciation" />
-                                <asp:BoundField DataField="STD_Depreciation" HeaderText="[STD]Depreciation" SortExpression="STD_Depreciation" />
-                                <asp:BoundField DataField="Repair_Maintenance" SortExpression="Repair_Maintenance" HeaderText="[STD]Depreciation" />
-                                <asp:BoundField DataField="STD_Repair_Maintenance" SortExpression="STD_Repair_Maintenance" HeaderText="[STD]Repair Maintenance" />
-                                <asp:BoundField DataField="Overhead_Cost" SortExpression="Overhead_Cost" HeaderText="Overhead Cost" />
-                                <asp:BoundField DataField="STD_Overhead_Cost" SortExpression="STD_Overhead_Cost" HeaderText="[STD]Overhead Cost" />
-                                <asp:BoundField DataField="Retur_Cost" SortExpression="Retur_Cost" HeaderText="Retur Cost" />
+                                <asp:BoundField DataField="Posting_Date" SortExpression="Posting_Date" HeaderText="Posting Date" />
+                                <asp:BoundField DataField="Document_Date" SortExpression="Document_Date" HeaderText="Document Date" />
+                                <asp:BoundField DataField="Document_Header_Text" SortExpression="Document_Header_Text" HeaderText="Document Header Text" />
+                                <asp:BoundField DataField="Material" SortExpression="Material" HeaderText="Material" />
+                                <asp:BoundField DataField="Material_Description" SortExpression="Material_Description" HeaderText="Material Description" />
+                                <asp:BoundField DataField="Plant" SortExpression="Plant" HeaderText="Plant" />
+                                <asp:BoundField DataField="Storage_Location" SortExpression="Storage_Location" HeaderText="Storage Location" />
+                                <asp:BoundField DataField="Movement_Type" SortExpression="Movement_Type" HeaderText="Movement Type" />
+                                <asp:BoundField DataField="Material_Document" SortExpression="Material_Document" HeaderText="Material Document" />
+                                <asp:BoundField DataField="Batch" SortExpression="Batch" HeaderText="Batch" />
+                                <asp:BoundField DataField="Qty_in_Un_of_Entry" SortExpression="Qty_in_Un_of_Entry" HeaderText="Qty in Un. of Entry" />
+                                <asp:BoundField DataField="Unit_of_Entry" SortExpression="Unit_of_Entry" HeaderText="Unit of Entry" />
+                                <asp:BoundField DataField="Entry_Date" SortExpression="Entry_Date" HeaderText="Entry Date" />
+                                <asp:BoundField DataField="Time_of_Entry" SortExpression="Time_of_Entry" HeaderText="Time of Entry" />
+                                <asp:BoundField DataField="User_name" SortExpression="User_name" HeaderText="User name" />
+                                <asp:BoundField DataField="Base_Unit_of_Measure" SortExpression="Base_Unit_of_Measure" HeaderText="Base Unit of Measure" />
+                                <asp:BoundField DataField="Quantity" SortExpression="Quantity" HeaderText="Quantity" />
+                                <asp:BoundField DataField="Amount_in_LC" SortExpression="Amount_in_LC" HeaderText="Amount in LC" />
+                                <asp:BoundField DataField="Goods_recipient" SortExpression="Goods_recipient" HeaderText="Goods recipient" />
                             </Columns>
                             <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="First" LastPageText="Last" />
                             <PagerStyle CssClass="custom-pager"/>

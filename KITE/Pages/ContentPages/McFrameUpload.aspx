@@ -20,6 +20,7 @@
             </tr>
         </table>
         <asp:Label ID="errorLabel" runat="server" Enabled="false" style="color: red; position:relative; width:auto; height:auto;"></asp:Label>
+        <asp:CheckBox ID="forcePushData" runat="server" Text="Overide data sebelumnya" /><br />
         <asp:Label ID="checkDataWarning" runat="server" Text="Pastikan untuk melakukan validasi ulang terhadap data yang di upload." />
 
         <asp:ScriptManager ID="CsvScriptManager" runat="server">

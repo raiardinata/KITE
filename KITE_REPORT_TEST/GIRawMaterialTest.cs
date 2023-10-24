@@ -27,11 +27,6 @@ namespace KITE_REPORT_TEST
             ConnectionString = Configuration["profiles:KITE_REPORT_TEST:environmentVariables:connectionString"];
         }
 
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [TearDown]
         public void TearDown()
         {
@@ -85,8 +80,8 @@ namespace KITE_REPORT_TEST
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }
 
-        [TestCase("20231009-GI Raw Materail Fail.csv", "./KITE_REPORT_TEST/Csv_File_Tester/20231009-GI Raw Materail Fail.csv")]
-        public void GIRawMaterialCsvReadFail(string fileName, string filePath)
+        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/20231009-GI Raw Materail Fail.csv")]
+        public void GIRawMaterialCsvReadFail(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
             List<GIRawMaterialViewModel> CsvDataList;

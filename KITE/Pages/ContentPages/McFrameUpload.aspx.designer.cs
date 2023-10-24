@@ -42,6 +42,15 @@ namespace KITE.Pages.ContentPages
         protected global::System.Web.UI.WebControls.Label errorLabel;
 
         /// <summary>
+        /// forcePushData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox forcePushData;
+
+        /// <summary>
         /// checkDataWarning control.
         /// </summary>
         /// <remarks>

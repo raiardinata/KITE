@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KITE</RootNamespace>
     <AssemblyName>KITE</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
@@ -81,7 +81,7 @@
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
@@ -479,8 +479,10 @@
     <Content Include="Client\JQuery\ui\vssver2.scc" />
     <Content Include="Client\JQuery\ui\i18n\vssver2.scc" />
     <Content Include="Pages\ContentPages\ChangePassword.aspx" />
+    <Content Include="Pages\ContentPages\DistributeConsumptionBM&amp;RS.aspx" />
+    <Content Include="Pages\ContentPages\ExportSalesUpload.aspx" />
     <Content Include="Pages\ContentPages\GIRawMaterialUpload.aspx" />
-    <Content Include="Pages\ContentPages\GRFinishGoods.aspx" />
+    <Content Include="Pages\ContentPages\GRFinishGoodsUpload.aspx" />
     <Content Include="Pages\ContentPages\Input_KITEA.aspx" />
     <Content Include="Pages\ContentPages\Input_KITEB.aspx" />
     <Content Include="Pages\ContentPages\Input_KITEB2.aspx" />
@@ -704,7 +706,6 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\CompanyController.cs" />
-    <Compile Include="Controllers\DatabaseController.cs" />
     <Compile Include="Controllers\KiteController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -728,6 +729,7 @@
     </Compile>
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\DatabaseModel.cs" />
+    <Compile Include="Models\DistributeConsumptionBM&amp;RSModel.cs" />
     <Compile Include="Models\GRFinishGoodsModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -757,6 +759,20 @@
     <Compile Include="Pages\ContentPages\ChangePassword.aspx.designer.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ContentPages\DistributeConsumptionBM&amp;RS.aspx.cs">
+      <DependentUpon>DistributeConsumptionBM&amp;RS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ContentPages\DistributeConsumptionBM&amp;RS.aspx.designer.cs">
+      <DependentUpon>DistributeConsumptionBM&amp;RS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ContentPages\ExportSalesUpload.aspx.cs">
+      <DependentUpon>ExportSalesUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ContentPages\ExportSalesUpload.aspx.designer.cs">
+      <DependentUpon>ExportSalesUpload.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ContentPages\GIRawMaterialUpload.aspx.cs">
       <DependentUpon>GIRawMaterialUpload.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -764,12 +780,12 @@
     <Compile Include="Pages\ContentPages\GIRawMaterialUpload.aspx.designer.cs">
       <DependentUpon>GIRawMaterialUpload.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ContentPages\GRFinishGoods.aspx.cs">
-      <DependentUpon>GRFinishGoods.aspx</DependentUpon>
+    <Compile Include="Pages\ContentPages\GRFinishGoodsUpload.aspx.cs">
+      <DependentUpon>GRFinishGoodsUpload.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\ContentPages\GRFinishGoods.aspx.designer.cs">
-      <DependentUpon>GRFinishGoods.aspx</DependentUpon>
+    <Compile Include="Pages\ContentPages\GRFinishGoodsUpload.aspx.designer.cs">
+      <DependentUpon>GRFinishGoodsUpload.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\ContentPages\Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>

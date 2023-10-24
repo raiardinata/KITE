@@ -102,6 +102,7 @@ namespace KITE.Models
 
                     // Assign keys based on the Id property
                     //CsvDataDictionary = CsvDataList.ToDictionary(data => data.Name);
+                    csvData.Dispose();
                 }
 
                 return Tuple.Create(new Exception("null"), filePath, CsvDataList);

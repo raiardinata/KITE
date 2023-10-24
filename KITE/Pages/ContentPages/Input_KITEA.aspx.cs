@@ -1,22 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web.Security;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Data.SqlClient;
 //using Microsoft.Reporting.WebForms;
-using System.Globalization;
 //using PRJ_REPORT_SCM.SQLConnect;
-using System.Text;
-using Microsoft.Reporting.WebForms;
 
 namespace KITE.Pages.ContentPages
 {
@@ -41,13 +30,13 @@ namespace KITE.Pages.ContentPages
         {
             CheckUser();
             localip = GETIPADDRESS();
-           
+
             if (!IsPostBack)
             {
                 //bool check = CheckPrev();
                 //if (check)
                 //{
-                    Timer2.Enabled = true;
+                Timer2.Enabled = true;
                 //}
                 //else
                 //{
@@ -57,8 +46,8 @@ namespace KITE.Pages.ContentPages
                 //    Timer1.Interval = Convert.ToInt32(Setting.TimerInterval);
                 //    Timer1.Enabled = true;
                 //}
-            }            
-           
+            }
+
         }
 
         protected string GETIPADDRESS()
@@ -147,7 +136,7 @@ namespace KITE.Pages.ContentPages
                     lblErrorSloc.Visible = true;
                     boleh = false;
                 }
-                
+
 
                 if (boleh)
                 {
@@ -191,7 +180,7 @@ namespace KITE.Pages.ContentPages
 
         protected void SubmitInformation(string Company, string Plant, string Material_LOW, string Material_HIGH, string sloc_low, string sloc_high, string sDate_LOW, string sDate_HIGH, string User_IP)
         {
-           
+
             KC.InsertQueueA(Company, Plant, Material_LOW, Material_HIGH, sloc_low, sloc_high, sDate_LOW, sDate_HIGH, HttpContext.Current.Session["UserAppID"].ToString(), "Open", "Open Report KITE A", HttpContext.Current.Session["UserAppID"].ToString(), HttpContext.Current.Session["FullName"].ToString());
             ScriptManager.RegisterClientScriptBlock(this, typeof(string), "Close", "Close('#Insert')", true);
             ScriptManager.RegisterClientScriptBlock(this, typeof(string), "Open", "ShowPopUp('#Loading')", true);
@@ -457,7 +446,7 @@ namespace KITE.Pages.ContentPages
             }
         }
 
-      
+
         private void show()
         {
             MonthYear();
@@ -678,7 +667,7 @@ namespace KITE.Pages.ContentPages
                         refresh = false;
                         Timer1.Enabled = false;
                     }
-                    else if (select.status.ToString() == "2") 
+                    else if (select.status.ToString() == "2")
                     {
                         ScriptManager.RegisterClientScriptBlock(this, typeof(string), "Close", "Close('#Loading')", true);
                         LabelWaitingList.Visible = false;
@@ -695,7 +684,7 @@ namespace KITE.Pages.ContentPages
         }
         protected void ddlPeriodTo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void labelCompany()
@@ -815,6 +804,6 @@ namespace KITE.Pages.ContentPages
             }
         }
 
-        
+
     }
 }

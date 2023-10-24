@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web.UI.WebControls;
 
@@ -11,7 +12,7 @@ namespace KITE.Pages.ContentPages
 {
     public partial class GIRawMaterialUpload : System.Web.UI.Page
     {
-        public List<GIRawMaterialViewModel> CsvDataList;
+        private List<GIRawMaterialViewModel> CsvDataList;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack && CsvDataGridView.DataSource == null)
@@ -28,7 +29,7 @@ namespace KITE.Pages.ContentPages
             if (fileResult.Item1.Message != "null")
             {
                 UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("There is some problem when submit the csv. Please check again the data is a match for McFrame Upload process.<br/> Detail : " + fileResult.Item1.Message);
+                Exception loadCsvException = new Exception("Terdapat masalah ketika mensubmit file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload GI Raw Material.<br/> Detail : " + fileResult.Item1.Message);
                 errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
             }
             else if (fileResult.Item2 != null && fileResult.Item3 != null)
@@ -117,7 +118,7 @@ namespace KITE.Pages.ContentPages
             catch (Exception ex)
             {
                 UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("There is some problem when going to page " + txtGoToPage.Text.Trim() + ". Detail : " + ex.Message);
+                Exception loadCsvException = new Exception("Terdapat masalah ketika mau membuka halaman " + txtGoToPage.Text.Trim() + ". Detail : " + ex.Message);
                 errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
             }
         }
@@ -139,7 +140,7 @@ namespace KITE.Pages.ContentPages
             catch (Exception ex)
             {
                 UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("There is some problem when previous button triggered. Detail : " + ex.Message);
+                Exception loadCsvException = new Exception("Terdapat masalah ketika tombol previous page berjalan. Detail : " + ex.Message);
                 errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
             }
         }
@@ -162,7 +163,7 @@ namespace KITE.Pages.ContentPages
             catch (Exception ex)
             {
                 UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("There is some problem when next button triggered. Detail : " + ex.Message);
+                Exception loadCsvException = new Exception("Terdapat masalah ketika tombol next page berjalan. Detail : " + ex.Message);
                 errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
             }
         }
@@ -173,19 +174,22 @@ namespace KITE.Pages.ContentPages
             CsvDataGridView_PageIndexChanging(this, e);
         }
 
-        public void LoadCsvData()
+        private void LoadCsvData()
         {
             try
             {
                 // Load your CSV data here
                 ReadCsvModel readCsv = new ReadCsvModel();
-                CsvReader csvData = readCsv.ReadCsvFile((string)Session["FilePath"], ";");
-                CsvDataList = csvData.GetRecords<GIRawMaterialViewModel>().ToList();
+                using (CsvReader csvData = readCsv.ReadCsvFile((string)Session["FilePath"], ";"))
+                {
+                    CsvDataList = csvData.GetRecords<GIRawMaterialViewModel>().ToList();
+                    csvData.Dispose();
+                }
             }
             catch (Exception ex)
             {
                 UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("There is some problem when load the csv. Please check again the data is a match for McFrame Upload process. Detail : " + ex.Message);
+                Exception loadCsvException = new Exception("Terdapat masalah ketika memuat file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload GI Raw Material.<br/> Detail : " + ex.Message);
                 errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
             }
         }
@@ -197,7 +201,7 @@ namespace KITE.Pages.ContentPages
             int monthPeriod = 0;
             string tableName = "GI_Raw_Material";
             DatabaseModel databaseModel = new DatabaseModel();
-            UtilityModel errorHandler = new UtilityModel();
+            UtilityModel utility = new UtilityModel();
             Exception loadCsvException;
 
             try
@@ -212,22 +216,35 @@ namespace KITE.Pages.ContentPages
                     index++;
                 }
 
+                if (forcePushData.Checked)
+                {
+                    Exception deleteResult = databaseModel.DeleteData(tableName, $" Year_Period = '{yearPeriod}' AND Month_Period = '{monthPeriod}' ", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                    if (deleteResult.Message != "Data period sebelumnya berhasil dibersihkan.")
+                    {
+                        utility.UploadCsvErrorHandler(deleteResult, CsvDataGridView, errorLabel);
+                    }
+                }
+
                 Exception checkPeriodResult = databaseModel.PeriodCheck(tableName, yearPeriod, monthPeriod, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 if (checkPeriodResult.Message != "Data Period Aman.")
                 {
                     loadCsvException = new Exception(checkPeriodResult.Message);
-                    errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                    utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
                 }
 
                 Exception insertResult = databaseModel.InsertIntoTable(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 if (insertResult.Message != $"Insert Into Table {tableName} Berhasil.")
                 {
                     loadCsvException = new Exception($"Gagal dalam penulisan ke database. Detail : {insertResult.Message}");
-                    errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                    utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
                 }
 
                 if (checkPeriodResult.Message == "Data Period Aman." && insertResult.Message == $"Insert Into Table {tableName} Berhasil.")
                 {
+                    if (File.Exists(Session["FilePath"].ToString()))
+                    {
+                        File.Delete(Session["FilePath"].ToString());
+                    }
                     Session["FilePath"] = "";
                     string script = $"alert('{insertResult.Message}'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/GIRawMaterialUpload.aspx")}';";
                     ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
@@ -236,7 +253,7 @@ namespace KITE.Pages.ContentPages
             catch (Exception ex)
             {
                 loadCsvException = new Exception(ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
             }
         }
     }

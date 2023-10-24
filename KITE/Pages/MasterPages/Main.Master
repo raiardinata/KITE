@@ -91,6 +91,7 @@
                                 <li><a href="~" id="master_cusgroup" visible="false" runat="server">Dummy Master_Cusgroup</a></li>
                                 <li><a href="~/Pages/ContentPages/McFrameUpload.aspx" id="master_mcframeupload" visible="false" runat="server">McFrame Upload</a></li>
                                 <li><a href="~/Pages/ContentPages/GIRawMaterialUpload.aspx" id="master_girawmaterialupload" visible="false" runat="server">GI Raw Material Upload</a></li>
+                                <li><a href="~/Pages/ContentPages/GRFinishGoodsUpload.aspx" id="master_grfinishgoodsupload" visible="false" runat="server">GR Finish Goods Upload</a></li>
                             </ul>
 
 
