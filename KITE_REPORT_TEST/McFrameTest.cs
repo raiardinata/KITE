@@ -48,7 +48,7 @@ namespace KITE_REPORT_TEST
         }
 
         [Test]
-        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/mcframe 032023.csv")]
+        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023.csv")]
         public void McFrameCsvRead(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
@@ -91,7 +91,7 @@ namespace KITE_REPORT_TEST
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }
 
-        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/mcframe 032023 Fail.csv")]
+        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023 Fail.csv")]
         public void McFrameCsvReadFail(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
@@ -125,7 +125,7 @@ namespace KITE_REPORT_TEST
             }
         }
 
-        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/mcframe 032023.csv")]
+        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023.csv")]
         public void McFrameUploadSucceed(string filePath)
         {
             int index = 0;
@@ -160,7 +160,7 @@ namespace KITE_REPORT_TEST
                     Assert.Fail(checkPeriodResult.Message);
                 }
 
-                Exception insertResult = databaseModel.InsertIntoTable(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConnectionString);
+                Exception insertResult = new ReadCsvModel().IterateCsvObject(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConnectionString);
                 if (insertResult.Message != $"Insert Into Table {tableName} Berhasil.")
                 {
                     Assert.Fail(insertResult.Message);

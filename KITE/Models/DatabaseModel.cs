@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -8,40 +6,27 @@ namespace KITE.Models
 {
     public class DatabaseModel
     {
-        public Exception InsertIntoTable(string tableName, string columnName, ArrayList csvValueArrayList, string connectionString)
-        {
-            foreach (object csvDataObject in csvValueArrayList)
-            {
-                string values = "";
-                List<object> csvDataList = (List<object>)csvDataObject;
-                foreach (object csvData in csvDataList)
-                {
-                    string modifiedString = $"'{csvData}'";
-                    modifiedString = modifiedString.Replace(",", ".");
 
-                    values += modifiedString + ",";
-                }
-                values = values.Substring(0, values.Length - 1);
-                string query = $"INSERT INTO {tableName}({columnName}) VALUES({values})";
-                using (SqlConnection connection = new SqlConnection(connectionString))
+        public Exception InsertIntoTable(string tableName, string columnName, string values, string connectionString)
+        {
+            string query = $"INSERT INTO {tableName}({columnName}) VALUES({values})";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    try
                     {
-                        try
-                        {
-                            connection.Open();
-                            command.ExecuteNonQuery();
-                            connection.Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            return ex;
-                        }
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        return ex;
                     }
                 }
             }
-
-            return new Exception($"Insert Into Table {tableName} Berhasil.");
+            return new Exception("null");
         }
 
         public Exception PeriodCheck(string tableName, int yearPeriod, int monthPeriod, string connectionString)

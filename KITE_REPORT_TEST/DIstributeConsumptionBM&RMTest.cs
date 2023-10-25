@@ -26,23 +26,29 @@ namespace KITE_REPORT_TEST
         [Test]
         [TestCase(
             new string[] {
-                " Year_Period,Month_Period,Target_item_CD,Item_CD,Unit,SUM(Quantity) SumQuantity",
-                " Year_Period,Month_Period,Posting_Date,Material,Plant,Storage_Location,Movement_Type,Batch,SUM(Qty_in_Un_of_Entry) Sum_QtyInUnOfEntry,Unit_of_Entry,Base_Unit_of_Measure,SUM(Quantity) Sum_Qty,Material_Document "
+                " Year_Period,Month_Period,Target_item_CD,Item_CD,Unit,SUM(Quantity) SumQuantity ",
+                " UUID,Year_Period,Month_Period,Posting_Date,Material,Plant,Storage_Location,Movement_Type,Batch,Qty_in_Un_of_Entry,Unit_of_Entry,Base_Unit_of_Measure,Quantity,Material_Document "
             },
             new string[] { " McFrame_Cost_Table ", " GI_Raw_Material " },
             new string[] {
-                " Item_CD IN ('121001071','121001072') AND Target_item_CD LIKE '124%' GROUP BY Year_Period , Month_Period ,Target_item_CD, Item_CD, Unit ",
-                " Material = '121001071' GROUP BY Year_Period, Month_Period, Material, Posting_Date, Material_Document, Plant, Storage_Location, Movement_Type, Batch, Unit_of_Entry, Base_Unit_of_Measure ORDER BY Material, Posting_Date ASC " }
+                " Item_CD IN (SELECT LOW FROM CommonTable WHERE ProgramID = 'DISTRIBUTED_MATERIAL') AND Target_item_CD LIKE '124%' GROUP BY Year_Period , Month_Period ,Target_item_CD, Item_CD, Unit ",
+                " Material = '121001071' ORDER BY Material,Posting_Date,Material_Document ASC " }
         )]
         public async Task PopulateRMperBatchAsync(string[] selectColumn, string[] tableName, string[] condition)
         {
-            // need to get material from common table
-            Tuple<DataTable, Exception> materialToBeSearch = new DatabaseModel().SelectTable("LOW", "CommonTable", " ProgramID = 'DISTRIBUTED_MATERIAL' ", ConnectionString);
-
             Tuple<DataTable, Exception> mcFrameDataTable = await new DistributeConsumptionBM_RSFunctionModel().GetDistributedMcFrameData(selectColumn[0], tableName[0], condition[0], ConnectionString);
-            Tuple<DataTable, Exception> gIRawMaterialDataTable = await new DistributeConsumptionBM_RSFunctionModel().GetDistributedGIRawMaterialData(selectColumn[1], tableName[1], condition[1], ConnectionString);
+            if (mcFrameDataTable.Item2.Message != "null" || mcFrameDataTable.Item1.Rows.Count == 0)
+            {
+                Assert.Fail(mcFrameDataTable.Item2.Message + " || DataTable Row 0");
+            }
 
-            new DistributeConsumptionBM_RSFunctionModel().DistributionCalculationProcess(mcFrameDataTable.Item1, gIRawMaterialDataTable.Item1);
+            Tuple<DataTable, Exception> gIRawMaterialDataTable = await new DistributeConsumptionBM_RSFunctionModel().GetDistributedGIRawMaterialData(selectColumn[1], tableName[1], condition[1], ConnectionString);
+            if (gIRawMaterialDataTable.Item2.Message != "null" || gIRawMaterialDataTable.Item1.Rows.Count == 0)
+            {
+                Assert.Fail(mcFrameDataTable.Item2.Message + " || DataTable Row 0");
+            }
+
+            new DistributeConsumptionBM_RSFunctionModel().DistributionCalculationProcess(mcFrameDataTable.Item1, gIRawMaterialDataTable.Item1, ConnectionString);
 
             Assert.Fail();
         }

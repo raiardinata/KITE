@@ -232,7 +232,7 @@ namespace KITE.Pages.ContentPages
                     utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
                 }
 
-                Exception insertResult = databaseModel.InsertIntoTable(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                Exception insertResult = new ReadCsvModel().IterateCsvObject(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 if (insertResult.Message != $"Insert Into Table {tableName} Berhasil.")
                 {
                     loadCsvException = new Exception($"Gagal dalam penulisan ke database. Detail : {insertResult.Message}");

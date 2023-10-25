@@ -1,5 +1,7 @@
 ﻿using CsvHelper;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 
@@ -44,6 +46,30 @@ namespace KITE.Models
                 return Tuple.Create(ex, "");
             }
 
+        }
+
+        public Exception IterateCsvObject(string tableName, string columnName, ArrayList csvValueArrayList, string connectionString)
+        {
+            foreach (object csvDataObject in csvValueArrayList)
+            {
+                string values = "";
+                List<object> csvDataList = (List<object>)csvDataObject;
+                foreach (object csvData in csvDataList)
+                {
+                    string modifiedString = $"'{csvData}'";
+                    modifiedString = modifiedString.Replace(",", ".");
+
+                    values += modifiedString + ",";
+                }
+                values = values.Substring(0, values.Length - 1);
+                Exception insertResult = new DatabaseModel().InsertIntoTable(tableName, columnName, values, connectionString);
+                if (insertResult.Message != "null")
+                {
+                    return new Exception($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : " + insertResult.Message);
+                }
+            }
+
+            return new Exception($"Insert Into Table {tableName} Berhasil.");
         }
     }
 }

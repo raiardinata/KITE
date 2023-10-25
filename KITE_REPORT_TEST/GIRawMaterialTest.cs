@@ -43,8 +43,8 @@ namespace KITE_REPORT_TEST
         }
 
         [Test]
-        [TestCase("20231009-GI Raw Materail.csv", "./KITE_REPORT_TEST/Csv_File_Tester/20231009-GI Raw Materail.csv")]
-        public void GIRawMaterialCsvReadSucceed(string fileName, string filePath)
+        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GI Raw Materail.csv")]
+        public void GIRawMaterialCsvReadSucceed(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
             List<GIRawMaterialViewModel> CsvDataList;
@@ -80,7 +80,7 @@ namespace KITE_REPORT_TEST
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }
 
-        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/20231009-GI Raw Materail Fail.csv")]
+        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GI Raw Materail Fail.csv")]
         public void GIRawMaterialCsvReadFail(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
@@ -114,7 +114,7 @@ namespace KITE_REPORT_TEST
             }
         }
 
-        [TestCase("./KITE_REPORT_TEST/Csv_File_Tester/20231009-GI Raw Materail.csv")]
+        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GI Raw Materail.csv")]
         public void GIRawMaterialUploadSucceed(string filePath)
         {
             int index = 0;
@@ -149,7 +149,7 @@ namespace KITE_REPORT_TEST
                     Assert.Fail(checkPeriodResult.Message);
                 }
 
-                Exception insertResult = databaseModel.InsertIntoTable(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConnectionString);
+                Exception insertResult = new ReadCsvModel().IterateCsvObject(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConnectionString);
                 if (insertResult.Message != $"Insert Into Table {tableName} Berhasil.")
                 {
                     Assert.Fail(insertResult.Message);
