@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -28,23 +29,24 @@ namespace KITE.Models
 
         }
 
-        public Exception DistributionCalculationProcess(DataTable mcFrameDataTable, DataTable giRawMaterialDataTable, string connectionString)
+        public Tuple<ArrayList, Exception> DistributionCalculationProcess(DataTable mcFrameDataTable, DataTable giRawMaterialDataTable, string connectionString)
         {
             int giRawMaterialIndex = 0;
             decimal leftOver = 0;
-            List<DistributedRMperBatchViewModel> listRMviewModel = new List<DistributedRMperBatchViewModel>();
+            List<string> rmPerBatchQueryList = new List<string>();
+            ArrayList rmPerBatchQueryArrayList = new ArrayList();
 
             EnumerableRowCollection<DataRow> mcFrameDataRows = mcFrameDataTable.AsEnumerable();
             foreach (DataRow mcFrameDataRow in mcFrameDataRows)
             {
+                Guid uuid = Guid.NewGuid();
                 decimal mcFrameSumQty = mcFrameDataRow.Field<decimal>("SumQuantity");
+                List<GIRawMaterialJsonViewModel> listGIRawMaterialviewModel = new List<GIRawMaterialJsonViewModel>();
 
                 for (int i = giRawMaterialIndex; i < giRawMaterialDataTable.Rows.Count; i++)
                 {
-                    Guid uuid = Guid.NewGuid();
                     DataRow giRawMaterialDataRow = giRawMaterialDataTable.Rows[i];
                     mcFrameSumQty += (leftOver != 0) ? leftOver : giRawMaterialDataRow.Field<decimal>("Quantity");
-                    List<GIRawMaterialJsonViewModel> listGIRawMaterialviewModel = new List<GIRawMaterialJsonViewModel>();
 
                     // populate RMperBatch tracking json
                     listGIRawMaterialviewModel.Add(new GIRawMaterialJsonViewModel
@@ -65,21 +67,6 @@ namespace KITE.Models
                         Material_Document = giRawMaterialDataRow.Field<string>("Material_Document")
                     });
 
-                    // populate RMperBatch table
-                    string valuesArray = $"" +
-                        $"'{uuid.ToString()}'" +
-                        $"'{mcFrameDataRow.Field<string>("Year_Period")}'," +
-                        $"'{mcFrameDataRow.Field<string>("Month_Period")}'," +
-                        $"'{mcFrameDataRow.Field<string>("Target_item_CD")}'," +
-                        $"'{mcFrameDataRow.Field<string>("Item_CD")}'," +
-                        $"'{mcFrameDataRow.Field<string>("Unit")}'," +
-                        $"'{mcFrameDataRow.Field<decimal>("SumQuantity")}'," +
-                        $"'{JsonConvert.SerializeObject(listGIRawMaterialviewModel[0], Formatting.Indented)}'";
-                    Exception insertResult = new DatabaseModel().InsertIntoTable("RM_per_Batch", "UUID,Year_Period,Month_Period,Target_item_CD,Unit,Sum_Qty,trackingJson", valuesArray, connectionString);
-                    if (insertResult != null)
-                    {
-                        return new Exception($"Terjadi kesalahan pada saat Insert Into RM_per_Batch. Detail : " + insertResult.Message);
-                    }
 
                     if (mcFrameSumQty >= 0)
                     {
@@ -92,8 +79,22 @@ namespace KITE.Models
                         break;
                     }
                 }
+
+                // populate RMperBatch table
+                string sumQuantity = mcFrameDataRow.Field<decimal>("SumQuantity").ToString();
+                string valuesArray = $"" +
+                    $"'{uuid.ToString()}'," +
+                    $"'{mcFrameDataRow.Field<string>("Year_Period")}'," +
+                    $"'{mcFrameDataRow.Field<string>("Month_Period")}'," +
+                    $"'{mcFrameDataRow.Field<string>("Target_item_CD")}'," +
+                    $"'{mcFrameDataRow.Field<string>("Item_CD")}'," +
+                    $"'{mcFrameDataRow.Field<string>("Unit")}'," +
+                    $"'{sumQuantity.Replace(",", ".")}'," +
+                    $"'{JsonConvert.SerializeObject(listGIRawMaterialviewModel, Formatting.Indented)}'";
+                rmPerBatchQueryList.Add(valuesArray);
             }
-            return new Exception("null");
+            rmPerBatchQueryArrayList.Add(rmPerBatchQueryList);
+            return Tuple.Create(rmPerBatchQueryArrayList, new Exception("null"));
         }
     }
 

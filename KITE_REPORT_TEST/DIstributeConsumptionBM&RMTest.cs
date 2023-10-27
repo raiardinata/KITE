@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -48,9 +49,28 @@ namespace KITE_REPORT_TEST
                 Assert.Fail(mcFrameDataTable.Item2.Message + " || DataTable Row 0");
             }
 
-            new DistributeConsumptionBM_RSFunctionModel().DistributionCalculationProcess(mcFrameDataTable.Item1, gIRawMaterialDataTable.Item1, ConnectionString);
+            Tuple<ArrayList, Exception> distrubuteResult = new DistributeConsumptionBM_RSFunctionModel().DistributionCalculationProcess(mcFrameDataTable.Item1, gIRawMaterialDataTable.Item1, ConnectionString);
+            if (distrubuteResult.Item2.Message != "null")
+            {
+                Assert.Fail(distrubuteResult.Item2.Message);
+            }
 
-            Assert.Fail();
+            Tuple<string[], Exception> iterationResult = new ReadCsvModel().IterateCsvObject(distrubuteResult.Item1);
+            if (iterationResult.Item2.Message != "Pemrosesan IterateCsvObject Berhasil.")
+            {
+                Assert.Fail(iterationResult.Item2.Message);
+            }
+
+            foreach (string iterionValue in iterationResult.Item1)
+            {
+                Exception insertResult = new DatabaseModel().InsertIntoTable("RM_per_Batch", "UUID,Year_Period,Month_Period,Target_item_CD,Item_CD,Unit,Sum_Qty,trackingJson", iterionValue, ConnectionString);
+                if (insertResult.Message != "null")
+                {
+                    Assert.Fail($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : {insertResult.Message}");
+                }
+            }
+
+            Assert.Pass("Distributed Consumption Succeed.");
         }
     }
 }

@@ -48,28 +48,32 @@ namespace KITE.Models
 
         }
 
-        public Exception IterateCsvObject(string tableName, string columnName, ArrayList csvValueArrayList, string connectionString)
+        public Tuple<string[], Exception> IterateCsvObject(ArrayList csvValueArrayList)
         {
-            foreach (object csvDataObject in csvValueArrayList)
+            List<string> valuesList = new List<string>();
+            try
             {
-                string values = "";
-                List<object> csvDataList = (List<object>)csvDataObject;
-                foreach (object csvData in csvDataList)
+                foreach (object csvDataObject in csvValueArrayList)
                 {
-                    string modifiedString = $"'{csvData}'";
-                    modifiedString = modifiedString.Replace(",", ".");
+                    string values = "";
+                    List<object> csvDataList = (List<object>)csvDataObject;
+                    foreach (object csvData in csvDataList)
+                    {
+                        string modifiedString = $"'{csvData}'";
+                        modifiedString = modifiedString.Replace(",", ".");
 
-                    values += modifiedString + ",";
-                }
-                values = values.Substring(0, values.Length - 1);
-                Exception insertResult = new DatabaseModel().InsertIntoTable(tableName, columnName, values, connectionString);
-                if (insertResult.Message != "null")
-                {
-                    return new Exception($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : " + insertResult.Message);
+                        values += modifiedString + ",";
+                    }
+                    values = values.Substring(0, values.Length - 1);
+                    valuesList.Add(values);
                 }
             }
+            catch (Exception ex)
+            {
+                return new Tuple<string[], Exception>(null, new Exception($"Terjadi kesalah dalam pemrosesan IterateCsvObject. Detail : {ex}"));
+            }
 
-            return new Exception($"Insert Into Table {tableName} Berhasil.");
+            return Tuple.Create(valuesList.ToArray(), new Exception("Pemrosesan IterateCsvObject Berhasil."));
         }
     }
 }

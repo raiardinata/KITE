@@ -3,6 +3,7 @@ using CsvHelper.Configuration.Attributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -12,7 +13,7 @@ namespace KITE.Models
 {
     public class GRFinishGoodsFunctionModel : System.Web.UI.Page
     {
-        public Tuple<string, ArrayList> GRFinishGoodsGenerateColumnAndCsvData(List<GRFinishGoodsViewModel> csvList)
+        public Tuple<string, ArrayList, Exception> GRFinishGoodsGenerateColumnAndCsvData(List<GRFinishGoodsViewModel> csvList, string connectionString)
         {
             List<string> listColumnName = new List<string>();
             listColumnName.Add("Year_Period");
@@ -47,6 +48,24 @@ namespace KITE.Models
             {
                 int yearPeriod = csvValues.Posting_Date.Year;
                 int monthPeriod = csvValues.Posting_Date.Month;
+                decimal KG = 0;
+                try
+                {
+                    Tuple<DataTable, Exception> insertResult = new DatabaseModel().SelectTable("KG", "UOM_Convertion", $"Material = '{csvValues.Material}'", connectionString);
+                    EnumerableRowCollection<DataRow> uomConvertionRows = insertResult.Item1.AsEnumerable();
+                    if (insertResult.Item2.Message != "null" || insertResult.Item1.Rows.Count == 0)
+                    {
+                        return Tuple.Create("", valuesArray, insertResult.Item2);
+                    }
+                    foreach (DataRow uomConvertionRow in uomConvertionRows)
+                    {
+                        KG = uomConvertionRow.Field<decimal>("KG");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Tuple.Create("", valuesArray, ex);
+                }
 
                 List<object> valuesList = new List<object>();
                 valuesList.Add(yearPeriod);
@@ -61,18 +80,18 @@ namespace KITE.Models
                 valuesList.Add(csvValues.Movement_Type);
                 valuesList.Add(csvValues.Material_Document);
                 valuesList.Add(csvValues.Batch);
-                valuesList.Add(Convert.ToDecimal(csvValues.Qty_in_Un_of_Entry));
-                valuesList.Add(csvValues.Unit_of_Entry);
+                valuesList.Add((KG != 0) ? (Convert.ToDecimal(csvValues.Qty_in_Un_of_Entry) * KG) : Convert.ToDecimal(csvValues.Qty_in_Un_of_Entry));
+                valuesList.Add((KG != 0) ? "KG" : csvValues.Unit_of_Entry);
                 valuesList.Add(csvValues.Entry_Date.Date.ToString("yyyy/MM/dd"));
                 valuesList.Add(csvValues.Time_of_Entry);
                 valuesList.Add(csvValues.User_name);
-                valuesList.Add(csvValues.Base_Unit_of_Measure);
-                valuesList.Add(Convert.ToDecimal(csvValues.Quantity));
+                valuesList.Add((KG != 0) ? "KG" : csvValues.Unit_of_Entry);
+                valuesList.Add(Convert.ToDecimal((KG != 0) ? (Convert.ToDecimal(csvValues.Qty_in_Un_of_Entry) * KG) : Convert.ToDecimal(csvValues.Qty_in_Un_of_Entry)));
                 valuesList.Add(Convert.ToDecimal(csvValues.Amount_in_LC));
                 valuesList.Add(csvValues.Goods_recipient);
                 valuesArray.Add(valuesList);
             }
-            return Tuple.Create(columns, valuesArray);
+            return Tuple.Create(columns, valuesArray, new Exception(""));
         }
         public Tuple<Exception, string, List<GRFinishGoodsViewModel>> GRFinishGoodsReadCsvFile(FileUpload fileUpload)
         {

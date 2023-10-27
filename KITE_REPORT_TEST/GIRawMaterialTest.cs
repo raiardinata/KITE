@@ -134,6 +134,7 @@ namespace KITE_REPORT_TEST
                 }
                 // until this one
 
+
                 GIRawMaterialFunctionModel csvDataProcess = new GIRawMaterialFunctionModel();
                 Tuple<string, ArrayList> columnNameAndData = csvDataProcess.GIRawMaterialGenerateColumnAndCsvData(CsvDataList);
                 foreach (object csvDataObject in (List<object>)columnNameAndData.Item2[0])
@@ -149,25 +150,27 @@ namespace KITE_REPORT_TEST
                     Assert.Fail(checkPeriodResult.Message);
                 }
 
-                Exception insertResult = new ReadCsvModel().IterateCsvObject(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConnectionString);
-                if (insertResult.Message != $"Insert Into Table {tableName} Berhasil.")
+                Tuple<string[], Exception> iterationResult = new ReadCsvModel().IterateCsvObject(columnNameAndData.Item2);
+                if (iterationResult.Item2.Message != "Pemrosesan IterateCsvObject Berhasil.")
                 {
-                    Assert.Fail(insertResult.Message);
+                    Assert.Fail(iterationResult.Item2.Message);
                 }
 
-                if (checkPeriodResult.Message == "Data Period Aman." && insertResult.Message == $"Insert Into Table {tableName} Berhasil.")
+                foreach (string iterionValue in iterationResult.Item1)
                 {
-                    Assert.AreEqual($"Insert Into Table {tableName} Berhasil.", insertResult.Message);
+                    Exception insertResult = new DatabaseModel().InsertIntoTable(tableName, columnNameAndData.Item1, iterionValue, ConnectionString);
+                    if (insertResult.Message != "null")
+                    {
+                        Assert.Fail($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : {insertResult.Message}");
+                    }
                 }
-
-
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
-
             TearDown();
+            Assert.Pass("Upload success");
         }
     }
 }

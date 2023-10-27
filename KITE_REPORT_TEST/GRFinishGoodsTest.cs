@@ -68,12 +68,12 @@ namespace KITE_REPORT_TEST
                 Batch = "P26032023",
                 Qty_in_Un_of_Entry = "120",
                 Unit_of_Entry = "CB",
-                Entry_Date = DateTime.Parse("2023/03/26"),
+                Entry_Date = DateTime.Parse("2023/03/27"),
                 Time_of_Entry = "15:52:00",
                 User_name = "ID0643",
                 Base_Unit_of_Measure = "CB",
                 Quantity = "120",
-                Amount_in_LC = "0,00",
+                Amount_in_LC = "0",
                 Goods_recipient = "",
 
             });
@@ -140,7 +140,7 @@ namespace KITE_REPORT_TEST
                 // until this one
 
                 GRFinishGoodsFunctionModel csvDataProcess = new GRFinishGoodsFunctionModel();
-                Tuple<string, ArrayList> columnNameAndData = csvDataProcess.GRFinishGoodsGenerateColumnAndCsvData(CsvDataList);
+                Tuple<string, ArrayList, Exception> columnNameAndData = csvDataProcess.GRFinishGoodsGenerateColumnAndCsvData(CsvDataList, ConnectionString);
                 foreach (object csvDataObject in (List<object>)columnNameAndData.Item2[0])
                 {
                     if (index == 0) { yearPeriod = (int)csvDataObject; }
@@ -154,25 +154,27 @@ namespace KITE_REPORT_TEST
                     Assert.Fail(checkPeriodResult.Message);
                 }
 
-                Exception insertResult = new ReadCsvModel().IterateCsvObject(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConnectionString);
-                if (insertResult.Message != $"Insert Into Table {tableName} Berhasil.")
+                Tuple<string[], Exception> iterationResult = new ReadCsvModel().IterateCsvObject(columnNameAndData.Item2);
+                if (iterationResult.Item2.Message != "Pemrosesan IterateCsvObject Berhasil.")
                 {
-                    Assert.Fail(insertResult.Message);
+                    Assert.Fail(iterationResult.Item2.Message);
                 }
 
-                if (checkPeriodResult.Message == "Data Period Aman." && insertResult.Message == $"Insert Into Table {tableName} Berhasil.")
+                foreach (string iterionValue in iterationResult.Item1)
                 {
-                    Assert.AreEqual($"Insert Into Table {tableName} Berhasil.", insertResult.Message);
+                    Exception insertResult = new DatabaseModel().InsertIntoTable(tableName, columnNameAndData.Item1, iterionValue, ConnectionString);
+                    if (insertResult.Message != "null")
+                    {
+                        Assert.Fail($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : {insertResult.Message}");
+                    }
                 }
-
-
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
-
             TearDown();
+            Assert.Pass("Upload success");
         }
     }
 }

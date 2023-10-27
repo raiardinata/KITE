@@ -232,23 +232,31 @@ namespace KITE.Pages.ContentPages
                     utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
                 }
 
-                Exception insertResult = new ReadCsvModel().IterateCsvObject(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                if (insertResult.Message != $"Insert Into Table {tableName} Berhasil.")
+                Tuple<string[], Exception> iterationResult = new ReadCsvModel().IterateCsvObject(columnNameAndData.Item2);
+                if (iterationResult.Item2.Message != "Pemrosesan IterateCsvObject Berhasil.")
                 {
-                    loadCsvException = new Exception($"Gagal dalam penulisan ke database. Detail : {insertResult.Message}");
+                    loadCsvException = new Exception($"Gagal dalam penulisan ke database. Detail : {iterationResult.Item2.Message}");
                     utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
                 }
 
-                if (checkPeriodResult.Message == "Data Period Aman." && insertResult.Message == $"Insert Into Table {tableName} Berhasil.")
+                foreach (string iterionValue in iterationResult.Item1)
                 {
-                    if (File.Exists(Session["FilePath"].ToString()))
+                    Exception insertResult = new DatabaseModel().InsertIntoTable(tableName, columnNameAndData.Item1, iterionValue, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                    if (insertResult.Message != "null")
                     {
-                        File.Delete(Session["FilePath"].ToString());
+                        loadCsvException = new Exception($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : {insertResult.Message}");
+                        utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                        break;
                     }
-                    Session["FilePath"] = "";
-                    string script = $"alert('{insertResult.Message}'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/McFrameUpload.aspx")}';";
-                    ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
                 }
+
+                if (File.Exists(Session["FilePath"].ToString()))
+                {
+                    File.Delete(Session["FilePath"].ToString());
+                }
+                Session["FilePath"] = "";
+                string script = $"alert('Upload CSV berhasil.'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/McFrameUpload.aspx")}';";
+                ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
             }
             catch (Exception ex)
             {

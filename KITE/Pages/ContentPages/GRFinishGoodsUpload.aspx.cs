@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web.UI.WebControls;
@@ -34,8 +35,58 @@ namespace KITE.Pages.ContentPages
             }
             else if (fileResult.Item2 != null && fileResult.Item3 != null)
             {
+                List<GRFinishGoodsViewModel> uomConvertionTempList = new List<GRFinishGoodsViewModel>();
+                foreach (GRFinishGoodsViewModel grData in fileResult.Item3)
+                {
+                    decimal KG = 0;
+                    try
+                    {
+                        Tuple<DataTable, Exception> insertResult = new DatabaseModel().SelectTable("KG", "UOM_Convertion", $"Material = '{grData.Material}'", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                        EnumerableRowCollection<DataRow> uomConvertionRows = insertResult.Item1.AsEnumerable();
+                        if (insertResult.Item2.Message != "null" || insertResult.Item1.Rows.Count == 0)
+                        {
+                            UtilityModel errorHandler = new UtilityModel();
+                            Exception loadCsvException = new Exception("Terdapat masalah ketika mensubmit file csv. Konversi UoM ke KG gagal.<br/> Detail : " + insertResult.Item2.Message);
+                            errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                        }
+                        foreach (DataRow uomConvertionRow in uomConvertionRows)
+                        {
+                            KG = uomConvertionRow.Field<decimal>("KG");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        UtilityModel errorHandler = new UtilityModel();
+                        Exception loadCsvException = new Exception("Terdapat masalah ketika mensubmit file csv. Konversi UoM ke KG gagal.<br/> Detail : " + ex.Message);
+                        errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                    }
+
+                    uomConvertionTempList.Add(new GRFinishGoodsViewModel
+                    {
+                        Posting_Date = grData.Posting_Date,
+                        Document_Date = grData.Document_Date,
+                        Document_Header_Text = grData.Document_Header_Text,
+                        Material = grData.Material,
+                        Material_Description = grData.Material_Description,
+                        Plant = grData.Plant,
+                        Storage_Location = grData.Storage_Location,
+                        Movement_Type = grData.Movement_Type,
+                        Material_Document = grData.Material_Document,
+                        Batch = grData.Batch,
+                        Qty_in_Un_of_Entry = (KG != 0) ? Convert.ToString(Convert.ToDecimal(grData.Qty_in_Un_of_Entry) * KG) : grData.Qty_in_Un_of_Entry,
+                        Unit_of_Entry = (KG != 0) ? "KG" : grData.Unit_of_Entry,
+                        Entry_Date = grData.Entry_Date,
+                        Time_of_Entry = grData.Time_of_Entry,
+                        User_name = grData.User_name,
+                        Base_Unit_of_Measure = (KG != 0) ? "KG" : grData.Unit_of_Entry,
+                        Quantity = (KG != 0) ? Convert.ToString(Convert.ToDecimal(grData.Quantity) * KG) : grData.Quantity,
+                        Amount_in_LC = grData.Amount_in_LC,
+                        Goods_recipient = grData.Goods_recipient,
+                    });
+                }
+
                 btnUpload.Enabled = true;
-                CsvDataList = fileResult.Item3;
+                CsvDataList = uomConvertionTempList;
                 Session["FilePath"] = fileResult.Item2;
                 GRFinishGoodsBindGridView();
             }
@@ -208,7 +259,7 @@ namespace KITE.Pages.ContentPages
             {
                 LoadCsvData();
                 GRFinishGoodsFunctionModel csvDataProcess = new GRFinishGoodsFunctionModel();
-                Tuple<string, ArrayList> columnNameAndData = csvDataProcess.GRFinishGoodsGenerateColumnAndCsvData(CsvDataList);
+                Tuple<string, ArrayList, Exception> columnNameAndData = csvDataProcess.GRFinishGoodsGenerateColumnAndCsvData(CsvDataList, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 foreach (object csvDataObject in (List<object>)columnNameAndData.Item2[0])
                 {
                     if (index == 0) { yearPeriod = (int)csvDataObject; }
@@ -232,23 +283,31 @@ namespace KITE.Pages.ContentPages
                     utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
                 }
 
-                Exception insertResult = new ReadCsvModel().IterateCsvObject(tableName, columnNameAndData.Item1, columnNameAndData.Item2, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                if (insertResult.Message != $"Insert Into Table {tableName} Berhasil.")
+                Tuple<string[], Exception> iterationResult = new ReadCsvModel().IterateCsvObject(columnNameAndData.Item2);
+                if (iterationResult.Item2.Message != "Pemrosesan IterateCsvObject Berhasil.")
                 {
-                    loadCsvException = new Exception($"Gagal dalam penulisan ke database. Detail : {insertResult.Message}");
+                    loadCsvException = new Exception($"Gagal dalam penulisan ke database. Detail : {iterationResult.Item2.Message}");
                     utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
                 }
 
-                if (checkPeriodResult.Message == "Data Period Aman." && insertResult.Message == $"Insert Into Table {tableName} Berhasil.")
+                foreach (string iterionValue in iterationResult.Item1)
                 {
-                    if (File.Exists(Session["FilePath"].ToString()))
+                    Exception insertResult = new DatabaseModel().InsertIntoTable(tableName, columnNameAndData.Item1, iterionValue, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                    if (insertResult.Message != "null")
                     {
-                        File.Delete(Session["FilePath"].ToString());
+                        loadCsvException = new Exception($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : {insertResult.Message}");
+                        utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                        break;
                     }
-                    Session["FilePath"] = "";
-                    string script = $"alert('{insertResult.Message}'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/GRFinishGoodsUpload.aspx")}';";
-                    ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
                 }
+
+                if (File.Exists(Session["FilePath"].ToString()))
+                {
+                    File.Delete(Session["FilePath"].ToString());
+                }
+                Session["FilePath"] = "";
+                string script = $"alert('Upload CSV berhasil.'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/GRFinishGoodsUpload.aspx")}';";
+                ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
             }
             catch (Exception ex)
             {
