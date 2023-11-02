@@ -66,13 +66,13 @@ namespace KITE_REPORT_TEST
                 Movement_Type = "Z72",
                 Material_Document = "4048816493",
                 Batch = "P26032023",
-                Qty_in_Un_of_Entry = "120",
-                Unit_of_Entry = "CB",
+                Qty_in_Un_of_Entry = "96000,00000000",
+                Unit_of_Entry = "KG",
                 Entry_Date = DateTime.Parse("2023/03/27"),
                 Time_of_Entry = "15:52:00",
                 User_name = "ID0643",
-                Base_Unit_of_Measure = "CB",
-                Quantity = "120",
+                Base_Unit_of_Measure = "KG",
+                Quantity = "96000,00000000",
                 Amount_in_LC = "0",
                 Goods_recipient = "",
 
@@ -80,7 +80,9 @@ namespace KITE_REPORT_TEST
 
             using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
             {
-                CsvDataList = csvData.GetRecords<GRFinishGoodsViewModel>().ToList();
+                Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "grFinishGoods", ConnectionString);
+                CsvDataList = (List<GRFinishGoodsViewModel>)uomConvertionObject.Item1;
+                csvData.Dispose();
             }
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }

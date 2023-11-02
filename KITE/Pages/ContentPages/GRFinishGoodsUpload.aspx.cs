@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web.UI.WebControls;
@@ -35,58 +34,8 @@ namespace KITE.Pages.ContentPages
             }
             else if (fileResult.Item2 != null && fileResult.Item3 != null)
             {
-                List<GRFinishGoodsViewModel> uomConvertionTempList = new List<GRFinishGoodsViewModel>();
-                foreach (GRFinishGoodsViewModel grData in fileResult.Item3)
-                {
-                    decimal KG = 0;
-                    try
-                    {
-                        Tuple<DataTable, Exception> insertResult = new DatabaseModel().SelectTable("KG", "UOM_Convertion", $"Material = '{grData.Material}'", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                        EnumerableRowCollection<DataRow> uomConvertionRows = insertResult.Item1.AsEnumerable();
-                        if (insertResult.Item2.Message != "null" || insertResult.Item1.Rows.Count == 0)
-                        {
-                            UtilityModel errorHandler = new UtilityModel();
-                            Exception loadCsvException = new Exception("Terdapat masalah ketika mensubmit file csv. Konversi UoM ke KG gagal.<br/> Detail : " + insertResult.Item2.Message);
-                            errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
-                        }
-                        foreach (DataRow uomConvertionRow in uomConvertionRows)
-                        {
-                            KG = uomConvertionRow.Field<decimal>("KG");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception("Terdapat masalah ketika mensubmit file csv. Konversi UoM ke KG gagal.<br/> Detail : " + ex.Message);
-                        errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
-                    }
-
-                    uomConvertionTempList.Add(new GRFinishGoodsViewModel
-                    {
-                        Posting_Date = grData.Posting_Date,
-                        Document_Date = grData.Document_Date,
-                        Document_Header_Text = grData.Document_Header_Text,
-                        Material = grData.Material,
-                        Material_Description = grData.Material_Description,
-                        Plant = grData.Plant,
-                        Storage_Location = grData.Storage_Location,
-                        Movement_Type = grData.Movement_Type,
-                        Material_Document = grData.Material_Document,
-                        Batch = grData.Batch,
-                        Qty_in_Un_of_Entry = (KG != 0) ? Convert.ToString(Convert.ToDecimal(grData.Qty_in_Un_of_Entry) * KG) : grData.Qty_in_Un_of_Entry,
-                        Unit_of_Entry = (KG != 0) ? "KG" : grData.Unit_of_Entry,
-                        Entry_Date = grData.Entry_Date,
-                        Time_of_Entry = grData.Time_of_Entry,
-                        User_name = grData.User_name,
-                        Base_Unit_of_Measure = (KG != 0) ? "KG" : grData.Unit_of_Entry,
-                        Quantity = (KG != 0) ? Convert.ToString(Convert.ToDecimal(grData.Quantity) * KG) : grData.Quantity,
-                        Amount_in_LC = grData.Amount_in_LC,
-                        Goods_recipient = grData.Goods_recipient,
-                    });
-                }
-
                 btnUpload.Enabled = true;
-                CsvDataList = uomConvertionTempList;
+                CsvDataList = fileResult.Item3;
                 Session["FilePath"] = fileResult.Item2;
                 GRFinishGoodsBindGridView();
             }
@@ -96,10 +45,8 @@ namespace KITE.Pages.ContentPages
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                int pageIndex = CsvDataGridView.PageIndex;
                 int pageSize = CsvDataGridView.PageSize;
-
-                // Calculate the sequence number based on the current page and row index
+                int pageIndex = CsvDataGridView.PageIndex;
                 int sequenceNumber = pageIndex * pageSize + e.Row.RowIndex + 1;
 
                 Label lblSequence = (Label)e.Row.FindControl("lblSequenceNo");
@@ -125,18 +72,17 @@ namespace KITE.Pages.ContentPages
 
         private void GRFinishGoodsBindGridView()
         {
-            CsvDataGridView.PageSize = int.Parse(CsvPageSizeDropDown.SelectedValue);
             ViewState["Row"] = 0;
-
             CsvDataGridView.DataSource = CsvDataList;
+            CsvDataGridView.PageSize = int.Parse(CsvPageSizeDropDown.SelectedValue);
             CsvDataGridView.DataBind();
 
             if (CsvDataList.Count() > 0)
             {
                 if (ViewState["Row"].ToString().Trim() == "0")
                 {
-                    ViewState["grandtotal"] = CsvDataList.Count;
                     ViewState["Row"] = 1;
+                    ViewState["grandtotal"] = CsvDataList.Count;
                     lblTotalRecords.Text = String.Format("Total Records : {0}", ViewState["grandtotal"]);
 
                     int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["grandtotal"]) / CsvDataGridView.PageSize));
@@ -233,7 +179,8 @@ namespace KITE.Pages.ContentPages
                 ReadCsvModel readCsv = new ReadCsvModel();
                 using (CsvReader csvData = readCsv.ReadCsvFile((string)Session["FilePath"], ";"))
                 {
-                    CsvDataList = csvData.GetRecords<GRFinishGoodsViewModel>().ToList();
+                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "grFinishGoods", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                    CsvDataList = (List<GRFinishGoodsViewModel>)uomConvertionObject.Item1;
                     csvData.Dispose();
                 }
             }

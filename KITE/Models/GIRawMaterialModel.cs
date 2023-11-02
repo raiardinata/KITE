@@ -3,7 +3,7 @@ using CsvHelper.Configuration.Attributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
@@ -76,37 +76,27 @@ namespace KITE.Models
         }
         public Tuple<Exception, string, List<GIRawMaterialViewModel>> GIRawMaterialReadCsvFile(FileUpload fileUpload)
         {
+            List<GIRawMaterialViewModel> CsvDataList;
             ReadCsvModel readCsv = new ReadCsvModel();
-            List<GIRawMaterialViewModel> NullDataList = new List<GIRawMaterialViewModel>();
-            NullDataList.Add(new GIRawMaterialViewModel { Material = "null" });
 
             try
             {
                 Tuple<Exception, string> valid = readCsv.FileChecker(fileUpload);
                 if (valid.Item1.Message != "null" && valid.Item2 != "valid")
                 {
-                    return Tuple.Create(valid.Item1, "Not a valid file.", NullDataList);
+                    return new Tuple<Exception, string, List<GIRawMaterialViewModel>>(valid.Item1, "Not a valid file.", null);
                 }
 
-                List<GIRawMaterialViewModel> CsvDataList;
-                //Dictionary<string, GIRawMaterialViewModel> CsvDataDictionary;
-
-                // Save the file to the server
                 string filePath = Server.MapPath("~/UploadedFiles/" + fileUpload.FileName);
                 fileUpload.SaveAs(filePath);
 
                 using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
                 {
-                    // Read records using CsvHelper
-                    CsvDataList = csvData.GetRecords<GIRawMaterialViewModel>().ToList();
-
-                    // Assign keys based on the Id property
-                    //CsvDataDictionary = CsvDataList.ToDictionary(data => data.Name);
+                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "giRawMaterial", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                    CsvDataList = (List<GIRawMaterialViewModel>)uomConvertionObject.Item1;
                     csvData.Dispose();
                 }
-
                 return Tuple.Create(new Exception("null"), filePath, CsvDataList);
-
             }
             catch (Exception ex)
             {
@@ -124,7 +114,7 @@ namespace KITE.Models
                     // Return the original string if "Headers:" is not found
                     loadCsvException = new Exception(ex.Message);
                 }
-                return Tuple.Create(loadCsvException, "null", NullDataList);
+                return new Tuple<Exception, string, List<GIRawMaterialViewModel>>(loadCsvException, "null", null);
             }
         }
     }

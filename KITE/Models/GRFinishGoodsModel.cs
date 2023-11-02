@@ -3,6 +3,7 @@ using CsvHelper.Configuration.Attributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -95,37 +96,27 @@ namespace KITE.Models
         }
         public Tuple<Exception, string, List<GRFinishGoodsViewModel>> GRFinishGoodsReadCsvFile(FileUpload fileUpload)
         {
+            List<GRFinishGoodsViewModel> CsvDataList;
             ReadCsvModel readCsv = new ReadCsvModel();
-            List<GRFinishGoodsViewModel> NullDataList = new List<GRFinishGoodsViewModel>();
-            NullDataList.Add(new GRFinishGoodsViewModel { Material = "null" });
 
             try
             {
                 Tuple<Exception, string> valid = readCsv.FileChecker(fileUpload);
                 if (valid.Item1.Message != "null" && valid.Item2 != "valid")
                 {
-                    return Tuple.Create(valid.Item1, "Not a valid file.", NullDataList);
+                    return new Tuple<Exception, string, List<GRFinishGoodsViewModel>>(valid.Item1, "Not a valid file.", null);
                 }
 
-                List<GRFinishGoodsViewModel> CsvDataList;
-                //Dictionary<string, GIRawMaterialViewModel> CsvDataDictionary;
-
-                // Save the file to the server
                 string filePath = Server.MapPath("~/UploadedFiles/" + fileUpload.FileName);
                 fileUpload.SaveAs(filePath);
 
                 using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
                 {
-                    // Read records using CsvHelper
-                    CsvDataList = csvData.GetRecords<GRFinishGoodsViewModel>().ToList();
-
-                    // Assign keys based on the Id property
-                    //CsvDataDictionary = CsvDataList.ToDictionary(data => data.Name);
+                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "grFinishGoods", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                    CsvDataList = (List<GRFinishGoodsViewModel>)uomConvertionObject.Item1;
                     csvData.Dispose();
                 }
-
                 return Tuple.Create(new Exception("null"), filePath, CsvDataList);
-
             }
             catch (Exception ex)
             {
@@ -143,7 +134,7 @@ namespace KITE.Models
                     // Return the original string if "Headers:" is not found
                     loadCsvException = new Exception(ex.Message);
                 }
-                return Tuple.Create(loadCsvException, "null", NullDataList);
+                return new Tuple<Exception, string, List<GRFinishGoodsViewModel>>(loadCsvException, "null", null);
             }
         }
     }

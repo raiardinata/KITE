@@ -29,7 +29,7 @@ namespace KITE.Models
 
         }
 
-        public Tuple<ArrayList, Exception> DistributionCalculationProcess(DataTable mcFrameDataTable, DataTable giRawMaterialDataTable, string connectionString)
+        public Tuple<ArrayList, Exception> DistributionCalculationProcessInJson(DataTable mcFrameDataTable, DataTable giRawMaterialDataTable)
         {
             int giRawMaterialIndex = 0;
             decimal leftOver = 0;
@@ -92,6 +92,71 @@ namespace KITE.Models
                     $"'{sumQuantity.Replace(",", ".")}'," +
                     $"'{JsonConvert.SerializeObject(listGIRawMaterialviewModel, Formatting.Indented)}'";
                 rmPerBatchQueryList.Add(valuesArray);
+            }
+            rmPerBatchQueryArrayList.Add(rmPerBatchQueryList);
+            return Tuple.Create(rmPerBatchQueryArrayList, new Exception("null"));
+        }
+
+        public Tuple<ArrayList, Exception> DistributionCalculationProcessInNormal(DataTable mcFrameDataTable, DataTable giRawMaterialDataTable)
+        {
+            int giRawMaterialIndex = 0;
+            decimal leftOver = 0;
+            List<string> rmPerBatchQueryList = new List<string>();
+            ArrayList rmPerBatchQueryArrayList = new ArrayList();
+
+            EnumerableRowCollection<DataRow> mcFrameDataRows = mcFrameDataTable.AsEnumerable();
+            foreach (DataRow mcFrameDataRow in mcFrameDataRows)
+            {
+                Guid uuid = Guid.NewGuid();
+                decimal mcFrameSumQty = mcFrameDataRow.Field<decimal>("SumQuantity");
+                List<GIRawMaterialJsonViewModel> listGIRawMaterialviewModel = new List<GIRawMaterialJsonViewModel>();
+
+                // populate RMperBatch table
+                string sumQuantity = mcFrameDataRow.Field<decimal>("SumQuantity").ToString();
+
+                for (int i = giRawMaterialIndex; i < giRawMaterialDataTable.Rows.Count; i++)
+                {
+                    DataRow giRawMaterialDataRow = giRawMaterialDataTable.Rows[i];
+                    mcFrameSumQty += (leftOver != 0) ? leftOver : giRawMaterialDataRow.Field<decimal>("Quantity");
+
+
+                    // populate RMperBatch tracking 
+                    string valuesArray = $"" +
+                        $"'{uuid.ToString()}'," +
+                        $"'{mcFrameDataRow.Field<string>("Year_Period")}'," +
+                        $"'{mcFrameDataRow.Field<string>("Month_Period")}'," +
+                        $"'{mcFrameDataRow.Field<string>("Target_item_CD")}'," +
+                        $"'{mcFrameDataRow.Field<string>("Item_CD")}'," +
+                        $"'{mcFrameDataRow.Field<string>("Unit")}'," +
+                        $"'{sumQuantity.Replace(",", ".")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("UUID")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Year_Period")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Month_Period")}'," +
+                        $"'{giRawMaterialDataRow.Field<DateTime>("Posting_Date")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Material")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Plant")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Storage_Location")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Movement_Type")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Batch")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Qty_in_Un_of_Entry")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Unit_of_Entry")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Base_Unit_of_Measure")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Quantity")}'," +
+                        $"'{giRawMaterialDataRow.Field<string>("Material_Document")}'";
+                    rmPerBatchQueryList.Add(valuesArray);
+
+                    if (mcFrameSumQty >= 0)
+                    {
+                        leftOver = 0;
+                        giRawMaterialIndex++;
+                    }
+                    else
+                    {
+                        leftOver = mcFrameSumQty;
+                        break;
+                    }
+                }
+
             }
             rmPerBatchQueryArrayList.Add(rmPerBatchQueryList);
             return Tuple.Create(rmPerBatchQueryArrayList, new Exception("null"));

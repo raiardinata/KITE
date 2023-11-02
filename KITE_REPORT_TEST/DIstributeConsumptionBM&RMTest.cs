@@ -49,21 +49,46 @@ namespace KITE_REPORT_TEST
                 Assert.Fail(mcFrameDataTable.Item2.Message + " || DataTable Row 0");
             }
 
-            Tuple<ArrayList, Exception> distrubuteResult = new DistributeConsumptionBM_RSFunctionModel().DistributionCalculationProcess(mcFrameDataTable.Item1, gIRawMaterialDataTable.Item1, ConnectionString);
-            if (distrubuteResult.Item2.Message != "null")
+            Tuple<ArrayList, Exception> distrubuteResultJson = new DistributeConsumptionBM_RSFunctionModel().DistributionCalculationProcessInJson(mcFrameDataTable.Item1, gIRawMaterialDataTable.Item1);
+            if (distrubuteResultJson.Item2.Message != "null")
             {
-                Assert.Fail(distrubuteResult.Item2.Message);
+                Assert.Fail(distrubuteResultJson.Item2.Message);
             }
 
-            Tuple<string[], Exception> iterationResult = new ReadCsvModel().IterateCsvObject(distrubuteResult.Item1);
-            if (iterationResult.Item2.Message != "Pemrosesan IterateCsvObject Berhasil.")
+            Tuple<ArrayList, Exception> distrubuteResultNormal = new DistributeConsumptionBM_RSFunctionModel().DistributionCalculationProcessInNormal(mcFrameDataTable.Item1, gIRawMaterialDataTable.Item1);
+            if (distrubuteResultNormal.Item2.Message != "null")
             {
-                Assert.Fail(iterationResult.Item2.Message);
+                Assert.Fail(distrubuteResultNormal.Item2.Message);
             }
 
-            foreach (string iterionValue in iterationResult.Item1)
+            // json type
+            Tuple<string[], Exception> iterationResultJson = new ReadCsvModel().IterateCsvObject(distrubuteResultJson.Item1);
+            if (iterationResultJson.Item2.Message != "Pemrosesan IterateCsvObject Berhasil.")
             {
-                Exception insertResult = new DatabaseModel().InsertIntoTable("RM_per_Batch", "UUID,Year_Period,Month_Period,Target_item_CD,Item_CD,Unit,Sum_Qty,trackingJson", iterionValue, ConnectionString);
+                Assert.Fail(iterationResultJson.Item2.Message);
+            }
+
+            // normal type
+            Tuple<string[], Exception> iterationResultNormal = new ReadCsvModel().IterateCsvObject(distrubuteResultJson.Item1);
+            if (iterationResultNormal.Item2.Message != "Pemrosesan IterateCsvObject Berhasil.")
+            {
+                Assert.Fail(iterationResultNormal.Item2.Message);
+            }
+
+            // json
+            foreach (string iterionValueJson in iterationResultJson.Item1)
+            {
+                Exception insertResult = new DatabaseModel().InsertIntoTable("RM_per_Batch", "UUID,Year_Period,Month_Period,Target_item_CD,Item_CD,Unit,Sum_Qty,trackingJson", iterionValueJson, ConnectionString);
+                if (insertResult.Message != "null")
+                {
+                    Assert.Fail($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : {insertResult.Message}");
+                }
+            }
+
+            // normal
+            foreach (string iterionValueNormal in iterationResultNormal.Item1)
+            {
+                Exception insertResult = new DatabaseModel().InsertIntoTable("RM_per_Batch", "UUID,Year_Period,Month_Period,Target_item_CD,Item_CD,Unit,Sum_Qty,trackingJson", iterionValueNormal, ConnectionString);
                 if (insertResult.Message != "null")
                 {
                     Assert.Fail($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : {insertResult.Message}");

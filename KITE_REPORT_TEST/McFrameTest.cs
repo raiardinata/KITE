@@ -49,7 +49,7 @@ namespace KITE_REPORT_TEST
 
         [Test]
         [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023.csv")]
-        public void McFrameCsvRead(string filePath)
+        public void McFrameCsvReadSucceed(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
             List<McFrameViewModel> CsvDataList;
@@ -86,7 +86,9 @@ namespace KITE_REPORT_TEST
 
             using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
             {
-                CsvDataList = csvData.GetRecords<McFrameViewModel>().ToList();
+                Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "mcFrame", ConnectionString);
+                CsvDataList = (List<McFrameViewModel>)uomConvertionObject.Item1;
+                csvData.Dispose();
             }
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }

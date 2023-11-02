@@ -45,10 +45,8 @@ namespace KITE.Pages.ContentPages
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                int pageIndex = CsvDataGridView.PageIndex;
                 int pageSize = CsvDataGridView.PageSize;
-
-                // Calculate the sequence number based on the current page and row index
+                int pageIndex = CsvDataGridView.PageIndex;
                 int sequenceNumber = pageIndex * pageSize + e.Row.RowIndex + 1;
 
                 Label lblSequence = (Label)e.Row.FindControl("lblSequenceNo");
@@ -74,18 +72,17 @@ namespace KITE.Pages.ContentPages
 
         private void McFrameBindGridView()
         {
-            CsvDataGridView.PageSize = int.Parse(CsvPageSizeDropDown.SelectedValue);
             ViewState["Row"] = 0;
-
             CsvDataGridView.DataSource = CsvDataList;
+            CsvDataGridView.PageSize = int.Parse(CsvPageSizeDropDown.SelectedValue);
             CsvDataGridView.DataBind();
 
             if (CsvDataList.Count() > 0)
             {
                 if (ViewState["Row"].ToString().Trim() == "0")
                 {
-                    ViewState["grandtotal"] = CsvDataList.Count;
                     ViewState["Row"] = 1;
+                    ViewState["grandtotal"] = CsvDataList.Count;
                     lblTotalRecords.Text = String.Format("Total Records : {0}", ViewState["grandtotal"]);
 
                     int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["grandtotal"]) / CsvDataGridView.PageSize));
@@ -178,11 +175,11 @@ namespace KITE.Pages.ContentPages
         {
             try
             {
-                // Load your CSV data here
                 ReadCsvModel readCsv = new ReadCsvModel();
                 using (CsvReader csvData = readCsv.ReadCsvFile((string)Session["FilePath"], ";"))
                 {
-                    CsvDataList = csvData.GetRecords<McFrameViewModel>().ToList();
+                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "mcFrame", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                    CsvDataList = (List<McFrameViewModel>)uomConvertionObject.Item1;
                     csvData.Dispose();
                 }
             }

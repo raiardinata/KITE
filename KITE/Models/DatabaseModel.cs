@@ -19,6 +19,7 @@ namespace KITE.Models
                         connection.Open();
                         command.ExecuteNonQuery();
                         connection.Close();
+                        command.Dispose();
                     }
                     catch (Exception ex)
                     {
@@ -50,6 +51,7 @@ namespace KITE.Models
                         }
                         command.ExecuteNonQuery();
                         connection.Close();
+                        command.Dispose();
                     }
                     catch (Exception ex)
                     {
@@ -75,6 +77,7 @@ namespace KITE.Models
                         connection.Open();
                         command.ExecuteNonQuery();
                         connection.Close();
+                        command.Dispose();
                     }
                     catch (Exception ex)
                     {
@@ -106,6 +109,7 @@ namespace KITE.Models
                             adapter.Fill(dataTable);
                         }
                         connection.Close();
+                        command.Dispose();
                         return Tuple.Create(dataTable, new Exception("null"));
                     }
                     catch (Exception ex)
