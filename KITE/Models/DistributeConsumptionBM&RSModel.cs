@@ -12,6 +12,15 @@ namespace KITE.Models
 
         public async Task<Tuple<DataTable, Exception>> GetDistributedMcFrameData(string selectColumn, string tableName, string condition, string connectionString)
         {
+            Tuple<DataTable, Exception> checkMcFrameDataExist = await Task.Run(() =>
+            {
+                return new DatabaseModel().SelectTable("*", "McFrame_Cost_Table", "", connectionString);
+            });
+            if (checkMcFrameDataExist.Item2.Message != "")
+            {
+                return new Tuple<DataTable, Exception>(null, checkMcFrameDataExist.Item2);
+            }
+
             Tuple<DataTable, Exception> mcFrameSelectDataTable = await Task.Run(() =>
             {
                 return new DatabaseModel().SelectTable(selectColumn, tableName, condition, connectionString);
@@ -21,6 +30,15 @@ namespace KITE.Models
 
         public async Task<Tuple<DataTable, Exception>> GetDistributedGIRawMaterialData(string selectColumn, string tableName, string condition, string connectionString)
         {
+            Tuple<DataTable, Exception> checkGiRawMaterialDataExist = await Task.Run(() =>
+            {
+                return new DatabaseModel().SelectTable("*", "GI_Raw_Material", "", connectionString);
+            });
+            if (checkGiRawMaterialDataExist.Item2.Message != "")
+            {
+                return new Tuple<DataTable, Exception>(null, checkGiRawMaterialDataExist.Item2);
+            }
+
             Tuple<DataTable, Exception> giRawMaterialSelectDataTable = await Task.Run(() =>
             {
                 return new DatabaseModel().SelectTable(selectColumn, tableName, condition, connectionString);

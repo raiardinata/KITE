@@ -22,7 +22,7 @@ namespace KITE_REPORT_TEST
             // Build the configuration provider using the appsettings.json file
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Properties\\launchSettings.json")
+                .AddJsonFile("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Properties\\launchSettings.json")
                 .Build();
             ConnectionString = Configuration["profiles:KITE_REPORT_TEST:environmentVariables:connectionString"];
         }
@@ -43,7 +43,7 @@ namespace KITE_REPORT_TEST
         }
 
         [Test]
-        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GI Raw Materail.csv")]
+        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GI Raw Materail.csv")]
         public void GIRawMaterialCsvReadSucceed(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
@@ -61,13 +61,13 @@ namespace KITE_REPORT_TEST
                 Movement_Type = "Z03",
                 Material_Document = "4048920880",
                 Batch = "002/078293",
-                Qty_in_Un_of_Entry = "-235,905",
-                Unit_of_Entry = "MT",
+                Qty_in_Un_of_Entry = "-235905,00000000000",
+                Unit_of_Entry = "KG",
                 Entry_Date = DateTime.Parse("2023/04/01"),
                 Time_of_Entry = "16:22:26",
                 User_name = "ID0857",
-                Base_Unit_of_Measure = "MT",
-                Quantity = "-235,905",
+                Base_Unit_of_Measure = "KG",
+                Quantity = "-235905,00000000000",
                 Amount_in_LC = "0",
                 Goods_recipient = "211000065",
 
@@ -75,12 +75,14 @@ namespace KITE_REPORT_TEST
 
             using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
             {
-                CsvDataList = csvData.GetRecords<GIRawMaterialViewModel>().ToList();
+                Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "giRawMaterial", ConnectionString);
+                CsvDataList = (List<GIRawMaterialViewModel>)uomConvertionObject.Item1;
+                csvData.Dispose();
             }
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }
 
-        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GI Raw Materail Fail.csv")]
+        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GI Raw Materail Fail.csv")]
         public void GIRawMaterialCsvReadFail(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
@@ -91,7 +93,9 @@ namespace KITE_REPORT_TEST
             {
                 using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
                 {
-                    CsvDataList = csvData.GetRecords<GIRawMaterialViewModel>().ToList();
+                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "giRawMaterial", ConnectionString);
+                    CsvDataList = (List<GIRawMaterialViewModel>)uomConvertionObject.Item1;
+                    csvData.Dispose();
                 }
             }
             catch (Exception ex)
@@ -114,7 +118,7 @@ namespace KITE_REPORT_TEST
             }
         }
 
-        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GI Raw Materail.csv")]
+        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GI Raw Materail.csv")]
         public void GIRawMaterialUploadSucceed(string filePath)
         {
             int index = 0;
@@ -130,7 +134,9 @@ namespace KITE_REPORT_TEST
                 List<GIRawMaterialViewModel> CsvDataList;
                 using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
                 {
-                    CsvDataList = csvData.GetRecords<GIRawMaterialViewModel>().ToList();
+                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "giRawMaterial", ConnectionString);
+                    CsvDataList = (List<GIRawMaterialViewModel>)uomConvertionObject.Item1;
+                    csvData.Dispose();
                 }
                 // until this one
 

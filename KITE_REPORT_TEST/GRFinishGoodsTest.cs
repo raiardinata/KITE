@@ -22,7 +22,7 @@ namespace KITE_REPORT_TEST
             // Build the configuration provider using the appsettings.json file
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Properties\\launchSettings.json")
+                .AddJsonFile("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Properties\\launchSettings.json")
                 .Build();
             ConnectionString = Configuration["profiles:KITE_REPORT_TEST:environmentVariables:connectionString"];
         }
@@ -48,7 +48,7 @@ namespace KITE_REPORT_TEST
         }
 
         [Test]
-        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GR FG.csv")]
+        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GR FG.csv")]
         public void GRFinishGoodsCsvReadSucceed(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
@@ -87,7 +87,7 @@ namespace KITE_REPORT_TEST
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }
 
-        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GR FG Fail.csv")]
+        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GR FG Fail.csv")]
         public void GRFinishGoodsCsvReadFail(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
@@ -98,7 +98,9 @@ namespace KITE_REPORT_TEST
             {
                 using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
                 {
-                    CsvDataList = csvData.GetRecords<GRFinishGoodsViewModel>().ToList();
+                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "grFinishGoods", ConnectionString);
+                    CsvDataList = (List<GRFinishGoodsViewModel>)uomConvertionObject.Item1;
+                    csvData.Dispose();
                 }
             }
             catch (Exception ex)
@@ -121,7 +123,7 @@ namespace KITE_REPORT_TEST
             }
         }
 
-        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GR FG.csv")]
+        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\20231009-GR FG.csv")]
         public void GRFinishGoodsUploadSucceed(string filePath)
         {
             int index = 0;
@@ -137,7 +139,9 @@ namespace KITE_REPORT_TEST
                 List<GRFinishGoodsViewModel> CsvDataList;
                 using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
                 {
-                    CsvDataList = csvData.GetRecords<GRFinishGoodsViewModel>().ToList();
+                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "grFinishGoods", ConnectionString);
+                    CsvDataList = (List<GRFinishGoodsViewModel>)uomConvertionObject.Item1;
+                    csvData.Dispose();
                 }
                 // until this one
 

@@ -22,7 +22,7 @@ namespace KITE_REPORT_TEST
             // Build the configuration provider using the appsettings.json file
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Properties\\launchSettings.json")
+                .AddJsonFile("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Properties\\launchSettings.json")
                 .Build();
             ConnectionString = Configuration["profiles:KITE_REPORT_TEST:environmentVariables:connectionString"];
         }
@@ -48,7 +48,7 @@ namespace KITE_REPORT_TEST
         }
 
         [Test]
-        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023.csv")]
+        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023.csv")]
         public void McFrameCsvReadSucceed(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
@@ -93,7 +93,7 @@ namespace KITE_REPORT_TEST
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }
 
-        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023 Fail.csv")]
+        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023 Fail.csv")]
         public void McFrameCsvReadFail(string filePath)
         {
             ReadCsvModel readCsv = new ReadCsvModel();
@@ -104,7 +104,9 @@ namespace KITE_REPORT_TEST
             {
                 using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
                 {
-                    CsvDataList = csvData.GetRecords<McFrameViewModel>().ToList();
+                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "mcFrame", ConnectionString);
+                    CsvDataList = (List<McFrameViewModel>)uomConvertionObject.Item1;
+                    csvData.Dispose();
                 }
             }
             catch (Exception ex)
@@ -127,7 +129,7 @@ namespace KITE_REPORT_TEST
             }
         }
 
-        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023.csv")]
+        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023.csv")]
         public void McFrameUploadSucceed(string filePath)
         {
             int index = 0;
@@ -143,7 +145,9 @@ namespace KITE_REPORT_TEST
                 List<McFrameViewModel> CsvDataList;
                 using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
                 {
-                    CsvDataList = csvData.GetRecords<McFrameViewModel>().ToList();
+                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "mcFrame", ConnectionString);
+                    CsvDataList = (List<McFrameViewModel>)uomConvertionObject.Item1;
+                    csvData.Dispose();
                 }
                 // until this one
 

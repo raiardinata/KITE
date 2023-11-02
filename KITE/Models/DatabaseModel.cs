@@ -110,6 +110,12 @@ namespace KITE.Models
                         }
                         connection.Close();
                         command.Dispose();
+
+                        if (dataTable.Rows.Count == 0)
+                        {
+                            return Tuple.Create(dataTable, new Exception($"SelectTable {dynamicTableName} query tidak menghasilkan data. Row is empty."));
+                        }
+
                         return Tuple.Create(dataTable, new Exception("null"));
                     }
                     catch (Exception ex)
