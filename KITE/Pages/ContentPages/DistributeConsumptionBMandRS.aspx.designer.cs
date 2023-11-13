@@ -7,227 +7,281 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KITE.Pages.MasterPages
+namespace KITE.Pages.ContentPages
 {
 
 
-    public partial class Main
+    public partial class DistributeConsumptionBMandRS
     {
 
         /// <summary>
-        /// master control.
+        /// btnCalculate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master;
+        protected global::System.Web.UI.WebControls.Button btnCalculate;
 
         /// <summary>
-        /// master_userapp control.
+        /// yearPeriodLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_userapp;
+        protected global::System.Web.UI.WebControls.Label yearPeriodLbl;
 
         /// <summary>
-        /// master_matcon control.
+        /// yearPeriodTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_matcon;
+        protected global::System.Web.UI.WebControls.TextBox yearPeriodTxt;
 
         /// <summary>
-        /// A1 control.
+        /// monthPeriodLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor A1;
+        protected global::System.Web.UI.WebControls.Label monthPeriodLbl;
 
         /// <summary>
-        /// master_slocconf control.
+        /// monthPeriodTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_slocconf;
+        protected global::System.Web.UI.WebControls.TextBox monthPeriodTxt;
 
         /// <summary>
-        /// master_cusgroup control.
+        /// errorLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_cusgroup;
+        protected global::System.Web.UI.WebControls.Label errorLabel;
 
         /// <summary>
-        /// master_mcframeupload control.
+        /// BMandRSScriptManager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_mcframeupload;
+        protected global::System.Web.UI.ScriptManager BMandRSScriptManager;
 
         /// <summary>
-        /// master_girawmaterialupload control.
+        /// BMandRSUpdatePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_girawmaterialupload;
+        protected global::System.Web.UI.UpdatePanel BMandRSUpdatePanel;
 
         /// <summary>
-        /// master_grfinishgoodsupload control.
+        /// RMperBatchLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_grfinishgoodsupload;
+        protected global::System.Web.UI.WebControls.Label RMperBatchLbl;
 
         /// <summary>
-        /// master_bmandrscalculation control.
+        /// RMperBatchPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_bmandrscalculation;
+        protected global::System.Web.UI.WebControls.Panel RMperBatchPanel;
 
         /// <summary>
-        /// report control.
+        /// RMperBatchGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report;
+        protected global::System.Web.UI.WebControls.GridView RMperBatchGridView;
 
         /// <summary>
-        /// report_kitea control.
+        /// RMperBatchdataPager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kitea;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RMperBatchdataPager;
 
         /// <summary>
-        /// report_kiteb control.
+        /// RMlblTotalRecords control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kiteb;
+        protected global::System.Web.UI.WebControls.Label RMlblTotalRecords;
 
         /// <summary>
-        /// report_kitec control.
+        /// RMlblShowRows control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kitec;
+        protected global::System.Web.UI.WebControls.Label RMlblShowRows;
 
         /// <summary>
-        /// report_kited control.
+        /// RMperBatchPageSizeDropDown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kited;
+        protected global::System.Web.UI.WebControls.DropDownList RMperBatchPageSizeDropDown;
 
         /// <summary>
-        /// report_kitee control.
+        /// RMperBatchGoToPageTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kitee;
+        protected global::System.Web.UI.WebControls.TextBox RMperBatchGoToPageTxt;
 
         /// <summary>
-        /// report_kitef control.
+        /// RMperBatchlblTotalNumberOfPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kitef;
+        protected global::System.Web.UI.WebControls.Label RMperBatchlblTotalNumberOfPages;
 
         /// <summary>
-        /// report_kiteg control.
+        /// RMperBatchbtnPrev control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kiteg;
+        protected global::System.Web.UI.WebControls.Button RMperBatchbtnPrev;
 
         /// <summary>
-        /// report_kiteh control.
+        /// RMperBatchbtnNext control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kiteh;
+        protected global::System.Web.UI.WebControls.Button RMperBatchbtnNext;
 
         /// <summary>
-        /// report_kiteb2 control.
+        /// FGperBatchLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor report_kiteb2;
+        protected global::System.Web.UI.WebControls.Label FGperBatchLbl;
 
         /// <summary>
-        /// logactivities control.
+        /// FGperBatchPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor logactivities;
+        protected global::System.Web.UI.WebControls.Panel FGperBatchPanel;
 
         /// <summary>
-        /// label1 control.
+        /// FGperBatchGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label1;
+        protected global::System.Web.UI.WebControls.GridView FGperBatchGridView;
 
         /// <summary>
-        /// lnLogout control.
+        /// FGperBatchdataPager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnLogout;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FGperBatchdataPager;
 
         /// <summary>
-        /// MainContent control.
+        /// FGlblTotalRecords control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Label FGlblTotalRecords;
+
+        /// <summary>
+        /// FGlblShowRows control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FGlblShowRows;
+
+        /// <summary>
+        /// FGperBatchPageSizeDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList FGperBatchPageSizeDropDown;
+
+        /// <summary>
+        /// FGperBatchGoToPageTxt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox FGperBatchGoToPageTxt;
+
+        /// <summary>
+        /// FGperBatchlblTotalNumberOfPages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FGperBatchlblTotalNumberOfPages;
+
+        /// <summary>
+        /// FGperBatchbtnPrev control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button FGperBatchbtnPrev;
+
+        /// <summary>
+        /// FGperBatchbtnNext control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button FGperBatchbtnNext;
     }
 }

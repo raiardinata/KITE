@@ -1,5 +1,4 @@
-﻿using CsvHelper;
-using CsvHelper.Configuration.Attributes;
+﻿using CsvHelper.Configuration.Attributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ namespace KITE.Models
 {
     public class GIRawMaterialFunctionModel : System.Web.UI.Page
     {
-        public Tuple<string, ArrayList> GIRawMaterialGenerateColumnAndCsvData(List<GIRawMaterialViewModel> csvList)
+        public Tuple<string, ArrayList> GIRawMaterialGenerateColumnAndCsvData(List<GIRawMaterialWithConvertionViewModel> csvList)
         {
             List<string> listColumnName = new List<string>();
             listColumnName.Add("Year_Period");
@@ -43,7 +42,7 @@ namespace KITE.Models
 
             // populate csv values
             ArrayList valuesArray = new ArrayList();
-            foreach (GIRawMaterialViewModel csvValues in csvList)
+            foreach (GIRawMaterialWithConvertionViewModel csvValues in csvList)
             {
                 int yearPeriod = csvValues.Posting_Date.Year;
                 int monthPeriod = csvValues.Posting_Date.Month;
@@ -62,6 +61,7 @@ namespace KITE.Models
                 valuesList.Add(csvValues.Material_Document);
                 valuesList.Add(csvValues.Batch);
                 valuesList.Add(Convert.ToDecimal(csvValues.Qty_in_Un_of_Entry));
+                valuesList.Add(Convert.ToDecimal(csvValues.Kilos_Convertion));
                 valuesList.Add(csvValues.Unit_of_Entry);
                 valuesList.Add(csvValues.Entry_Date.Date.ToString("yyyy/MM/dd"));
                 valuesList.Add(csvValues.Time_of_Entry);
@@ -74,9 +74,9 @@ namespace KITE.Models
             }
             return Tuple.Create(columns, valuesArray);
         }
-        public Tuple<Exception, string, List<GIRawMaterialViewModel>> GIRawMaterialReadCsvFile(FileUpload fileUpload)
+        public Tuple<Exception, string, List<GIRawMaterialWithConvertionViewModel>> GIRawMaterialReadCsvFile(FileUpload fileUpload)
         {
-            List<GIRawMaterialViewModel> CsvDataList;
+            List<GIRawMaterialWithConvertionViewModel> CsvDataList;
             ReadCsvModel readCsv = new ReadCsvModel();
 
             try
@@ -84,18 +84,19 @@ namespace KITE.Models
                 Tuple<Exception, string> valid = readCsv.FileChecker(fileUpload);
                 if (valid.Item1.Message != "null" && valid.Item2 != "valid")
                 {
-                    return new Tuple<Exception, string, List<GIRawMaterialViewModel>>(valid.Item1, "Not a valid file.", null);
+                    return new Tuple<Exception, string, List<GIRawMaterialWithConvertionViewModel>>(valid.Item1, "Not a valid file.", null);
                 }
 
                 string filePath = Server.MapPath("~/UploadedFiles/" + fileUpload.FileName);
                 fileUpload.SaveAs(filePath);
 
-                using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
+                Tuple<object, Exception> readCsvResult = new ReadCsvModel().ReadCsvFunction("giRawMaterial", filePath, ";", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (readCsvResult.Item2.Message != "null")
                 {
-                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "giRawMaterial", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                    CsvDataList = (List<GIRawMaterialViewModel>)uomConvertionObject.Item1;
-                    csvData.Dispose();
+                    return new Tuple<Exception, string, List<GIRawMaterialWithConvertionViewModel>>(readCsvResult.Item2, filePath, null);
                 }
+                CsvDataList = (List<GIRawMaterialWithConvertionViewModel>)readCsvResult.Item1;
+
                 return Tuple.Create(new Exception("null"), filePath, CsvDataList);
             }
             catch (Exception ex)
@@ -114,7 +115,7 @@ namespace KITE.Models
                     // Return the original string if "Headers:" is not found
                     loadCsvException = new Exception(ex.Message);
                 }
-                return new Tuple<Exception, string, List<GIRawMaterialViewModel>>(loadCsvException, "null", null);
+                return new Tuple<Exception, string, List<GIRawMaterialWithConvertionViewModel>>(loadCsvException, "null", null);
             }
         }
     }
@@ -173,13 +174,71 @@ namespace KITE.Models
 
         [Name("Goods recipient")]
         public string Goods_recipient { get; set; }
+    }
+
+    public class GIRawMaterialWithConvertionViewModel
+    {
+        [Name("Posting Date")]
+        public DateTime Posting_Date { get; set; }
+
+        [Name("Document Date")]
+        public DateTime Document_Date { get; set; }
+
+        [Name("Document Header Text")]
+        public string Document_Header_Text { get; set; }
+
+        public string Material { get; set; }
+
+        [Name("Material Description")]
+        public string Material_Description { get; set; }
+
+        public string Plant { get; set; }
+
+        [Name("Storage Location")]
+        public string Storage_Location { get; set; }
+
+        [Name("Movement Type")]
+        public string Movement_Type { get; set; }
+
+        [Name("Material Document")]
+        public string Material_Document { get; set; }
+
+        public string Batch { get; set; }
+
+        [Name("Qty in Un. of Entry")]
+        public string Qty_in_Un_of_Entry { get; set; }
+
+        public string Kilos_Convertion { get; set; }
+
+        [Name("Unit of Entry")]
+        public string Unit_of_Entry { get; set; }
+
+        [Name("Entry Date")]
+        public DateTime Entry_Date { get; set; }
+
+        [Name("Time of Entry")]
+        public string Time_of_Entry { get; set; }
+
+        [Name("User name")]
+        public string User_name { get; set; }
+
+        [Name("Base Unit of Measure")]
+        public string Base_Unit_of_Measure { get; set; }
+
+        public string Quantity { get; set; }
+
+        [Name("Amount in LC")]
+        public string Amount_in_LC { get; set; }
+
+        [Name("Goods recipient")]
+        public string Goods_recipient { get; set; }
 
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            GIRawMaterialViewModel other = (GIRawMaterialViewModel)obj;
+            GIRawMaterialWithConvertionViewModel other = (GIRawMaterialWithConvertionViewModel)obj;
             return
                 Posting_Date == other.Posting_Date &&
                 Document_Date == other.Document_Date &&
@@ -192,6 +251,7 @@ namespace KITE.Models
                 Material_Document == other.Material_Document &&
                 Batch == other.Batch &&
                 Qty_in_Un_of_Entry == other.Qty_in_Un_of_Entry &&
+                Kilos_Convertion == other.Kilos_Convertion &&
                 Unit_of_Entry == other.Unit_of_Entry &&
                 Entry_Date == other.Entry_Date &&
                 Time_of_Entry == other.Time_of_Entry &&
@@ -216,6 +276,7 @@ namespace KITE.Models
                 Material_Document,
                 Batch,
                 Qty_in_Un_of_Entry,
+                Kilos_Convertion,
                 Unit_of_Entry,
                 Entry_Date,
                 Time_of_Entry,

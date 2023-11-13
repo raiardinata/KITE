@@ -5,10 +5,13 @@ namespace KITE.Models
 {
     public class UtilityModel : System.Web.UI.Page
     {
-        public void UploadCsvErrorHandler(Exception ex, GridView gridView, Label errorLabel)
+        public void UploadCsvErrorHandler(Exception ex, GridView[] gridView, Label errorLabel)
         {
-            gridView.DataSource = null;
-            gridView.DataBind();
+            foreach (GridView grid in gridView)
+            {
+                grid.DataSource = null;
+                grid.DataBind();
+            }
 
             errorLabel.Text = "";
             errorLabel.Enabled = true;

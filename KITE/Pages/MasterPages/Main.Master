@@ -92,6 +92,7 @@
                                 <li><a href="~/Pages/ContentPages/McFrameUpload.aspx" id="master_mcframeupload" visible="false" runat="server">McFrame Upload</a></li>
                                 <li><a href="~/Pages/ContentPages/GIRawMaterialUpload.aspx" id="master_girawmaterialupload" visible="false" runat="server">GI Raw Material Upload</a></li>
                                 <li><a href="~/Pages/ContentPages/GRFinishGoodsUpload.aspx" id="master_grfinishgoodsupload" visible="false" runat="server">GR Finish Goods Upload</a></li>
+                                <li><a href="~/Pages/ContentPages/DistributeConsumptionBMandRS.aspx" id="master_bmandrscalculation" visible="false" runat="server">BM and RS Calculation</a></li>
                             </ul>
 
 

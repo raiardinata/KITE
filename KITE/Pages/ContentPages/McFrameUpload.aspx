@@ -53,6 +53,7 @@
                                 <asp:BoundField DataField="Unit" HeaderText="Unit" SortExpression="Unit" />
                                 <asp:BoundField DataField="Quantity" HeaderText="Qty." SortExpression="Quantity" />
                                 <asp:BoundField DataField="STD_Qty" HeaderText="[STD]Qty." SortExpression="STD_Qty" />
+                                <asp:BoundField DataField="Kilos_Convertion" HeaderText="Kilos Convertion" SortExpression="Kilos_Convertion" />
                                 <asp:BoundField DataField="Variable_Cost" HeaderText="Variable Cost" SortExpression="Variable_Cost" />
                                 <asp:BoundField DataField="STD_Variable_Cost" HeaderText="[STD]Variable Cost" SortExpression="STD_Variable_Cost" />
                                 <asp:BoundField DataField="Labour_Cost" HeaderText="Labour Cost" SortExpression="Labour_Cost" />

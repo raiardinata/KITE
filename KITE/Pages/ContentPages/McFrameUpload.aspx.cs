@@ -1,5 +1,4 @@
-﻿using CsvHelper;
-using KITE.Models;
+﻿using KITE.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ namespace KITE.Pages.ContentPages
 {
     public partial class McFrameUpload : System.Web.UI.Page
     {
-        private List<McFrameViewModel> CsvDataList;
+        private List<McFrameWithKilosConvertionViewModel> CsvDataList;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack && CsvDataGridView.DataSource == null)
@@ -25,12 +24,12 @@ namespace KITE.Pages.ContentPages
         {
             errorLabel.Text = "";
             McFrameFunctionModel mcFrameFunction = new McFrameFunctionModel();
-            Tuple<Exception, string, List<McFrameViewModel>> fileResult = mcFrameFunction.McFrameReadCsvFile(fileUpload);
+            Tuple<Exception, string, List<McFrameWithKilosConvertionViewModel>> fileResult = mcFrameFunction.McFrameReadCsvFile(fileUpload);
             if (fileResult.Item1.Message != "null")
             {
                 UtilityModel errorHandler = new UtilityModel();
                 Exception loadCsvException = new Exception("Terdapat masalah ketika mensubmit file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload McFrame.<br/> Detail : " + fileResult.Item1.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
             }
             else if (fileResult.Item2 != null && fileResult.Item3 != null)
             {
@@ -116,7 +115,7 @@ namespace KITE.Pages.ContentPages
             {
                 UtilityModel errorHandler = new UtilityModel();
                 Exception loadCsvException = new Exception("Terdapat masalah ketika mau membuka halaman " + txtGoToPage.Text.Trim() + ". Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
             }
         }
 
@@ -138,7 +137,7 @@ namespace KITE.Pages.ContentPages
             {
                 UtilityModel errorHandler = new UtilityModel();
                 Exception loadCsvException = new Exception("Terdapat masalah ketika tombol previous page berjalan. Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
             }
         }
 
@@ -161,7 +160,7 @@ namespace KITE.Pages.ContentPages
             {
                 UtilityModel errorHandler = new UtilityModel();
                 Exception loadCsvException = new Exception("Terdapat masalah ketika tombol next page berjalan. Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
             }
         }
 
@@ -175,19 +174,20 @@ namespace KITE.Pages.ContentPages
         {
             try
             {
-                ReadCsvModel readCsv = new ReadCsvModel();
-                using (CsvReader csvData = readCsv.ReadCsvFile((string)Session["FilePath"], ";"))
+                Tuple<object, Exception> readCsvResult = new ReadCsvModel().ReadCsvFunction("mcFrame", (string)Session["FilePath"], ";", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (readCsvResult.Item2.Message != "null")
                 {
-                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "mcFrame", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                    CsvDataList = (List<McFrameViewModel>)uomConvertionObject.Item1;
-                    csvData.Dispose();
+                    UtilityModel errorHandler = new UtilityModel();
+                    Exception loadCsvException = new Exception("Terdapat masalah ketika memuat file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload McFrame process.<br/> Detail : " + readCsvResult.Item2.Message);
+                    errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
                 }
+                CsvDataList = (List<McFrameWithKilosConvertionViewModel>)readCsvResult.Item1;
             }
             catch (Exception ex)
             {
                 UtilityModel errorHandler = new UtilityModel();
                 Exception loadCsvException = new Exception("Terdapat masalah ketika memuat file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload McFrame process.<br/> Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
             }
         }
 
@@ -218,7 +218,7 @@ namespace KITE.Pages.ContentPages
                     Exception deleteResult = databaseModel.DeleteData(tableName, $" Year_Period = '{yearPeriod}' AND Month_Period = '{monthPeriod}' ", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                     if (deleteResult.Message != "Data period sebelumnya berhasil dibersihkan.")
                     {
-                        utility.UploadCsvErrorHandler(deleteResult, CsvDataGridView, errorLabel);
+                        utility.UploadCsvErrorHandler(deleteResult, new GridView[] { CsvDataGridView }, errorLabel);
                     }
                 }
 
@@ -226,39 +226,42 @@ namespace KITE.Pages.ContentPages
                 if (checkPeriodResult.Message != "Data Period Aman.")
                 {
                     loadCsvException = new Exception(checkPeriodResult.Message);
-                    utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
                 }
 
                 Tuple<string[], Exception> iterationResult = new ReadCsvModel().IterateCsvObject(columnNameAndData.Item2);
                 if (iterationResult.Item2.Message != "Pemrosesan IterateCsvObject Berhasil.")
                 {
                     loadCsvException = new Exception($"Gagal dalam penulisan ke database. Detail : {iterationResult.Item2.Message}");
-                    utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
                 }
 
-                foreach (string iterionValue in iterationResult.Item1)
+                if (checkPeriodResult.Message == "Data Period Aman." && iterationResult.Item2.Message == "Pemrosesan IterateCsvObject Berhasil.")
                 {
-                    Exception insertResult = new DatabaseModel().InsertIntoTable(tableName, columnNameAndData.Item1, iterionValue, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                    if (insertResult.Message != "null")
+                    foreach (string iterionValue in iterationResult.Item1)
                     {
-                        loadCsvException = new Exception($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : {insertResult.Message}");
-                        utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
-                        break;
+                        Exception insertResult = new DatabaseModel().InsertIntoTable(tableName, columnNameAndData.Item1, iterionValue, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                        if (insertResult.Message != "null")
+                        {
+                            loadCsvException = new Exception($"Terjadi kesalahan ketika Insert Into Table {tableName}. Detail : {insertResult.Message}");
+                            utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                            break;
+                        }
                     }
-                }
 
-                if (File.Exists(Session["FilePath"].ToString()))
-                {
-                    File.Delete(Session["FilePath"].ToString());
+                    if (File.Exists(Session["FilePath"].ToString()))
+                    {
+                        File.Delete(Session["FilePath"].ToString());
+                    }
+                    Session["FilePath"] = "";
+                    string script = $"alert('Upload CSV berhasil.'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/McFrameUpload.aspx")}';";
+                    ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
                 }
-                Session["FilePath"] = "";
-                string script = $"alert('Upload CSV berhasil.'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/McFrameUpload.aspx")}';";
-                ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
             }
             catch (Exception ex)
             {
                 loadCsvException = new Exception(ex.Message);
-                utility.UploadCsvErrorHandler(loadCsvException, CsvDataGridView, errorLabel);
+                utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
             }
         }
     }

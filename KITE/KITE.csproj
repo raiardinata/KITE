@@ -479,7 +479,7 @@
     <Content Include="Client\JQuery\ui\vssver2.scc" />
     <Content Include="Client\JQuery\ui\i18n\vssver2.scc" />
     <Content Include="Pages\ContentPages\ChangePassword.aspx" />
-    <Content Include="Pages\ContentPages\DistributeConsumptionBM&amp;RS.aspx" />
+    <Content Include="Pages\ContentPages\DistributeConsumptionBMandRS.aspx" />
     <Content Include="Pages\ContentPages\ExportSalesUpload.aspx" />
     <Content Include="Pages\ContentPages\GIRawMaterialUpload.aspx" />
     <Content Include="Pages\ContentPages\GRFinishGoodsUpload.aspx" />
@@ -759,12 +759,12 @@
     <Compile Include="Pages\ContentPages\ChangePassword.aspx.designer.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ContentPages\DistributeConsumptionBM&amp;RS.aspx.cs">
-      <DependentUpon>DistributeConsumptionBM&amp;RS.aspx</DependentUpon>
+    <Compile Include="Pages\ContentPages\DistributeConsumptionBMandRS.aspx.cs">
+      <DependentUpon>DistributeConsumptionBMandRS.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\ContentPages\DistributeConsumptionBM&amp;RS.aspx.designer.cs">
-      <DependentUpon>DistributeConsumptionBM&amp;RS.aspx</DependentUpon>
+    <Compile Include="Pages\ContentPages\DistributeConsumptionBMandRS.aspx.designer.cs">
+      <DependentUpon>DistributeConsumptionBMandRS.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\ContentPages\ExportSalesUpload.aspx.cs">
       <DependentUpon>ExportSalesUpload.aspx</DependentUpon>

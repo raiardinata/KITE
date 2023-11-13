@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 
 namespace KITE.Models
 {
-    public class DatabaseModel
+    public class DatabaseModel : DbContext
     {
 
         public Exception InsertIntoTable(string tableName, string columnName, string values, string connectionString)
@@ -88,13 +89,13 @@ namespace KITE.Models
             return new Exception("Data period sebelumnya berhasil dibersihkan.");
         }
 
-        public Tuple<DataTable, Exception> SelectTable(string dynamicSelectColumn, string dynamicTableName, string dynamicCondition, string connectionString)
+        public Tuple<DataTable, Exception> SelectTableIntoDataTable(string dynamicSelectColumn, string dynamicTableName, string dynamicCondition, string connectionString)
         {
             DataTable dataTable = new DataTable();
             string query = $"SELECT {dynamicSelectColumn} FROM {dynamicTableName} ";
             if (dynamicCondition != "")
             {
-                query += $" WHERE {dynamicCondition}";
+                query += $" {dynamicCondition} ";
             }
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -124,6 +125,43 @@ namespace KITE.Models
                     }
                 }
             }
+        }
+
+        // Initiate execute a store procedure function
+        public Exception ExecStoreProcedure(string storeProcedureName, object[] param, string connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(storeProcedureName, connection))
+                {
+                    // dynamic store procedure param selection
+                    Exception switchResult = SwitchStoreProcedure(storeProcedureName, param, command);
+                    command.Dispose();
+                    connection.Close();
+                    return switchResult;
+                }
+            }
+        }
+
+        // Switch store procedure parameter to their respective parameter
+        public Exception SwitchStoreProcedure(string storeProcedureName, object[] param, SqlCommand command)
+        {
+            Exception switchStoreProcedureResult = new Exception();
+            switch (storeProcedureName)
+            {
+                case "CreatingBalanceGI":
+                    switchStoreProcedureResult = new DistributeConsumptionBM_RSFunctionModel().ExecCreatingBMandRSProcedure(command, param);
+                    break;
+                case "CreatingRMperBatch":
+                    switchStoreProcedureResult = new DistributeConsumptionBM_RSFunctionModel().ExecCreatingBMandRSProcedure(command, param);
+                    break;
+                case "CreatingFGperBatch":
+                    switchStoreProcedureResult = new DistributeConsumptionBM_RSFunctionModel().ExecCreatingBMandRSProcedure(command, param);
+                    break;
+            }
+            return switchStoreProcedureResult;
         }
     }
 }

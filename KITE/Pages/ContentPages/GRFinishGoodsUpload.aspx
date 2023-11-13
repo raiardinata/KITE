@@ -52,6 +52,7 @@
                                 <asp:BoundField DataField="Material_Document" SortExpression="Material_Document" HeaderText="Material Document" />
                                 <asp:BoundField DataField="Batch" SortExpression="Batch" HeaderText="Batch" />
                                 <asp:BoundField DataField="Qty_in_Un_of_Entry" SortExpression="Qty_in_Un_of_Entry" HeaderText="Qty in Un. of Entry" />
+                                <asp:BoundField DataField="Kilos_Convertion" SortExpression="Kilos_Convertion" HeaderText="Kilos Convertion" />
                                 <asp:BoundField DataField="Unit_of_Entry" SortExpression="Unit_of_Entry" HeaderText="Unit of Entry" />
                                 <asp:BoundField DataField="Entry_Date" SortExpression="Entry_Date" HeaderText="Entry Date" />
                                 <asp:BoundField DataField="Time_of_Entry" SortExpression="Time_of_Entry" HeaderText="Time of Entry" />

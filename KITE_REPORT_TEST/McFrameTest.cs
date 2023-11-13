@@ -1,17 +1,15 @@
-﻿using CsvHelper;
-using KITE.Models;
+﻿using KITE.Models;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace KITE_REPORT_TEST
 {
-    internal class McFrameTest : System.Web.UI.Page
+    internal class AMcFrameTest : System.Web.UI.Page
     {
         private IConfiguration Configuration;
         private string ConnectionString;
@@ -22,7 +20,7 @@ namespace KITE_REPORT_TEST
             // Build the configuration provider using the appsettings.json file
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Properties\\launchSettings.json")
+                .AddJsonFile("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Properties\\launchSettings.json")
                 .Build();
             ConnectionString = Configuration["profiles:KITE_REPORT_TEST:environmentVariables:connectionString"];
         }
@@ -35,7 +33,7 @@ namespace KITE_REPORT_TEST
         [TearDown]
         public void TearDown()
         {
-            string query = "TRUNCATE TABLE GI_Raw_Material; TRUNCATE TABLE McFrame_Cost_Table;";
+            string query = "TRUNCATE TABLE McFrame_Cost_Table;";
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -48,29 +46,29 @@ namespace KITE_REPORT_TEST
         }
 
         [Test]
-        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023.csv")]
-        public void McFrameCsvReadSucceed(string filePath)
+        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcFrame 032023.csv")]
+        public void TestA_McFrameCsvReadSucceed(string filePath)
         {
-            ReadCsvModel readCsv = new ReadCsvModel();
-            List<McFrameViewModel> CsvDataList;
-            List<McFrameViewModel> Expected = new List<McFrameViewModel>();
-            Expected.Add(new McFrameViewModel()
+            List<McFrameWithKilosConvertionViewModel> CsvDataList;
+            List<McFrameWithKilosConvertionViewModel> Expected = new List<McFrameWithKilosConvertionViewModel>();
+            Expected.Add(new McFrameWithKilosConvertionViewModel()
             {
-                Calc_No = "BL572",
+                Calc_No = "BL588",
                 Mgmt_dept_CD = "2201",
                 Management_Dept_Name = "",
-                YM = DateTime.Parse("2023/03/01 00:00:00"),
+                YM = DateTime.Parse("2023/10/01 00:00:00"),
                 Lvl = 0,
-                Target_item_CD = "121000004",
-                Item_CD = "121000004",
+                Target_item_CD = "121000000",
+                Item_CD = "121000000",
                 Item_name = "",
                 Item_type_name = "",
-                Unit = "",
-                Quantity = "1010300",
-                STD_Qty = "1010300",
-                Total = "932286,83",
+                Unit = "MT",
+                Quantity = "7479,42",
+                STD_Qty = "7479,42",
+                Kilos_Convertion = "7479420,0000000000",
+                Total = "1412743,21",
                 STD_Total = "0",
-                Variable_Cost = "932286,83",
+                Variable_Cost = "1412743,21",
                 STD_Variable_Cost = "0",
                 Labour_Cost = "0",
                 STD_Labour_Cost = "0",
@@ -84,29 +82,28 @@ namespace KITE_REPORT_TEST
                 STD_Retur_Cost = "0",
             });
 
-            using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
+            Tuple<object, Exception> readCsvResult = new ReadCsvModel().ReadCsvFunction("mcFrame", filePath, ";", ConnectionString);
+            if (readCsvResult.Item2.Message != "null")
             {
-                Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "mcFrame", ConnectionString);
-                CsvDataList = (List<McFrameViewModel>)uomConvertionObject.Item1;
-                csvData.Dispose();
+                Assert.Fail(readCsvResult.Item2.Message);
             }
+
+            CsvDataList = (List<McFrameWithKilosConvertionViewModel>)readCsvResult.Item1;
+
             CollectionAssert.AreEquivalent(Expected, CsvDataList);
         }
 
-        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023 Fail.csv")]
-        public void McFrameCsvReadFail(string filePath)
+        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023 Fail.csv")]
+        public void TestB_McFrameCsvReadFail(string filePath)
         {
-            ReadCsvModel readCsv = new ReadCsvModel();
-            List<McFrameViewModel> CsvDataList;
             string Expected = "Header with name 'Calc. No.'[0] was not found.\r\n";
 
             try
             {
-                using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
+                Tuple<object, Exception> readCsvResult = new ReadCsvModel().ReadCsvFunction("mcFrame", filePath, ";", ConnectionString);
+                if (readCsvResult.Item2.Message != "null")
                 {
-                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "mcFrame", ConnectionString);
-                    CsvDataList = (List<McFrameViewModel>)uomConvertionObject.Item1;
-                    csvData.Dispose();
+                    Assert.Fail(readCsvResult.Item2.Message);
                 }
             }
             catch (Exception ex)
@@ -129,8 +126,8 @@ namespace KITE_REPORT_TEST
             }
         }
 
-        [TestCase("D:\\03. Rai\\01. Programing Playground\\06. KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023.csv")]
-        public void McFrameUploadSucceed(string filePath)
+        [TestCase("D:\\03. Project\\KITE REPORT\\KITE\\KITE_REPORT_TEST\\Csv_File_Tester\\mcframe 032023.csv")]
+        public void TestC_McFrameUploadSucceed(string filePath)
         {
             int index = 0;
             int yearPeriod = 0;
@@ -142,13 +139,13 @@ namespace KITE_REPORT_TEST
             {
                 // basicly this one is LoadCsvData()
                 ReadCsvModel readCsv = new ReadCsvModel();
-                List<McFrameViewModel> CsvDataList;
-                using (CsvReader csvData = readCsv.ReadCsvFile(filePath, ";"))
+                List<McFrameWithKilosConvertionViewModel> CsvDataList;
+                Tuple<object, Exception> readCsvResult = new ReadCsvModel().ReadCsvFunction("mcFrame", filePath, ";", ConnectionString);
+                if (readCsvResult.Item2.Message != "null")
                 {
-                    Tuple<object, Exception> uomConvertionObject = new ReadCsvModel().UomConvertion(csvData, "mcFrame", ConnectionString);
-                    CsvDataList = (List<McFrameViewModel>)uomConvertionObject.Item1;
-                    csvData.Dispose();
+                    Assert.Fail(readCsvResult.Item2.Message);
                 }
+                CsvDataList = (List<McFrameWithKilosConvertionViewModel>)readCsvResult.Item1;
                 // until this one
 
                 McFrameFunctionModel csvDataProcess = new McFrameFunctionModel();
