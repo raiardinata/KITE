@@ -51,13 +51,24 @@
                                 <asp:BoundField DataField="Year_Period" SortExpression="Year_Period" HeaderText="Year Period" />
                                 <asp:BoundField DataField="Month_Period" SortExpression="Month_Period" HeaderText="Month Period" />
                                 <asp:BoundField DataField="Finish_Goods" SortExpression="Finish_Goods" HeaderText="Finish Goods" />
-                                <asp:BoundField DataField="FG_Qty" SortExpression="FG_Qty" HeaderText="FG Qty" />
+                                <asp:BoundField DataField="FG_Qty" SortExpression="FG_Qty" HeaderText="FG Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
                                 <asp:BoundField DataField="Raw_Material" SortExpression="Raw_Material" HeaderText="Raw Material" />
-                                <asp:BoundField DataField="Batch_Sequent" SortExpression="Batch_Sequent" HeaderText="Batch Sequent" />
+                                <asp:BoundField DataField="Total_RM_Qty" SortExpression="Total_RM_Qty" HeaderText="Total RM Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Batch_Sequence" SortExpression="Batch_Sequence" HeaderText="Batch Sequence" />
                                 <asp:BoundField DataField="RM_Batch" SortExpression="RM_Batch" HeaderText="RM Batch" />
-                                <asp:BoundField DataField="RM_Qty" SortExpression="RM_Qty" HeaderText="RM Qty" />
-                                <asp:BoundField DataField="Distribution_Qty" SortExpression="Distribution_Qty" HeaderText="Distribution Qty" />
-                                <asp:BoundField DataField="Remaining_Qty" SortExpression="Remaining_Qty" HeaderText="Remaining Qty" />
+                                <asp:BoundField DataField="RM_Qty" SortExpression="RM_Qty" HeaderText="RM Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Distribution_Qty" SortExpression="Distribution_Qty" HeaderText="Distribution Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Remaining_Qty" SortExpression="Remaining_Qty" HeaderText="Remaining Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
                             </Columns>
                             <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="First" LastPageText="Last" />
                             <PagerStyle CssClass="custom-pager"/>
@@ -103,16 +114,28 @@
                                 <asp:BoundField DataField="Year_Period" SortExpression="Year_Period" HeaderText="Year Period" />
                                 <asp:BoundField DataField="Month_Period" SortExpression="Month_Period" HeaderText="Month Period" />
                                 <asp:BoundField DataField="Finish_Goods" SortExpression="Finish_Goods" HeaderText="Finish Goods" />
-                                <asp:BoundField DataField="FG_Qty" SortExpression="FG_Qty" HeaderText="FG Qty" />
+                                <asp:BoundField DataField="FG_Qty" SortExpression="FG_Qty" HeaderText="FG Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
                                 <asp:BoundField DataField="FG_Batch" SortExpression="FG_Batch" HeaderText="FG Batch" />
-                                <asp:BoundField DataField="FG_Batch_Qty" SortExpression="FG_Batch_Qty" HeaderText="FG Batch Qty" />
+                                <asp:BoundField DataField="FG_Batch_Qty" SortExpression="FG_Batch_Qty" HeaderText="FG Batch Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
                                 <asp:BoundField DataField="Raw_Material" SortExpression="Raw_Material" HeaderText="Raw Material" />
-                                <asp:BoundField DataField="RM_Batch_Sequent" SortExpression="RM_Batch_Sequent" HeaderText="RM Batch Sequent" />
+                                <asp:BoundField DataField="Total_RM_Qty" SortExpression="Total_RM_Qty" HeaderText="Total RM Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="RM_Batch_Sequence" SortExpression="RM_Batch_Sequence" HeaderText="RM Batch Sequence" />
                                 <asp:BoundField DataField="RM_Batch" SortExpression="RM_Batch" HeaderText="RM Batch" />
-                                <asp:BoundField DataField="Total_RM_Qty" SortExpression="Total_RM_Qty" HeaderText="Total RM Qty" />
-                                <asp:BoundField DataField="Qty_RM_Batch_FG" SortExpression="Qty_RM_Batch_FG" HeaderText="Qty RM Batch FG" />
-                                <asp:BoundField DataField="Distribution_Qty" SortExpression="Distribution_Qty" HeaderText="Distribution Qty" />
-                                <asp:BoundField DataField="Remaining_Qty" SortExpression="Remaining_Qty" HeaderText="Remaining Qty" />
+                                <asp:BoundField DataField="Qty_RM_Batch" SortExpression="Qty_RM_Batch" HeaderText="Qty RM Batch" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Distribution_Qty" SortExpression="Distribution_Qty" HeaderText="Distribution Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Remaining_Qty" SortExpression="Remaining_Qty" HeaderText="Remaining Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
                             </Columns>
                             <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="First" LastPageText="Last" />
                             <PagerStyle CssClass="custom-pager"/>

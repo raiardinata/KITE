@@ -31,34 +31,46 @@ namespace KITE.Pages.ContentPages
             {
                 try
                 {
+                    Exception returningBalanceGIResult = new DatabaseModel().ExecStoreProcedure("ReturnRMperBatchDistributedValue", param, ConnectionString);
+                    if (returningBalanceGIResult != null)
+                    {
+                        UtilityModel errorHandler = new UtilityModel();
+                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses ReturnRMperBatchDistributedValue. Detail : {returningBalanceGIResult.Message}");
+                        errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
+                        return;
+                    }
                     Exception balanceGIResult = new DatabaseModel().ExecStoreProcedure("CreatingBalanceGI", param, ConnectionString);
                     if (balanceGIResult != null)
                     {
                         UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception("Terdapat masalah ketika menjalankan proses CreatingBalanceGI.");
+                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses CreatingBalanceGI. Detail : {balanceGIResult.Message}");
                         errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
+                        return;
                     }
                     Exception rmperBatchResult = new DatabaseModel().ExecStoreProcedure("CreatingRMperBatch", param, ConnectionString);
                     if (rmperBatchResult != null)
                     {
                         UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception("Terdapat masalah ketika menjalankan proses CreatingBalanceGI.");
+                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses CreatingRMperBatch. Detail : {rmperBatchResult.Message}");
                         errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
+                        return;
                     }
                     Exception fgperBatchResult = new DatabaseModel().ExecStoreProcedure("CreatingFGperBatch", param, ConnectionString);
                     if (fgperBatchResult != null)
                     {
                         UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception("Terdapat masalah ketika menjalankan proses CreatingBalanceGI.");
+                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses CreatingFGperBatch. Detail : {fgperBatchResult.Message}");
                         errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
+                        return;
                     }
 
-                    Tuple<DataTable, Exception> RMperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "RM_per_Batch", " ORDER BY Finish_Goods, Raw_Material ASC ", ConnectionString);
+                    Tuple<DataTable, Exception> RMperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "RM_per_Batch", " ORDER BY Finish_Goods ASC, Raw_Material ASC, Batch_Sequence ASC ", ConnectionString);
                     if (RMperBatchDataTable.Item2.Message != "null")
                     {
                         UtilityModel errorHandler = new UtilityModel();
                         Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table RM_per_Batch. Detail : {RMperBatchDataTable.Item2.Message}");
                         errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
+                        return;
                     }
                     else
                     {
@@ -66,12 +78,13 @@ namespace KITE.Pages.ContentPages
                         RMperBatchBindGridView();
                     }
 
-                    Tuple<DataTable, Exception> FGperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_per_Batch", " ORDER BY Finish_Goods, Raw_Material ASC ", ConnectionString);
+                    Tuple<DataTable, Exception> FGperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_per_Batch", " ORDER BY Finish_Goods ASC, FG_Batch ASC, Raw_Material ASC, RM_Batch_Sequence ASC ", ConnectionString);
                     if (FGperBatchDataTable.Item2.Message != "null")
                     {
                         UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table RM_per_Batch. Detail : {FGperBatchDataTable.Item2.Message}");
+                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table FG_per_Batch. Detail : {FGperBatchDataTable.Item2.Message}");
                         errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
+                        return;
                     }
                     else
                     {

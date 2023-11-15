@@ -97,7 +97,7 @@ namespace KITE.Models
         // Uom convertion function
         public Tuple<object, Exception> UomConvertion(CsvReader csvDataRead, string type, string connectionString)
         {
-            decimal KG = 1;
+            decimal KG;
             object CsvDataList = new object();
 
             if (type == "mcFrame")
@@ -107,6 +107,7 @@ namespace KITE.Models
 
                 foreach (McFrameViewModel csvData in (List<McFrameViewModel>)CsvDataList)
                 {
+                    KG = 1;
                     try
                     {
                         Tuple<DataTable, Exception> insertResult = new DatabaseModel().SelectTableIntoDataTable("KilosConvertion", "UoM_To_Kilos_Convertion", $" WHERE BaseUoM = '{csvData.Unit}' ", connectionString);
@@ -165,6 +166,7 @@ namespace KITE.Models
 
                 foreach (GIRawMaterialViewModel csvData in (List<GIRawMaterialViewModel>)CsvDataList)
                 {
+                    KG = 1;
                     try
                     {
                         Tuple<DataTable, Exception> insertResult = new DatabaseModel().SelectTableIntoDataTable("KilosConvertion", "UoM_To_Kilos_Convertion", $" WHERE BaseUoM = '{csvData.Unit_of_Entry}' ", connectionString);
@@ -215,6 +217,7 @@ namespace KITE.Models
 
                 foreach (GRFinishGoodsViewModel csvData in (List<GRFinishGoodsViewModel>)CsvDataList)
                 {
+                    KG = 1;
                     try
                     {
                         Tuple<DataTable, Exception> insertResult = new DatabaseModel().SelectTableIntoDataTable("KG", "UOMandMaterial_Convertion", $" WHERE Material = '{csvData.Material}' AND Base_UOM = '{csvData.Unit_of_Entry}' ", connectionString);

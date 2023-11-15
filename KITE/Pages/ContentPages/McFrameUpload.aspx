@@ -44,27 +44,55 @@
                                 <asp:BoundField DataField="Calc_No" HeaderText="Calc. No." SortExpression="Calc_No" />
                                 <asp:BoundField DataField="Mgmt_dept_CD" HeaderText="Mgmt. Dept. CD" SortExpression="Mgmt_dept_CD" />
                                 <asp:BoundField DataField="Management_Dept_Name" HeaderText="Mgmt. Dept. Name" SortExpression="Management_Dept_Name" />
-                                <asp:BoundField DataField="YM" HeaderText="YM" SortExpression="YM" DataFormatString="{0:dd/MM/yyyy}" />
+                                <asp:BoundField DataField="YM" HeaderText="YM" SortExpression="YM" DataFormatString="{0:yyyy/MM/dd}" />
                                 <asp:BoundField DataField="Lvl" HeaderText="LVL" SortExpression="Lvl" />
                                 <asp:BoundField DataField="Target_item_CD" HeaderText="Target Item CD" SortExpression="Target_item_CD" />
                                 <asp:BoundField DataField="Item_CD" HeaderText="Item CD" SortExpression="Item_CD" />
                                 <asp:BoundField DataField="Item_name" HeaderText="Item Name" SortExpression="Item_name" />
                                 <asp:BoundField DataField="Item_type_name" HeaderText="Item Type Name" SortExpression="Item_type_name" />
                                 <asp:BoundField DataField="Unit" HeaderText="Unit" SortExpression="Unit" />
-                                <asp:BoundField DataField="Quantity" HeaderText="Qty." SortExpression="Quantity" />
-                                <asp:BoundField DataField="STD_Qty" HeaderText="[STD]Qty." SortExpression="STD_Qty" />
-                                <asp:BoundField DataField="Kilos_Convertion" HeaderText="Kilos Convertion" SortExpression="Kilos_Convertion" />
-                                <asp:BoundField DataField="Variable_Cost" HeaderText="Variable Cost" SortExpression="Variable_Cost" />
-                                <asp:BoundField DataField="STD_Variable_Cost" HeaderText="[STD]Variable Cost" SortExpression="STD_Variable_Cost" />
-                                <asp:BoundField DataField="Labour_Cost" HeaderText="Labour Cost" SortExpression="Labour_Cost" />
-                                <asp:BoundField DataField="STD_Labour_Cost" HeaderText="[STD]Labour Cost" SortExpression="STD_Labour_Cost" />
-                                <asp:BoundField DataField="Depreciation" HeaderText="Depreciation" SortExpression="Depreciation" />
-                                <asp:BoundField DataField="STD_Depreciation" HeaderText="[STD]Depreciation" SortExpression="STD_Depreciation" />
-                                <asp:BoundField DataField="Repair_Maintenance" SortExpression="Repair_Maintenance" HeaderText="[STD]Depreciation" />
-                                <asp:BoundField DataField="STD_Repair_Maintenance" SortExpression="STD_Repair_Maintenance" HeaderText="[STD]Repair Maintenance" />
-                                <asp:BoundField DataField="Overhead_Cost" SortExpression="Overhead_Cost" HeaderText="Overhead Cost" />
-                                <asp:BoundField DataField="STD_Overhead_Cost" SortExpression="STD_Overhead_Cost" HeaderText="[STD]Overhead Cost" />
-                                <asp:BoundField DataField="Retur_Cost" SortExpression="Retur_Cost" HeaderText="Retur Cost" />
+                                <asp:BoundField DataField="Quantity" HeaderText="Qty." SortExpression="Quantity" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="STD_Qty" HeaderText="[STD]Qty." SortExpression="STD_Qty" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Kilos_Convertion" HeaderText="Kilos Convertion" SortExpression="Kilos_Convertion" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Variable_Cost" HeaderText="Variable Cost" SortExpression="Variable_Cost" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="STD_Variable_Cost" HeaderText="[STD]Variable Cost" SortExpression="STD_Variable_Cost" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Labour_Cost" HeaderText="Labour Cost" SortExpression="Labour_Cost" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="STD_Labour_Cost" HeaderText="[STD]Labour Cost" SortExpression="STD_Labour_Cost" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Depreciation" HeaderText="Depreciation" SortExpression="Depreciation" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="STD_Depreciation" HeaderText="[STD]Depreciation" SortExpression="STD_Depreciation" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Repair_Maintenance" SortExpression="Repair_Maintenance" HeaderText="[STD]Depreciation" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="STD_Repair_Maintenance" SortExpression="STD_Repair_Maintenance" HeaderText="[STD]Repair Maintenance" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Overhead_Cost" SortExpression="Overhead_Cost" HeaderText="Overhead Cost" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="STD_Overhead_Cost" SortExpression="STD_Overhead_Cost" HeaderText="[STD]Overhead Cost" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Retur_Cost" SortExpression="Retur_Cost" HeaderText="Retur Cost" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
                             </Columns>
                             <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="First" LastPageText="Last" />
                             <PagerStyle CssClass="custom-pager"/>
