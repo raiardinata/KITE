@@ -105,6 +105,15 @@ namespace KITE.Pages.MasterPages
         protected global::System.Web.UI.HtmlControls.HtmlAnchor master_bmandrscalculation;
 
         /// <summary>
+        /// master_exportsales control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_exportsales;
+
+        /// <summary>
         /// report control.
         /// </summary>
         /// <remarks>

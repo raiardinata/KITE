@@ -119,6 +119,10 @@ namespace KITE.Models
                                 KG = uomConvertionRow.Field<decimal>("KilosConvertion");
                             }
                         }
+                        if (csvData.Quantity.Contains(','))
+                        {
+                            return new Tuple<object, Exception>(null, new Exception($"Terdapat kesalahan dalam konfigurasi csv comma separator menggunakan (','). Silahkan ganti konfigurasi csv comma separator menggunakan ('.')."));
+                        }
 
                         uomConvertionTempList.Add(new McFrameWithKilosConvertionViewModel
                         {
@@ -148,7 +152,7 @@ namespace KITE.Models
                             Overhead_Cost = Convert.ToString(Convert.ToDecimal(csvData.Overhead_Cost)),
                             STD_Overhead_Cost = Convert.ToString(Convert.ToDecimal(csvData.STD_Overhead_Cost)),
                             Retur_Cost = Convert.ToString(Convert.ToDecimal(csvData.Retur_Cost)),
-                            STD_Retur_Cost = Convert.ToString(Convert.ToDecimal(csvData.STD_Retur_Cost)),
+                            STD_Retur_Cost = (Convert.ToDecimal(csvData.STD_Retur_Cost)).ToString("N4"),
                         });
                     }
                     catch (Exception ex)
@@ -178,6 +182,11 @@ namespace KITE.Models
                                 KG = uomConvertionRow.Field<decimal>("KilosConvertion");
                             }
                         }
+                        if (csvData.Qty_in_Un_of_Entry.Contains(','))
+                        {
+                            return new Tuple<object, Exception>(null, new Exception($"Terdapat kesalahan dalam konfigurasi csv comma separator menggunakan (','). Silahkan ganti konfigurasi csv comma separator menggunakan ('.')."));
+                        }
+
                         uomConvertionTempList.Add(new GIRawMaterialWithConvertionViewModel
                         {
                             Posting_Date = csvData.Posting_Date,
@@ -191,7 +200,7 @@ namespace KITE.Models
                             Material_Document = csvData.Material_Document,
                             Batch = csvData.Batch,
                             Qty_in_Un_of_Entry = csvData.Qty_in_Un_of_Entry,
-                            Kilos_Convertion = (KG != 1) ? Convert.ToString(Convert.ToDecimal(csvData.Qty_in_Un_of_Entry) * KG) : Convert.ToString(csvData.Qty_in_Un_of_Entry),
+                            Kilos_Convertion = (KG != 1) ? (Convert.ToDecimal(csvData.Qty_in_Un_of_Entry) * KG).ToString("N4") : (Convert.ToDecimal(csvData.Qty_in_Un_of_Entry)).ToString("N4"),
                             Unit_of_Entry = csvData.Unit_of_Entry,
                             Entry_Date = csvData.Entry_Date,
                             Time_of_Entry = csvData.Time_of_Entry,
@@ -229,6 +238,11 @@ namespace KITE.Models
                                 KG = uomConvertionRow.Field<decimal>("KG");
                             }
                         }
+                        if (csvData.Qty_in_Un_of_Entry.Contains(','))
+                        {
+                            return new Tuple<object, Exception>(null, new Exception($"Terdapat kesalahan dalam konfigurasi csv comma separator menggunakan (','). Silahkan ganti konfigurasi csv comma separator menggunakan ('.')."));
+                        }
+
                         uomConvertionTempList.Add(new GRFinishGoodsWithConvertionViewModel
                         {
                             Posting_Date = csvData.Posting_Date,
@@ -242,7 +256,7 @@ namespace KITE.Models
                             Material_Document = csvData.Material_Document,
                             Batch = csvData.Batch,
                             Qty_in_Un_of_Entry = csvData.Qty_in_Un_of_Entry,
-                            Kilos_Convertion = (KG != 1) ? Convert.ToString(Convert.ToDecimal(csvData.Qty_in_Un_of_Entry) * KG) : Convert.ToString(csvData.Qty_in_Un_of_Entry),
+                            Kilos_Convertion = (KG != 1) ? (Convert.ToDecimal(csvData.Qty_in_Un_of_Entry) * KG).ToString("N4") : (Convert.ToDecimal(csvData.Qty_in_Un_of_Entry)).ToString("N4"),
                             Unit_of_Entry = csvData.Unit_of_Entry,
                             Entry_Date = csvData.Entry_Date,
                             Time_of_Entry = csvData.Time_of_Entry,
@@ -251,6 +265,90 @@ namespace KITE.Models
                             Quantity = csvData.Quantity,
                             Amount_in_LC = csvData.Amount_in_LC,
                             Goods_recipient = csvData.Goods_recipient,
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        return new Tuple<object, Exception>(null, new Exception($"Terdapat kesalahan dalam penambahan uomConvertionTempList. Detail : {ex}"));
+                    }
+
+
+                }
+                CsvDataList = uomConvertionTempList;
+                return Tuple.Create(CsvDataList, new Exception("null"));
+            }
+            else if (type == "exportSales")
+            {
+                CsvDataList = csvDataRead.GetRecords<ExportSalesViewModel>().ToList();
+                List<ExportSalesWithKilosConvertionViewModel> uomConvertionTempList = new List<ExportSalesWithKilosConvertionViewModel>(); // this will help change McFrameViewModel form into ExportSalesWithKilosConvertionViewModel form
+
+                foreach (ExportSalesViewModel csvData in (List<ExportSalesViewModel>)CsvDataList)
+                {
+                    KG = 1;
+                    try
+                    {
+                        Tuple<DataTable, Exception> insertResultMaterial = new DatabaseModel().SelectTableIntoDataTable("KG", "UOMandMaterial_Convertion", $" WHERE Material = '{csvData.Material}' AND Base_UOM = '{csvData.Unit_of_Entry}' ", connectionString);
+                        EnumerableRowCollection<DataRow> materialUomConvertionRows = insertResultMaterial.Item1.AsEnumerable(); // return only one line
+                        if (insertResultMaterial.Item2.Message == "null")
+                        {
+                            foreach (DataRow materialUomConvertionRow in materialUomConvertionRows) // but still need to iterate it. How to avoid iteration?
+                            {
+                                KG = materialUomConvertionRow.Field<decimal>("KG");
+                            }
+                        }
+                        else
+                        {
+                            Tuple<DataTable, Exception> insertResultKilos = new DatabaseModel().SelectTableIntoDataTable("KilosConvertion", "UoM_To_Kilos_Convertion", $" WHERE BaseUoM = '{csvData.Unit_of_Entry}' ", connectionString);
+                            EnumerableRowCollection<DataRow> kilosUomConvertionRows = insertResultKilos.Item1.AsEnumerable(); // return only one line
+                            if (insertResultKilos.Item2.Message == "null")
+                            {
+                                foreach (DataRow kilosUomConvertionRow in kilosUomConvertionRows) // but still need to iterate it. How to avoid iteration?
+                                {
+                                    KG = kilosUomConvertionRow.Field<decimal>("KilosConvertion");
+                                }
+                            }
+                        }
+                        if (csvData.Qty_in_Un_of_Entry.ToString().Contains(','))
+                        {
+                            return new Tuple<object, Exception>(null, new Exception($"Terdapat kesalahan dalam konfigurasi csv comma separator menggunakan (','). Silahkan ganti konfigurasi csv comma separator menggunakan ('.')."));
+                        }
+
+                        uomConvertionTempList.Add(new ExportSalesWithKilosConvertionViewModel
+                        {
+                            Posting_Date = csvData.Posting_Date,
+                            Document_Date = csvData.Document_Date,
+                            Document_Header_Text = csvData.Document_Header_Text,
+                            Purchase_Order = csvData.Purchase_Order,
+                            Reference = csvData.Reference,
+                            Material = csvData.Material,
+                            Material_Description = csvData.Material_Description,
+                            Plant = csvData.Plant,
+                            Storage_Location = csvData.Storage_Location,
+                            Movement_Type = csvData.Movement_Type,
+                            Material_Document = csvData.Material_Document,
+                            Batch = csvData.Batch,
+                            Qty_in_Un_of_Entry = csvData.Qty_in_Un_of_Entry,
+                            Unit_of_Entry = csvData.Unit_of_Entry,
+                            Entry_Date = csvData.Entry_Date,
+                            Time_of_Entry = csvData.Time_of_Entry,
+                            User_Name = csvData.User_Name,
+                            Base_Unit_of_Measure = csvData.Base_Unit_of_Measure,
+                            Quantity = csvData.Quantity,
+                            Debit_Credit_Ind = csvData.Debit_Credit_Ind,
+                            Amount_in_LC = csvData.Amount_in_LC,
+                            Sales_Order = csvData.Sales_Order,
+                            Text = csvData.Text,
+                            Customer = csvData.Customer,
+                            Vendor = csvData.Vendor,
+                            Vendor_Name = csvData.Vendor_Name,
+                            Goods_recipient = csvData.Goods_recipient,
+                            SO = csvData.SO,
+                            SaType = csvData.SaType,
+                            Sold_to_party = csvData.Sold_to_party,
+                            Name_1 = csvData.Name_1,
+                            PO_Number = csvData.PO_Number,
+                            NO_PEB = csvData.NO_PEB,
+                            Tanggal_PEB = csvData.Tanggal_PEB,
                         });
                     }
                     catch (Exception ex)

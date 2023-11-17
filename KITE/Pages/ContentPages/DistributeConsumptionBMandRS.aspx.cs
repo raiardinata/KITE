@@ -242,7 +242,7 @@ namespace KITE.Pages.ContentPages
 
         private void LoadRMperBatchData()
         {
-            Tuple<DataTable, Exception> RMperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "RM_per_Batch", " ORDER BY Finish_Goods, Raw_Material ASC ", ConnectionString);
+            Tuple<DataTable, Exception> RMperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "RM_per_Batch", " ORDER BY Finish_Goods ASC, Raw_Material ASC, Batch_Sequence ASC ", ConnectionString);
             if (RMperBatchDataTable.Item2.Message != "null")
             {
                 UtilityModel errorHandler = new UtilityModel();
@@ -388,7 +388,7 @@ namespace KITE.Pages.ContentPages
 
         private void LoadFGperBatchData()
         {
-            Tuple<DataTable, Exception> FGperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_per_Batch", " ORDER BY Finish_Goods, Raw_Material ASC ", ConnectionString);
+            Tuple<DataTable, Exception> FGperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_per_Batch", " ORDER BY Finish_Goods ASC, FG_Batch ASC, Raw_Material ASC, RM_Batch_Sequence ASC ", ConnectionString);
             if (FGperBatchDataTable.Item2.Message != "null")
             {
                 UtilityModel errorHandler = new UtilityModel();

@@ -51,46 +51,46 @@
                                 <asp:BoundField DataField="Item_name" HeaderText="Item Name" SortExpression="Item_name" />
                                 <asp:BoundField DataField="Item_type_name" HeaderText="Item Type Name" SortExpression="Item_type_name" />
                                 <asp:BoundField DataField="Unit" HeaderText="Unit" SortExpression="Unit" />
-                                <asp:BoundField DataField="Quantity" HeaderText="Qty." SortExpression="Quantity" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="Quantity" HeaderText="Qty." SortExpression="Quantity" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="STD_Qty" HeaderText="[STD]Qty." SortExpression="STD_Qty" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="STD_Qty" HeaderText="[STD]Qty." SortExpression="STD_Qty" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="Kilos_Convertion" HeaderText="Kilos Convertion" SortExpression="Kilos_Convertion" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="Kilos_Convertion" HeaderText="Kilos Convertion" SortExpression="Kilos_Convertion" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="Variable_Cost" HeaderText="Variable Cost" SortExpression="Variable_Cost" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="Variable_Cost" HeaderText="Variable Cost" SortExpression="Variable_Cost" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="STD_Variable_Cost" HeaderText="[STD]Variable Cost" SortExpression="STD_Variable_Cost" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="STD_Variable_Cost" HeaderText="[STD]Variable Cost" SortExpression="STD_Variable_Cost" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="Labour_Cost" HeaderText="Labour Cost" SortExpression="Labour_Cost" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="Labour_Cost" HeaderText="Labour Cost" SortExpression="Labour_Cost" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="STD_Labour_Cost" HeaderText="[STD]Labour Cost" SortExpression="STD_Labour_Cost" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="STD_Labour_Cost" HeaderText="[STD]Labour Cost" SortExpression="STD_Labour_Cost" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="Depreciation" HeaderText="Depreciation" SortExpression="Depreciation" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="Depreciation" HeaderText="Depreciation" SortExpression="Depreciation" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="STD_Depreciation" HeaderText="[STD]Depreciation" SortExpression="STD_Depreciation" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="STD_Depreciation" HeaderText="[STD]Depreciation" SortExpression="STD_Depreciation" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="Repair_Maintenance" SortExpression="Repair_Maintenance" HeaderText="[STD]Depreciation" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="Repair_Maintenance" SortExpression="Repair_Maintenance" HeaderText="[STD]Depreciation" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="STD_Repair_Maintenance" SortExpression="STD_Repair_Maintenance" HeaderText="[STD]Repair Maintenance" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="STD_Repair_Maintenance" SortExpression="STD_Repair_Maintenance" HeaderText="[STD]Repair Maintenance" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="Overhead_Cost" SortExpression="Overhead_Cost" HeaderText="Overhead Cost" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="Overhead_Cost" SortExpression="Overhead_Cost" HeaderText="Overhead Cost" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="STD_Overhead_Cost" SortExpression="STD_Overhead_Cost" HeaderText="[STD]Overhead Cost" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="STD_Overhead_Cost" SortExpression="STD_Overhead_Cost" HeaderText="[STD]Overhead Cost" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="Retur_Cost" SortExpression="Retur_Cost" HeaderText="Retur Cost" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="Retur_Cost" SortExpression="Retur_Cost" HeaderText="Retur Cost" >
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
                             </Columns>
