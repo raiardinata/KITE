@@ -83,6 +83,7 @@ namespace KITE.Models
                 valuesList.Add(csvValues.PO_Number);
                 valuesList.Add(csvValues.NO_PEB);
                 valuesList.Add(csvValues.Tanggal_PEB);
+                valuesList.Add(csvValues.KilosConvertion);
                 valuesArray.Add(valuesList);
             }
             return Tuple.Create(columns, valuesArray);
@@ -324,6 +325,8 @@ namespace KITE.Models
 
         [Name("Tanggal PEB")]
         public string Tanggal_PEB { get; set; }
+
+        public decimal KilosConvertion { get; set; }
 
         public override bool Equals(object obj)
         {

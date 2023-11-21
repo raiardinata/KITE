@@ -254,8 +254,13 @@ namespace KITE.Pages.ContentPages
                         File.Delete(Session["FilePath"].ToString());
                     }
                     Session["FilePath"] = "";
-                    string script = $"alert('Upload CSV berhasil.'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/ExportSalesUpload.aspx")}';";
-                    ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
+
+                    if (errorLabel.Text == "")
+                    {
+                        string script = $"alert('Upload CSV berhasil.'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/ExportSalesUpload.aspx")}';";
+                        ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
+                    }
+
                 }
             }
             catch (Exception ex)

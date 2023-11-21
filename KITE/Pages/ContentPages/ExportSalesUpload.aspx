@@ -41,8 +41,8 @@
                                         <asp:Label ID="lblSequenceNo" runat="server" Text=""></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Posting_Date" SortExpression="Posting_Date" HeaderText="Posting Date" />
-                                <asp:BoundField DataField="Document_Date" SortExpression="Document_Date" HeaderText="Document Date" />
+                                <asp:BoundField DataField="Posting_Date" SortExpression="Posting_Date" HeaderText="Posting Date" DataFormatString="{0:yyyy/MM/dd}" />
+                                <asp:BoundField DataField="Document_Date" SortExpression="Document_Date" HeaderText="Document Date" DataFormatString="{0:yyyy/MM/dd}"  />
                                 <asp:BoundField DataField="Document_Header_Text" SortExpression="Document_Header_Text" HeaderText="Document Header Text" />
                                 <asp:BoundField DataField="Purchase_Order" SortExpression="Purchase_Order" HeaderText="Purchase_Order" />
                                 <asp:BoundField DataField="Reference" SortExpression="Reference" HeaderText="Reference" />
@@ -53,15 +53,24 @@
                                 <asp:BoundField DataField="Movement_Type" SortExpression="Movement_Type" HeaderText="Movement Type" />
                                 <asp:BoundField DataField="Material_Document" SortExpression="Material_Document" HeaderText="Material Document" />
                                 <asp:BoundField DataField="Batch" SortExpression="Batch" HeaderText="Batch" />
-                                <asp:BoundField DataField="Qty_in_Un_of_Entry" SortExpression="Qty_in_Un_of_Entry" HeaderText="Qty in Un of Entry" />
+                                <asp:BoundField DataField="Qty_in_Un_of_Entry" SortExpression="Qty_in_Un_of_Entry" HeaderText="Qty in Un of Entry" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="KilosConvertion" SortExpression="KilosConvertion" HeaderText="Kilos Convertion" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
                                 <asp:BoundField DataField="Unit_of_Entry" SortExpression="Unit_of_Entry" HeaderText="Unit of Entry" />
-                                <asp:BoundField DataField="Entry_Date" SortExpression="Entry_Date" HeaderText="Entry Date" />
+                                <asp:BoundField DataField="Entry_Date" SortExpression="Entry_Date" HeaderText="Entry Date" DataFormatString="{0:yyyy/MM/dd}"  />
                                 <asp:BoundField DataField="Time_of_Entry" SortExpression="Time_of_Entry" HeaderText="Time of Entry" />
                                 <asp:BoundField DataField="User_Name" SortExpression="User_Name" HeaderText="User Name" />
                                 <asp:BoundField DataField="Base_Unit_of_Measure" SortExpression="Base_Unit_of_Measure" HeaderText="Base Unitof Measure" />
-                                <asp:BoundField DataField="Quantity" SortExpression="Quantity" HeaderText="Quantity" />
+                                <asp:BoundField DataField="Quantity" SortExpression="Quantity" HeaderText="Quantity" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
                                 <asp:BoundField DataField="Debit_Credit_Ind" SortExpression="Debit_Credit_Ind" HeaderText="Debit Credit Ind" />
-                                <asp:BoundField DataField="Amount_in_LC" SortExpression="Amount_in_LC" HeaderText="Amount in LC" />
+                                <asp:BoundField DataField="Amount_in_LC" SortExpression="Amount_in_LC" HeaderText="Amount in LC" DataFormatString="{0:N4}">
+                                    <ItemStyle HorizontalAlign="Right" />
+                                </asp:BoundField>
                                 <asp:BoundField DataField="Sales_Order" SortExpression="Sales_Order" HeaderText="Sales Order" />
                                 <asp:BoundField DataField="Text" SortExpression="Text" HeaderText="Text" />
                                 <asp:BoundField DataField="Customer" SortExpression="Customer" HeaderText="Customer" />

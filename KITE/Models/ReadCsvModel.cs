@@ -14,7 +14,7 @@ namespace KITE.Models
         // Read csv function so it could be tested and reusable
         public Tuple<object, Exception> ReadCsvFunction(string processType, string filePath, string delimiter, string connectionString)
         {
-            using (CsvReader csvData = ReadCsvFile(filePath, delimiter)) // still using McFrameViewModel
+            using (CsvReader csvData = ReadCsvFile(filePath, delimiter))
             {
                 Tuple<object, Exception> uomConvertionObject = UomConvertion(csvData, processType, connectionString);
                 if (uomConvertionObject.Item2.Message != "null")
@@ -328,6 +328,7 @@ namespace KITE.Models
                             Material_Document = csvData.Material_Document,
                             Batch = csvData.Batch,
                             Qty_in_Un_of_Entry = csvData.Qty_in_Un_of_Entry,
+                            KilosConvertion = (KG != 1) ? csvData.Qty_in_Un_of_Entry * KG : csvData.Qty_in_Un_of_Entry,
                             Unit_of_Entry = csvData.Unit_of_Entry,
                             Entry_Date = csvData.Entry_Date,
                             Time_of_Entry = csvData.Time_of_Entry,
