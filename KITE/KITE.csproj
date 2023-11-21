@@ -480,6 +480,7 @@
     <Content Include="Client\JQuery\ui\i18n\vssver2.scc" />
     <Content Include="Pages\ContentPages\ChangePassword.aspx" />
     <Content Include="Pages\ContentPages\DistributeConsumptionBMandRS.aspx" />
+    <Content Include="Pages\ContentPages\DistributeFGTracing.aspx" />
     <Content Include="Pages\ContentPages\ExportSalesUpload.aspx" />
     <Content Include="Pages\ContentPages\GIRawMaterialUpload.aspx" />
     <Content Include="Pages\ContentPages\GRFinishGoodsUpload.aspx" />
@@ -769,6 +770,13 @@
     <Compile Include="Pages\ContentPages\DistributeConsumptionBMandRS.aspx.designer.cs">
       <DependentUpon>DistributeConsumptionBMandRS.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ContentPages\DistributeFGTracing.aspx.cs">
+      <DependentUpon>DistributeFGTracing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ContentPages\DistributeFGTracing.aspx.designer.cs">
+      <DependentUpon>DistributeFGTracing.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ContentPages\ExportSalesUpload.aspx.cs">
       <DependentUpon>ExportSalesUpload.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -983,6 +991,12 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -1000,6 +1014,9 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <servers defaultServer="SelfHostServer">
+            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:17324/" workingDir="" />
+          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
