@@ -142,7 +142,7 @@ namespace KITE.Models
         public DateTime YM { get; set; }
 
         [Name("LVL")]
-        public int? Lvl { get; set; }
+        public int Lvl { get; set; }
 
         [Name("Target item CD")]
         public string Target_item_CD { get; set; }
@@ -220,7 +220,7 @@ namespace KITE.Models
         public DateTime YM { get; set; }
 
         [Name("LVL")]
-        public int? Lvl { get; set; }
+        public int Lvl { get; set; }
 
         [Name("Target item CD")]
         public string Target_item_CD { get; set; }

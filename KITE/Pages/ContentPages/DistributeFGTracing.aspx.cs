@@ -1,19 +1,14 @@
 ﻿using KITE.Models;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace KITE.Pages.ContentPages
 {
     public partial class DistributeFGTracing : System.Web.UI.Page
     {
-        private DataTable globalRMperBatchDataTable;
-        private DataTable globalFGperBatchDataTable;
+        private DataTable globalFGTracingDataTable;
         private string ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -24,76 +19,52 @@ namespace KITE.Pages.ContentPages
             }
         }
 
+        public void btnDownloadToCsv(object sender, EventArgs e)
+        {
+            LoadFGTracingData();
+            string fileName = $"{DateTime.Now:yyyyMMdd}KITE_FGTracing.csv";
+            string csvContent = new ReadCsvModel().DataTableToCsv(globalFGTracingDataTable);
+
+            Response.Clear();
+            Response.ContentType = "text/csv";
+            Response.AddHeader("Content-Disposition", $"attachment;filename={fileName}");
+            Response.Write(csvContent);
+            Response.End();
+        }
+
         public void btnCalculate_Click(object sender, EventArgs e)
         {
             object currentYear = yearPeriodTxt.Text;
             object currentMonth = monthPeriodTxt.Text;
             object[] param = new[] { currentYear, currentMonth };
-            GridView[] gridArray = new GridView[] { RMperBatchGridView, FGperBatchGridView };
+            GridView[] gridArray = new GridView[] { FGTracingGridView };
 
             if (yearPeriodTxt.Text != "" && monthPeriodTxt.Text != "")
             {
                 try
                 {
-                    Exception returningBalanceGIResult = new DatabaseModel().ExecStoreProcedure("ReturnRMperBatchDistributedValue", param, ConnectionString);
-                    if (returningBalanceGIResult != null)
+                    Exception createFGTracingResult = new DatabaseModel().ExecStoreProcedure("CreatingTracingFG", param, ConnectionString);
+                    if (createFGTracingResult != null)
                     {
                         UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses ReturnRMperBatchDistributedValue. Detail : {returningBalanceGIResult.Message}");
-                        errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
-                        return;
-                    }
-                    Exception balanceGIResult = new DatabaseModel().ExecStoreProcedure("CreatingBalanceGI", param, ConnectionString);
-                    if (balanceGIResult != null)
-                    {
-                        UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses CreatingBalanceGI. Detail : {balanceGIResult.Message}");
-                        errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
-                        return;
-                    }
-                    Exception rmperBatchResult = new DatabaseModel().ExecStoreProcedure("CreatingRMperBatch", param, ConnectionString);
-                    if (rmperBatchResult != null)
-                    {
-                        UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses CreatingRMperBatch. Detail : {rmperBatchResult.Message}");
-                        errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
-                        return;
-                    }
-                    Exception fgperBatchResult = new DatabaseModel().ExecStoreProcedure("CreatingFGperBatch", param, ConnectionString);
-                    if (fgperBatchResult != null)
-                    {
-                        UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses CreatingFGperBatch. Detail : {fgperBatchResult.Message}");
+                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses ReturnFGTracingDistributedValue. Detail : {createFGTracingResult.Message}");
                         errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
                         return;
                     }
 
-                    Tuple<DataTable, Exception> RMperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "RM_per_Batch", " ORDER BY Finish_Goods ASC, Raw_Material ASC, Batch_Sequence ASC ", ConnectionString);
-                    if (RMperBatchDataTable.Item2.Message != "null")
+                    Tuple<DataTable, Exception> FGTracingDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_Tracing", " ORDER BY Finish_Goods ASC, FG_Batch ASC, Raw_Material ASC, RM_Batch_Sequence ASC, RM_Batch ASC ", ConnectionString);
+                    if (FGTracingDataTable.Item2.Message != "null")
                     {
                         UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table RM_per_Batch. Detail : {RMperBatchDataTable.Item2.Message}");
+                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table FG_Tracing. Detail : {FGTracingDataTable.Item2.Message}");
                         errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
                         return;
                     }
                     else
                     {
-                        globalRMperBatchDataTable = RMperBatchDataTable.Item1;
-                        RMperBatchBindGridView();
-                    }
-
-                    Tuple<DataTable, Exception> FGperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_per_Batch", " ORDER BY Finish_Goods ASC, FG_Batch ASC, Raw_Material ASC, RM_Batch_Sequence ASC ", ConnectionString);
-                    if (FGperBatchDataTable.Item2.Message != "null")
-                    {
-                        UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table FG_per_Batch. Detail : {FGperBatchDataTable.Item2.Message}");
-                        errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
-                        return;
-                    }
-                    else
-                    {
-                        globalFGperBatchDataTable = FGperBatchDataTable.Item1;
-                        FGperBatchBindGridView();
+                        globalFGTracingDataTable = FGTracingDataTable.Item1;
+                        FGTracingBindGridView();
+                        btnDownloadCsv.Enabled = true;
                     }
                 }
                 catch (Exception ex)
@@ -114,295 +85,149 @@ namespace KITE.Pages.ContentPages
         }
 
         // RM per Batch Region
-        private void RMperBatchBindGridView()
+        private void FGTracingBindGridView()
         {
-            ViewState["RMRow"] = 0;
-            RMperBatchGridView.DataSource = globalRMperBatchDataTable;
-            RMperBatchGridView.PageSize = int.Parse(RMperBatchPageSizeDropDown.SelectedValue);
-            RMperBatchGridView.DataBind();
+            ViewState["FGTRow"] = 0;
+            FGTracingGridView.DataSource = globalFGTracingDataTable;
+            FGTracingGridView.PageSize = int.Parse(FGTracingPageSizeDropDown.SelectedValue);
+            FGTracingGridView.DataBind();
 
-            if (globalRMperBatchDataTable.Rows.Count > 0)
+            if (globalFGTracingDataTable.Rows.Count > 0)
             {
-                if (ViewState["RMRow"].ToString().Trim() == "0")
+                if (ViewState["FGTRow"].ToString().Trim() == "0")
                 {
-                    ViewState["RMRow"] = 1;
-                    ViewState["RMgrandtotal"] = globalRMperBatchDataTable.Rows.Count;
-                    RMlblTotalRecords.Text = String.Format("Total Records : {0}", ViewState["RMgrandtotal"]);
+                    ViewState["FGTRow"] = 1;
+                    ViewState["FGTgrandtotal"] = globalFGTracingDataTable.Rows.Count;
+                    FGTlblTotalRecords.Text = String.Format("Total Records : {0}", ViewState["FGTgrandtotal"]);
 
-                    int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["RMgrandtotal"]) / RMperBatchGridView.PageSize));
-                    RMperBatchlblTotalNumberOfPages.Text = pageCount.ToString();
-                    RMperBatchGoToPageTxt.Text = (RMperBatchGridView.PageIndex + 1).ToString();
+                    int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["FGTgrandtotal"]) / FGTracingGridView.PageSize));
+                    FGTracinglblTotalNumberOfPages.Text = pageCount.ToString();
+                    FGTracingGoToPageTxt.Text = (FGTracingGridView.PageIndex + 1).ToString();
                 }
 
             }
             else
             {
-                ViewState["RMgrandtotal"] = 0;
+                ViewState["FGTgrandtotal"] = 0;
             }
         }
 
-        protected void RMperBatchGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void FGTracingGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                int pageSize = RMperBatchGridView.PageSize;
-                int pageIndex = RMperBatchGridView.PageIndex;
+                int pageSize = FGTracingGridView.PageSize;
+                int pageIndex = FGTracingGridView.PageIndex;
                 int sequenceNumber = pageIndex * pageSize + e.Row.RowIndex + 1;
 
-                Label lblSequence = (Label)e.Row.FindControl("RMperBatchlblSequenceNo");
+                Label lblSequence = (Label)e.Row.FindControl("FGTracinglblSequenceNo");
                 lblSequence.Text = sequenceNumber.ToString();
             }
         }
 
-        protected void RMperBatchGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        protected void FGTracingGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            RMperBatchGridView.PageIndex = e.NewPageIndex;
-            LoadRMperBatchData();
-            RMperBatchBindGridView();
+            FGTracingGridView.PageIndex = e.NewPageIndex;
+            LoadFGTracingData();
+            FGTracingBindGridView();
         }
 
-        protected void RMperBatchPageSizeDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        protected void FGTracingPageSizeDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int selectedPageSize = Convert.ToInt32(RMperBatchPageSizeDropDown.SelectedValue);
-            RMperBatchGridView.PageSize = selectedPageSize;
+            int selectedPageSize = Convert.ToInt32(FGTracingPageSizeDropDown.SelectedValue);
+            FGTracingGridView.PageSize = selectedPageSize;
 
-            LoadRMperBatchData();
-            RMperBatchBindGridView();
+            LoadFGTracingData();
+            FGTracingBindGridView();
         }
 
-        protected void RMperBatchGoToPage_TextChanged(object sender, EventArgs e)
+        protected void FGTracingGoToPage_TextChanged(object sender, EventArgs e)
         {
             try
             {
                 int pageNumber;
-                int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["RMgrandtotal"]) / RMperBatchGridView.PageSize));
-                if (int.TryParse(RMperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber > 0 && pageNumber <= pageCount)
+                int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["FGTgrandtotal"]) / FGTracingGridView.PageSize));
+                if (int.TryParse(FGTracingGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber > 0 && pageNumber <= pageCount)
                 {
-                    RMperBatchLoadPage(pageNumber - 1);
+                    FGTracingLoadPage(pageNumber - 1);
                 }
                 else
                 {
-                    RMperBatchLoadPage(0);
+                    FGTracingLoadPage(0);
                 }
             }
             catch (Exception ex)
             {
                 UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("Terdapat masalah ketika mau membuka halaman " + RMperBatchGoToPageTxt.Text.Trim() + ". Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
+                Exception loadCsvException = new Exception("Terdapat masalah ketika mau membuka halaman " + FGTracingGoToPageTxt.Text.Trim() + ". Detail : " + ex.Message);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { FGTracingGridView }, errorLabel);
             }
         }
 
-        protected void RMperBatchbtnPrev_OnClick(object sender, EventArgs e)
+        protected void FGTracingbtnPrev_OnClick(object sender, EventArgs e)
         {
             try
             {
                 int pageNumber;
-                if (int.TryParse(RMperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber > 1)
+                if (int.TryParse(FGTracingGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber > 1)
                 {
-                    RMperBatchLoadPage(pageNumber - 2);
+                    FGTracingLoadPage(pageNumber - 2);
                 }
                 else
                 {
-                    RMperBatchLoadPage(RMperBatchGridView.PageIndex);
+                    FGTracingLoadPage(FGTracingGridView.PageIndex);
                 }
             }
             catch (Exception ex)
             {
                 UtilityModel errorHandler = new UtilityModel();
                 Exception loadCsvException = new Exception("Terdapat masalah ketika tombol previous page berjalan. Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { FGTracingGridView }, errorLabel);
             }
         }
 
-        protected void RMperBatchbtnNext_OnClick(object sender, EventArgs e)
+        protected void FGTracingbtnNext_OnClick(object sender, EventArgs e)
         {
             try
             {
                 int pageNumber;
-                int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["RMgrandtotal"]) / RMperBatchGridView.PageSize));
-                if (int.TryParse(RMperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber < pageCount)
+                int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["FGTgrandtotal"]) / FGTracingGridView.PageSize));
+                if (int.TryParse(FGTracingGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber < pageCount)
                 {
-                    RMperBatchLoadPage(pageNumber);
+                    FGTracingLoadPage(pageNumber);
                 }
                 else
                 {
-                    RMperBatchLoadPage(RMperBatchGridView.PageIndex);
+                    FGTracingLoadPage(FGTracingGridView.PageIndex);
                 }
             }
             catch (Exception ex)
             {
                 UtilityModel errorHandler = new UtilityModel();
                 Exception loadCsvException = new Exception("Terdapat masalah ketika tombol next page berjalan. Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
+                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { FGTracingGridView }, errorLabel);
             }
         }
 
-        private void RMperBatchLoadPage(int pageNumber)
+        private void FGTracingLoadPage(int pageNumber)
         {
             GridViewPageEventArgs e = new GridViewPageEventArgs(pageNumber);
-            RMperBatchGridView_PageIndexChanging(this, e);
+            FGTracingGridView_PageIndexChanging(this, e);
         }
 
-        private void LoadRMperBatchData()
+        private void LoadFGTracingData()
         {
-            Tuple<DataTable, Exception> RMperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "RM_per_Batch", " ORDER BY Finish_Goods ASC, Raw_Material ASC, Batch_Sequence ASC ", ConnectionString);
-            if (RMperBatchDataTable.Item2.Message != "null")
+            Tuple<DataTable, Exception> FGTracingDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_Tracing", " ORDER BY Finish_Goods ASC, FG_Batch ASC, Raw_Material ASC, RM_Batch_Sequence ASC, RM_Batch ASC ", ConnectionString);
+            if (FGTracingDataTable.Item2.Message != "null")
             {
                 UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table RM_per_Batch. Detail : {RMperBatchDataTable.Item2.Message}");
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
+                Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table FG_Tracing. Detail : {FGTracingDataTable.Item2.Message}");
+                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { FGTracingGridView }, errorLabel);
             }
             else
             {
-                globalRMperBatchDataTable = RMperBatchDataTable.Item1;
-                RMperBatchBindGridView();
-            }
-        }
-
-        // FG per Batch Region
-        private void FGperBatchBindGridView()
-        {
-            ViewState["FGRow"] = 0;
-            FGperBatchGridView.DataSource = globalFGperBatchDataTable;
-            FGperBatchGridView.PageSize = int.Parse(FGperBatchPageSizeDropDown.SelectedValue);
-            FGperBatchGridView.DataBind();
-
-            if (globalFGperBatchDataTable.Rows.Count > 0)
-            {
-                if (ViewState["FGRow"].ToString().Trim() == "0")
-                {
-                    ViewState["FGRow"] = 1;
-                    ViewState["FGgrandtotal"] = globalFGperBatchDataTable.Rows.Count;
-                    FGlblTotalRecords.Text = String.Format("Total Records : {0}", ViewState["FGgrandtotal"]);
-
-                    int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["FGgrandtotal"]) / FGperBatchGridView.PageSize));
-                    FGperBatchlblTotalNumberOfPages.Text = pageCount.ToString();
-                    FGperBatchGoToPageTxt.Text = (FGperBatchGridView.PageIndex + 1).ToString();
-                }
-            }
-            else
-            {
-                ViewState["FGgrandtotal"] = 0;
-            }
-        }
-
-        protected void FGperBatchGridView_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                int pageSize = FGperBatchGridView.PageSize;
-                int pageIndex = FGperBatchGridView.PageIndex;
-                int sequenceNumber = pageIndex * pageSize + e.Row.RowIndex + 1;
-
-                Label lblSequence = (Label)e.Row.FindControl("FGperBatchlblSequenceNo");
-                lblSequence.Text = sequenceNumber.ToString();
-            }
-        }
-
-        protected void FGperBatchGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            FGperBatchGridView.PageIndex = e.NewPageIndex;
-            LoadFGperBatchData();
-            FGperBatchBindGridView();
-        }
-
-        protected void FGperBatchPageSizeDropDown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int selectedPageSize = Convert.ToInt32(FGperBatchPageSizeDropDown.SelectedValue);
-            FGperBatchGridView.PageSize = selectedPageSize;
-
-            LoadFGperBatchData();
-            FGperBatchBindGridView();
-        }
-
-        protected void FGperBatchGoToPage_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int pageNumber;
-                int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["FGgrandtotal"]) / FGperBatchGridView.PageSize));
-                if (int.TryParse(FGperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber > 0 && pageNumber <= pageCount)
-                {
-                    FGperBatchLoadPage(pageNumber - 1);
-                }
-                else
-                {
-                    FGperBatchLoadPage(0);
-                }
-            }
-            catch (Exception ex)
-            {
-                UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("Terdapat masalah ketika mau membuka halaman " + RMperBatchGoToPageTxt.Text.Trim() + ". Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { FGperBatchGridView }, errorLabel);
-            }
-        }
-
-        protected void FGperBatchbtnPrev_OnClick(object sender, EventArgs e)
-        {
-            try
-            {
-                int pageNumber;
-                if (int.TryParse(FGperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber > 1)
-                {
-                    FGperBatchLoadPage(pageNumber - 2);
-                }
-                else
-                {
-                    FGperBatchLoadPage(FGperBatchGridView.PageIndex);
-                }
-            }
-            catch (Exception ex)
-            {
-                UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("Terdapat masalah ketika tombol previous page berjalan. Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { FGperBatchGridView }, errorLabel);
-            }
-        }
-
-        protected void FGperBatchbtnNext_OnClick(object sender, EventArgs e)
-        {
-            try
-            {
-                int pageNumber;
-                int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["FGgrandtotal"]) / FGperBatchGridView.PageSize));
-                if (int.TryParse(FGperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber < pageCount)
-                {
-                    FGperBatchLoadPage(pageNumber);
-                }
-                else
-                {
-                    FGperBatchLoadPage(FGperBatchGridView.PageIndex);
-                }
-            }
-            catch (Exception ex)
-            {
-                UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("Terdapat masalah ketika tombol next page berjalan. Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { FGperBatchGridView }, errorLabel);
-            }
-        }
-
-        private void FGperBatchLoadPage(int pageNumber)
-        {
-            GridViewPageEventArgs e = new GridViewPageEventArgs(pageNumber);
-            FGperBatchGridView_PageIndexChanging(this, e);
-        }
-
-        private void LoadFGperBatchData()
-        {
-            Tuple<DataTable, Exception> FGperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_per_Batch", " ORDER BY Finish_Goods ASC, FG_Batch ASC, Raw_Material ASC, RM_Batch_Sequence ASC ", ConnectionString);
-            if (FGperBatchDataTable.Item2.Message != "null")
-            {
-                UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table RM_per_Batch. Detail : {FGperBatchDataTable.Item2.Message}");
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { FGperBatchGridView }, errorLabel);
-            }
-            else
-            {
-                globalFGperBatchDataTable = FGperBatchDataTable.Item1;
-                FGperBatchBindGridView();
+                globalFGTracingDataTable = FGTracingDataTable.Item1;
+                FGTracingBindGridView();
             }
         }
     }

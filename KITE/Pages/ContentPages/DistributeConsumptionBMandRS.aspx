@@ -2,7 +2,7 @@
 <asp:Content ID="BMandRSCalculate" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
         function showWarning() {
-            alert('Semua data RM per Batch dan FG per Batch periode yang dipilih akan didelete dan generate ulang.');
+            alert('Semua data RM per Batch, FG per Batch dan FG Tracing Calculation periode yang dipilih akan didelete dan generate ulang.');
         }
     </script>
     <style>
@@ -165,5 +165,6 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
+        <asp:Button ID="btnDownloadCsv" runat="server" OnClick="btnDownloadToCsv" Enabled="false" Text="Download Csv" class="btn btn-primary" style="display: inline-block; margin-right: 0px; float: right;padding-right: 12px;margin-top: 10px;" />
     </div>
 </asp:Content>

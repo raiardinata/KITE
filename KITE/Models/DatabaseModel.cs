@@ -163,6 +163,9 @@ namespace KITE.Models
                 case "ReturnRMperBatchDistributedValue":
                     switchStoreProcedureResult = new DistributeConsumptionBM_RSFunctionModel().ExecCreatingBMandRSProcedure(command, param);
                     break;
+                case "CreatingTracingFG":
+                    switchStoreProcedureResult = new DistributeConsumptionFGTracingModel().ExecCreatingFGTracingProcedure(command, param);
+                    break;
             }
             return switchStoreProcedureResult;
         }

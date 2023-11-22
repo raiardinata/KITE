@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace KITE.Models
@@ -363,6 +364,59 @@ namespace KITE.Models
                 return Tuple.Create(CsvDataList, new Exception("null"));
             }
             return new Tuple<object, Exception>(null, new Exception("Type tidak dapat dideteksi dalam pemrosesan konversi UoM."));
+        }
+
+        public string DataTableToCsv(DataTable dataTable)
+        {
+            // Create a StringBuilder to hold the CSV data
+            System.Text.StringBuilder csvContent = new System.Text.StringBuilder();
+
+            // Write column headers
+            foreach (DataColumn column in dataTable.Columns)
+            {
+                csvContent.Append(column.ColumnName);
+                csvContent.Append(";");
+            }
+            csvContent.AppendLine();
+
+            // Write data rows
+            foreach (DataRow row in dataTable.Rows)
+            {
+                foreach (object item in row.ItemArray)
+                {
+                    csvContent.Append(item.ToString());
+                    csvContent.Append(";");
+                }
+                csvContent.AppendLine();
+            }
+
+            return csvContent.ToString();
+        }
+
+        public DataTable ConvertListToDataTable<T>(List<T> dataList)
+        {
+            DataTable dataTable = new DataTable();
+
+            // Get all properties of the type T
+            PropertyInfo[] properties = typeof(T).GetProperties();
+
+            // Create DataTable columns based on the properties of T
+            foreach (PropertyInfo property in properties)
+            {
+                dataTable.Columns.Add(property.Name, property.PropertyType);
+            }
+
+            // Populate DataTable rows with data from the list
+            foreach (T item in dataList)
+            {
+                DataRow row = dataTable.NewRow();
+                foreach (PropertyInfo property in properties)
+                {
+                    row[property.Name] = property.GetValue(item);
+                }
+                dataTable.Rows.Add(row);
+            }
+            return dataTable;
         }
     }
 }

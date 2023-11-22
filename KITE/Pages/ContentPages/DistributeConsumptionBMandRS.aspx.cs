@@ -2,6 +2,8 @@
 using System;
 using System.Configuration;
 using System.Data;
+using System.IO;
+using System.IO.Compression;
 using System.Web.UI.WebControls;
 
 namespace KITE.Pages.ContentPages
@@ -17,6 +19,41 @@ namespace KITE.Pages.ContentPages
             if (IsPostBack)
             {
                 errorLabel.Text = "";
+            }
+        }
+
+        public void btnDownloadToCsv(object sender, EventArgs e)
+        {
+            // Load RM per Batch Data
+            LoadRMperBatchData();
+            string rmFileName = $"{DateTime.Now:yyyyMMdd}KITE_RMperBatch.csv";
+            string rmCsvContent = new ReadCsvModel().DataTableToCsv(globalRMperBatchDataTable);
+
+            // Load FG per Batch Data
+            LoadFGperBatchData();
+            string fgFileName = $"{DateTime.Now:yyyyMMdd}KITE_FGTracing.csv";
+            string fgCsvContent = new ReadCsvModel().DataTableToCsv(globalFGperBatchDataTable);
+
+            // Create a memory stream to store the zip file
+            using (MemoryStream zipStream = new MemoryStream())
+            {
+                // Create a zip archive
+                using (ZipArchive zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Create, true))
+                {
+                    // Add the RM CSV file to the archive
+                    new UtilityModel().AddFileToZip(zipArchive, rmCsvContent, rmFileName);
+
+                    // Add the FG CSV file to the archive
+                    new UtilityModel().AddFileToZip(zipArchive, fgCsvContent, fgFileName);
+                }
+
+                // Set response properties for the zip file
+                Response.Clear();
+                Response.ContentType = "application/zip";
+                Response.AddHeader("Content-Disposition", $"attachment;filename=BMandRSCalculation.zip");
+                zipStream.Seek(0, SeekOrigin.Begin);
+                zipStream.CopyTo(Response.OutputStream);
+                Response.End();
             }
         }
 
@@ -90,6 +127,7 @@ namespace KITE.Pages.ContentPages
                     {
                         globalFGperBatchDataTable = FGperBatchDataTable.Item1;
                         FGperBatchBindGridView();
+                        btnDownloadCsv.Enabled = true;
                     }
                 }
                 catch (Exception ex)

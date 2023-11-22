@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
         function showWarning() {
-            alert('Semua data RM per Batch dan FG per Batch periode yang dipilih akan didelete dan generate ulang.');
+            alert('Semua data FG Tracing periode yang dipilih akan didelete dan generate ulang.');
         }
     </script>
     <style>
@@ -29,123 +29,63 @@
         </table>
         <asp:Label ID="errorLabel" runat="server" Enabled="false" style="color: red; position:relative; width:auto; height:auto;"></asp:Label>
 
-        <asp:ScriptManager ID="BMandRSScriptManager" runat="server">
+        <asp:ScriptManager ID="FGTracingScriptManager" runat="server">
             <Scripts>
             </Scripts>
         </asp:ScriptManager>
-        <asp:UpdatePanel ID="BMandRSUpdatePanel" runat="server">
+        <asp:UpdatePanel ID="FGTracingUpdatePanel" runat="server">
             <ContentTemplate>
 
-                <asp:Label runat="server" ID="RMperBatchLbl" Text="RMperBatch Data"></asp:Label>
+                <asp:Label runat="server" ID="FGTracingLbl" Text="FG Tracing Data"></asp:Label>
                 <div class="rounded-corners">
-                    <asp:Panel ID="RMperBatchPanel" runat="Server" ScrollBars="Horizontal">
-                        <asp:GridView class="GridView" ID="RMperBatchGridView" runat="server" AutoGenerateColumns="False" AllowPaging="true" OnRowDataBound="RMperBatchGridView_RowDataBound" OnPageIndexChanging="RMperBatchGridView_PageIndexChanging">
+                    <asp:Panel ID="FGTracingPanel" runat="Server" ScrollBars="Horizontal">
+                        <asp:GridView class="GridView" ID="FGTracingGridView" runat="server" AutoGenerateColumns="False" AllowPaging="true" OnRowDataBound="FGTracingGridView_RowDataBound" OnPageIndexChanging="FGTracingGridView_PageIndexChanging">
                             <HeaderStyle CssClass="ui-widget-header" Font-Size="Small" Wrap="False" VerticalAlign="Middle" />
                             <RowStyle CssClass="NoWarp" />
                             <Columns>
                                 <asp:TemplateField HeaderText="No." ItemStyle-Width="5%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
-                                        <asp:Label ID="RMperBatchlblSequenceNo" runat="server" Text=""></asp:Label>
+                                        <asp:Label ID="FGTracinglblSequenceNo" runat="server" Text=""></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="Year_Period" SortExpression="Year_Period" HeaderText="Year Period" />
                                 <asp:BoundField DataField="Month_Period" SortExpression="Month_Period" HeaderText="Month Period" />
-                                <asp:BoundField DataField="Finish_Goods" SortExpression="Finish_Goods" HeaderText="Finish Goods" />
-                                <asp:BoundField DataField="FG_Qty" SortExpression="FG_Qty" HeaderText="FG Qty" DataFormatString="{0:N4}">
-                                    <ItemStyle HorizontalAlign="Right" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Raw_Material" SortExpression="Raw_Material" HeaderText="Raw Material" />
-                                <asp:BoundField DataField="Total_RM_Qty" SortExpression="Total_RM_Qty" HeaderText="Total RM Qty" DataFormatString="{0:N4}">
-                                    <ItemStyle HorizontalAlign="Right" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Batch_Sequence" SortExpression="Batch_Sequence" HeaderText="Batch Sequence" />
-                                <asp:BoundField DataField="RM_Batch" SortExpression="RM_Batch" HeaderText="RM Batch" />
-                                <asp:BoundField DataField="RM_Qty" SortExpression="RM_Qty" HeaderText="RM Qty" DataFormatString="{0:N4}">
-                                    <ItemStyle HorizontalAlign="Right" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Distribution_Qty" SortExpression="Distribution_Qty" HeaderText="Distribution Qty" DataFormatString="{0:N4}">
-                                    <ItemStyle HorizontalAlign="Right" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Remaining_Qty" SortExpression="Remaining_Qty" HeaderText="Remaining Qty" DataFormatString="{0:N4}">
-                                    <ItemStyle HorizontalAlign="Right" />
-                                </asp:BoundField>
-                            </Columns>
-                            <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="First" LastPageText="Last" />
-                            <PagerStyle CssClass="custom-pager"/>
-                        </asp:GridView>
-                    </asp:Panel>
-
-                    <div id="RMperBatchdataPager" runat="server" class="pagerstyle">
-                        <asp:Label ID="RMlblTotalRecords" runat="server" Text="Total Records:" CssClass="totalRecords" />
-                        <asp:Label ID="RMlblShowRows" runat="server" Text="Line of rows:" />
-                        <asp:DropDownList ID="RMperBatchPageSizeDropDown" runat="server" AutoPostBack="true" OnSelectedIndexChanged="RMperBatchPageSizeDropDown_SelectedIndexChanged">
-                            <asp:ListItem Text="10" Value="10" />
-                            <asp:ListItem Text="50" Value="50" />
-                            <asp:ListItem Text="100" Value="100" />
-                            <asp:ListItem Text="250" Value="250" />
-                            <asp:ListItem Text="1000" Value="1000" />
-                        </asp:DropDownList>
-                        &nbsp; Page
-                        <asp:TextBox ID="RMperBatchGoToPageTxt" runat="server" AutoPostBack="true" OnTextChanged="RMperBatchGoToPage_TextChanged"
-                            CssClass="gotopage" Width="30px" />
-                        of
-                        <asp:Label ID="RMperBatchlblTotalNumberOfPages" runat="server" />
-                        &nbsp;
-                        <asp:Button ID="RMperBatchbtnPrev" runat="server" Text="<" ToolTip="Previous Page" OnClick="RMperBatchbtnPrev_OnClick" />
-                        <asp:Button ID="RMperBatchbtnNext" runat="server" Text=">" CommandName="Page" ToolTip="Next Page" CommandArgument="Next"
-                            OnClick="RMperBatchbtnNext_OnClick" />
-                    </div>
-                </div>
-                <br />
-
-
-                <asp:Label runat="server" ID="FGperBatchLbl" Text="FGperBatch Data"></asp:Label>
-                <div class="rounded-corners">
-                    <asp:Panel ID="FGperBatchPanel" runat="Server" ScrollBars="Horizontal">
-                        <asp:GridView class="GridView" ID="FGperBatchGridView" runat="server" AutoGenerateColumns="False" AllowPaging="true" OnRowDataBound="FGperBatchGridView_RowDataBound" OnPageIndexChanging="FGperBatchGridView_PageIndexChanging">
-                            <HeaderStyle CssClass="ui-widget-header" Font-Size="Small" Wrap="False" VerticalAlign="Middle" />
-                            <RowStyle CssClass="NoWarp" />
-                            <Columns>
-                                <asp:TemplateField HeaderText="No." ItemStyle-Width="5%" ItemStyle-HorizontalAlign="Center">
-                                    <ItemTemplate>
-                                        <asp:Label ID="FGperBatchlblSequenceNo" runat="server" Text=""></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField DataField="Year_Period" SortExpression="Year_Period" HeaderText="Year Period" />
-                                <asp:BoundField DataField="Month_Period" SortExpression="Month_Period" HeaderText="Month Period" />
-                                <asp:BoundField DataField="Finish_Goods" SortExpression="Finish_Goods" HeaderText="Finish Goods" />
-                                <asp:BoundField DataField="FG_Qty" SortExpression="FG_Qty" HeaderText="FG Qty" DataFormatString="{0:N4}">
-                                    <ItemStyle HorizontalAlign="Right" />
-                                </asp:BoundField>
+                                <asp:BoundField DataField="SO" SortExpression="SO" HeaderText="SO" />
+                                <asp:BoundField DataField="Finish_Goods" SortExpression="Finish_Goods" HeaderText="Finish Goods"  />
+                                <asp:BoundField DataField="FG_Name" SortExpression="FG_Name" HeaderText="FG Name" />
                                 <asp:BoundField DataField="FG_Batch" SortExpression="FG_Batch" HeaderText="FG Batch" />
-                                <asp:BoundField DataField="FG_Batch_Qty" SortExpression="FG_Batch_Qty" HeaderText="FG Batch Qty" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="Qty_Sales" SortExpression="Qty_Sales" HeaderText="Qty Sales" DataFormatString="{0:N4}">
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
+                                <asp:BoundField DataField="UoM" SortExpression="UoM" HeaderText="UoM" />
                                 <asp:BoundField DataField="Raw_Material" SortExpression="Raw_Material" HeaderText="Raw Material" />
+                                <asp:BoundField DataField="Material_Description" SortExpression="Material_Description" HeaderText="Material Description" />
                                 <asp:BoundField DataField="Total_RM_Qty" SortExpression="Total_RM_Qty" HeaderText="Total RM Qty" DataFormatString="{0:N4}">
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="RM_Batch_Sequence" SortExpression="RM_Batch_Sequence" HeaderText="RM Batch Sequence" />
                                 <asp:BoundField DataField="RM_Batch" SortExpression="RM_Batch" HeaderText="RM Batch" />
-                                <asp:BoundField DataField="Qty_RM_Batch" SortExpression="Qty_RM_Batch" HeaderText="Qty RM Batch" DataFormatString="{0:N4}">
+                                <asp:BoundField DataField="RM_Qty" SortExpression="RM_Qty" HeaderText="RM Qty" DataFormatString="{0:N4}">
                                     <ItemStyle HorizontalAlign="Right" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="Distribution_Qty" SortExpression="Distribution_Qty" HeaderText="Distribution Qty" DataFormatString="{0:N4}">
-                                    <ItemStyle HorizontalAlign="Right" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Remaining_Qty" SortExpression="Remaining_Qty" HeaderText="Remaining Qty" DataFormatString="{0:N4}">
-                                    <ItemStyle HorizontalAlign="Right" />
-                                </asp:BoundField>
+                                <asp:BoundField DataField="PIB_Date" SortExpression="PIB_Date" HeaderText="PIB Date" DataFormatString="{0:yyyy/MM/dd}" />
+                                <asp:BoundField DataField="Customer" SortExpression="Customer" HeaderText="Customer" />
+                                <asp:BoundField DataField="Name_1" SortExpression="Name_1" HeaderText="Name_1" />
+                                <asp:BoundField DataField="NO_PEB" SortExpression="NO_PEB" HeaderText="NO_PEB" />
+                                <asp:BoundField DataField="PEB_Date" SortExpression="PEB_Date" HeaderText="PEB Date" DataFormatString="{0:yyyy/MM/dd}" />
+                                <asp:BoundField DataField="PO_Number" SortExpression="PO_Number" HeaderText="PO Number" />
+                                <asp:BoundField DataField="Country_Destination" SortExpression="Country_Destination" HeaderText="Country Destination" />
+                                <asp:BoundField DataField="Description" SortExpression="Description" HeaderText="Description" />
                             </Columns>
                             <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="First" LastPageText="Last" />
                             <PagerStyle CssClass="custom-pager"/>
                         </asp:GridView>
                     </asp:Panel>
 
-                    <div id="FGperBatchdataPager" runat="server" class="pagerstyle">
-                        <asp:Label ID="FGlblTotalRecords" runat="server" Text="Total Records:" CssClass="totalRecords" />
-                        <asp:Label ID="FGlblShowRows" runat="server" Text="Line of rows:" />
-                        <asp:DropDownList ID="FGperBatchPageSizeDropDown" runat="server" AutoPostBack="true" OnSelectedIndexChanged="FGperBatchPageSizeDropDown_SelectedIndexChanged">
+                    <div id="FGTracingdataPager" runat="server" class="pagerstyle">
+                        <asp:Label ID="FGTlblTotalRecords" runat="server" Text="Total Records:" CssClass="totalRecords" />
+                        <asp:Label ID="FGTlblShowRows" runat="server" Text="Line of rows:" />
+                        <asp:DropDownList ID="FGTracingPageSizeDropDown" runat="server" AutoPostBack="true" OnSelectedIndexChanged="FGTracingPageSizeDropDown_SelectedIndexChanged">
                             <asp:ListItem Text="10" Value="10" />
                             <asp:ListItem Text="50" Value="50" />
                             <asp:ListItem Text="100" Value="100" />
@@ -153,17 +93,18 @@
                             <asp:ListItem Text="1000" Value="1000" />
                         </asp:DropDownList>
                         &nbsp; Page
-                        <asp:TextBox ID="FGperBatchGoToPageTxt" runat="server" AutoPostBack="true" OnTextChanged="FGperBatchGoToPage_TextChanged"
+                        <asp:TextBox ID="FGTracingGoToPageTxt" runat="server" AutoPostBack="true" OnTextChanged="FGTracingGoToPage_TextChanged"
                             CssClass="gotopage" Width="30px" />
                         of
-                        <asp:Label ID="FGperBatchlblTotalNumberOfPages" runat="server" />
+                        <asp:Label ID="FGTracinglblTotalNumberOfPages" runat="server" />
                         &nbsp;
-                        <asp:Button ID="FGperBatchbtnPrev" runat="server" Text="<" ToolTip="Previous Page" OnClick="FGperBatchbtnPrev_OnClick" />
-                        <asp:Button ID="FGperBatchbtnNext" runat="server" Text=">" CommandName="Page" ToolTip="Next Page" CommandArgument="Next"
-                            OnClick="FGperBatchbtnNext_OnClick" />
+                        <asp:Button ID="FGTracingbtnPrev" runat="server" Text="<" ToolTip="Previous Page" OnClick="FGTracingbtnPrev_OnClick" />
+                        <asp:Button ID="FGTracingbtnNext" runat="server" Text=">" CommandName="Page" ToolTip="Next Page" CommandArgument="Next"
+                            OnClick="FGTracingbtnNext_OnClick" />
                     </div>
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
+        <asp:Button ID="btnDownloadCsv" runat="server" OnClick="btnDownloadToCsv" Enabled="false" Text="Download Csv" class="btn btn-primary" style="display: inline-block; margin-right: 0px; float: right;padding-right: 12px;margin-top: 10px;" />
     </div>
 </asp:Content>

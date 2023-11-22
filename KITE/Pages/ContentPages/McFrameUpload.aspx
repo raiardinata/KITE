@@ -124,5 +124,6 @@
             </ContentTemplate>
         </asp:UpdatePanel>
         <asp:Button ID="btnUpload" runat="server" OnClick="btnUpload_Click" Enabled="false" Text="Upload" class="btn btn-primary" style="display: inline-block; margin-right: 0px; float: right;padding-right: 12px;margin-top: 10px;" />
+        <asp:Button ID="btnDownloadCsv" runat="server" OnClick="btnDownloadToCsv" Enabled="false" Text="Download Csv" class="btn btn-primary" style="display: inline-block; margin-right: 10px; float: right;padding-right: 12px;margin-top: 10px;" />
     </div>
 </asp:Content>

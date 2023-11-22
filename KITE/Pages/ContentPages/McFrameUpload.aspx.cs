@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web.UI.WebControls;
@@ -20,6 +21,20 @@ namespace KITE.Pages.ContentPages
             }
         }
 
+        public void btnDownloadToCsv(object sender, EventArgs e)
+        {
+            LoadCsvData();
+            DataTable dataTable = new ReadCsvModel().ConvertListToDataTable(CsvDataList);
+            string fileName = $"{DateTime.Now:yyyyMMdd}KITE_McFrame.csv";
+            string csvContent = new ReadCsvModel().DataTableToCsv(dataTable);
+
+            Response.Clear();
+            Response.ContentType = "text/csv";
+            Response.AddHeader("Content-Disposition", $"attachment;filename={fileName}");
+            Response.Write(csvContent);
+            Response.End();
+        }
+
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             errorLabel.Text = "";
@@ -34,6 +49,7 @@ namespace KITE.Pages.ContentPages
             else if (fileResult.Item2 != null && fileResult.Item3 != null)
             {
                 btnUpload.Enabled = true;
+                btnDownloadCsv.Enabled = true;
                 CsvDataList = fileResult.Item3;
                 Session["FilePath"] = fileResult.Item2;
                 McFrameBindGridView();

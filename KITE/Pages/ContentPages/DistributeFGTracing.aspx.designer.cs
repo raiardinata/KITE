@@ -69,219 +69,129 @@ namespace KITE.Pages.ContentPages
         protected global::System.Web.UI.WebControls.Label errorLabel;
 
         /// <summary>
-        /// BMandRSScriptManager control.
+        /// FGTracingScriptManager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager BMandRSScriptManager;
+        protected global::System.Web.UI.ScriptManager FGTracingScriptManager;
 
         /// <summary>
-        /// BMandRSUpdatePanel control.
+        /// FGTracingUpdatePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel BMandRSUpdatePanel;
+        protected global::System.Web.UI.UpdatePanel FGTracingUpdatePanel;
 
         /// <summary>
-        /// RMperBatchLbl control.
+        /// FGTracingLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RMperBatchLbl;
+        protected global::System.Web.UI.WebControls.Label FGTracingLbl;
 
         /// <summary>
-        /// RMperBatchPanel control.
+        /// FGTracingPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel RMperBatchPanel;
+        protected global::System.Web.UI.WebControls.Panel FGTracingPanel;
 
         /// <summary>
-        /// RMperBatchGridView control.
+        /// FGTracingGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView RMperBatchGridView;
+        protected global::System.Web.UI.WebControls.GridView FGTracingGridView;
 
         /// <summary>
-        /// RMperBatchdataPager control.
+        /// FGTracingdataPager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RMperBatchdataPager;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FGTracingdataPager;
 
         /// <summary>
-        /// RMlblTotalRecords control.
+        /// FGTlblTotalRecords control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RMlblTotalRecords;
+        protected global::System.Web.UI.WebControls.Label FGTlblTotalRecords;
 
         /// <summary>
-        /// RMlblShowRows control.
+        /// FGTlblShowRows control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RMlblShowRows;
+        protected global::System.Web.UI.WebControls.Label FGTlblShowRows;
 
         /// <summary>
-        /// RMperBatchPageSizeDropDown control.
+        /// FGTracingPageSizeDropDown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList RMperBatchPageSizeDropDown;
+        protected global::System.Web.UI.WebControls.DropDownList FGTracingPageSizeDropDown;
 
         /// <summary>
-        /// RMperBatchGoToPageTxt control.
+        /// FGTracingGoToPageTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox RMperBatchGoToPageTxt;
+        protected global::System.Web.UI.WebControls.TextBox FGTracingGoToPageTxt;
 
         /// <summary>
-        /// RMperBatchlblTotalNumberOfPages control.
+        /// FGTracinglblTotalNumberOfPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RMperBatchlblTotalNumberOfPages;
+        protected global::System.Web.UI.WebControls.Label FGTracinglblTotalNumberOfPages;
 
         /// <summary>
-        /// RMperBatchbtnPrev control.
+        /// FGTracingbtnPrev control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RMperBatchbtnPrev;
+        protected global::System.Web.UI.WebControls.Button FGTracingbtnPrev;
 
         /// <summary>
-        /// RMperBatchbtnNext control.
+        /// FGTracingbtnNext control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RMperBatchbtnNext;
+        protected global::System.Web.UI.WebControls.Button FGTracingbtnNext;
 
         /// <summary>
-        /// FGperBatchLbl control.
+        /// btnDownloadCsv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FGperBatchLbl;
-
-        /// <summary>
-        /// FGperBatchPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel FGperBatchPanel;
-
-        /// <summary>
-        /// FGperBatchGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView FGperBatchGridView;
-
-        /// <summary>
-        /// FGperBatchdataPager control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FGperBatchdataPager;
-
-        /// <summary>
-        /// FGlblTotalRecords control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FGlblTotalRecords;
-
-        /// <summary>
-        /// FGlblShowRows control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FGlblShowRows;
-
-        /// <summary>
-        /// FGperBatchPageSizeDropDown control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList FGperBatchPageSizeDropDown;
-
-        /// <summary>
-        /// FGperBatchGoToPageTxt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FGperBatchGoToPageTxt;
-
-        /// <summary>
-        /// FGperBatchlblTotalNumberOfPages control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FGperBatchlblTotalNumberOfPages;
-
-        /// <summary>
-        /// FGperBatchbtnPrev control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button FGperBatchbtnPrev;
-
-        /// <summary>
-        /// FGperBatchbtnNext control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button FGperBatchbtnNext;
+        protected global::System.Web.UI.WebControls.Button btnDownloadCsv;
     }
 }
