@@ -34,6 +34,7 @@ namespace KITE.Models
         public string Year_Period { get; set; }
         public string Month_Period { get; set; }
         public string SO { get; set; }
+        public DateTime PGO_Date { get; set; }
         public string Finish_Goods { get; set; }
         public string FG_Name { get; set; }
         public string FG_Batch { get; set; }

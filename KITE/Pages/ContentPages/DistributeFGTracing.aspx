@@ -18,7 +18,7 @@
             </tr>
             <tr style="border: 1px solid #ccc;">
                 <td style="padding: 10px 5px 10px 20px; position: relative;">
-                    <span style="position: absolute; top: -12px; left: 8px; background-color: white; z-index: 1; font-weight: bold; padding:0px 3px 0px 3px;">Distribute Consumption BM & RS</span>
+                    <span style="position: absolute; top: -12px; left: 8px; background-color: white; z-index: 1; font-weight: bold; padding:0px 3px 0px 3px;">Distribute Consumption FG Tracing</span>
                     <asp:Button ID="btnCalculate" runat="server" Text="Calculate BM & RS" class="btn btn-primary" OnClick="btnCalculate_Click" OnClientClick="if (document.getElementById('MainContent_yearPeriodTxt').value != '' && document.getElementById('MainContent_monthPeriodTxt').value != '') {showWarning();}" style="display: inline-block; margin-right: 10px;" />
                     <asp:Label runat="server" ID="yearPeriodLbl" Text="Year Period : "></asp:Label>
                     <asp:TextBox ID="yearPeriodTxt" runat="server" style="display: inline-block; position: relative; top: 1px;"/>
@@ -51,6 +51,7 @@
                                 <asp:BoundField DataField="Year_Period" SortExpression="Year_Period" HeaderText="Year Period" />
                                 <asp:BoundField DataField="Month_Period" SortExpression="Month_Period" HeaderText="Month Period" />
                                 <asp:BoundField DataField="SO" SortExpression="SO" HeaderText="SO" />
+                                <asp:BoundField DataField="PGI_Date" SortExpression="PGI_Date" HeaderText="PGI Date" DataFormatString="{0:yyyy/MM/dd}" />
                                 <asp:BoundField DataField="Finish_Goods" SortExpression="Finish_Goods" HeaderText="Finish Goods"  />
                                 <asp:BoundField DataField="FG_Name" SortExpression="FG_Name" HeaderText="FG Name" />
                                 <asp:BoundField DataField="FG_Batch" SortExpression="FG_Batch" HeaderText="FG Batch" />
