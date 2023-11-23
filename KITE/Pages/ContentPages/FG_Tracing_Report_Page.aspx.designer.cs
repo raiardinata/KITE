@@ -24,15 +24,6 @@ namespace KITE.Pages.ContentPages
         protected global::System.Web.UI.ScriptManager FG_Tracing_Report;
 
         /// <summary>
-        /// FG_TracingLbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FG_TracingLbl;
-
-        /// <summary>
         /// FG_Tracing_ReportViewer control.
         /// </summary>
         /// <remarks>

@@ -5,9 +5,18 @@
         <Scripts>
         </Scripts>
     </asp:ScriptManager>
-    <asp:Label runat="server" ID="FG_TracingLbl" Text="FG Tracing Report Page"></asp:Label>
-    <br />
-    <div class="rounded-corners" style="width: 102%;">
+    <table style="padding-left: 10px; min-width: 1170px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 10px">
+        <tr>
+            <th style ="font-weight: normal; text-align: left; background-color:white; top:9px; left: 5px; position: relative; width: 150px;">
+            </th>
+        </tr>
+        <tr style="border: 1px solid #ccc;">
+            <td style="padding: 10px 5px 10px 20px; position: relative;">
+                <span style="position: absolute; top: -12px; left: 8px; background-color: white; z-index: 1; font-weight: bold; padding:0px 3px 0px 3px;">FG Tracing Report Page</span>
+            </td>
+        </tr>
+    </table>
+    <div class="rounded-corners" style="position: relative; left: -12px; width: 102%;">
         <rsweb:ReportViewer ID="FG_Tracing_ReportViewer" runat="server" ProcessingMode="Remote"  style="width: 1200px;">
           <ServerReport ReportPath="/KITE_Report/KITE_FG_Tracing" ReportServerUrl="http://127.0.0.1/ReportServer" />
         </rsweb:ReportViewer>
