@@ -95,6 +95,7 @@
                                 <li><a href="~/Pages/ContentPages/DistributeConsumptionBMandRS.aspx" id="master_bmandrscalculation" visible="false" runat="server">BM and RS Calculation</a></li>
                                 <li><a href="~/Pages/ContentPages/ExportSalesUpload.aspx" id="master_exportsales" visible="false" runat="server">Export Sales Upload</a></li>
                                 <li><a href="~/Pages/ContentPages/DistributeFGTracing.aspx" id="master_fgtracing" visible="false" runat="server">FG Tracing Calculaton</a></li>
+                                <li><a href="~/Pages/ContentPages/FG_Tracing_Report_Page.aspx" id="master_fgtracingreportpage" visible="false" runat="server">FG Tracing Report Page</a></li>
                             </ul>
 
                         </li>

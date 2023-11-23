@@ -123,6 +123,15 @@ namespace KITE.Pages.MasterPages
         protected global::System.Web.UI.HtmlControls.HtmlAnchor master_fgtracing;
 
         /// <summary>
+        /// master_fgtracingreportpage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor master_fgtracingreportpage;
+
+        /// <summary>
         /// report control.
         /// </summary>
         /// <remarks>

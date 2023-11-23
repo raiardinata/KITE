@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>KITE_DataSource</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@RM_Batch">
+          <DefaultValue>%%</DefaultValue>
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@NO_PEB">
+          <DefaultValue>%%</DefaultValue>
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@PO_Number">
+          <DefaultValue>%%</DefaultValue>
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@PGI_Date_From">
+          <DefaultValue>01/01/2023 00:00:00</DefaultValue>
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@Customer">
+          <DefaultValue>%%</DefaultValue>
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@PGI_Date_Until">
+          <DefaultValue>12/31/2023 00:00:00</DefaultValue>
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT
+  FG_Tracing.UUID
+  ,FG_Tracing.Year_Period
+  ,FG_Tracing.Month_Period
+  ,FG_Tracing.SO
+  ,FG_Tracing.Finish_Goods
+  ,FG_Tracing.FG_Name
+  ,FG_Tracing.FG_Batch
+  ,FG_Tracing.Qty_Sales
+  ,FG_Tracing.UoM
+  ,FG_Tracing.Raw_Material
+  ,FG_Tracing.Material_Description
+  ,FG_Tracing.Total_RM_Qty
+  ,FG_Tracing.RM_Batch_Sequence
+  ,FG_Tracing.RM_Batch
+  ,FG_Tracing.RM_Qty
+  ,FG_Tracing.PIB_Date
+  ,FG_Tracing.Customer
+  ,FG_Tracing.Name_1
+  ,FG_Tracing.NO_PEB
+  ,FG_Tracing.PEB_Date
+  ,FG_Tracing.PO_Number
+  ,FG_Tracing.Country_Destination
+  ,FG_Tracing.Description
+  ,FG_Tracing.FGperBatch_UUID
+  ,FG_Tracing.PGI_Date
+FROM
+  FG_Tracing
+WHERE
+  FG_Tracing.RM_Batch LIKE @RM_Batch
+  AND FG_Tracing.NO_PEB LIKE @NO_PEB
+  AND FG_Tracing.PO_Number LIKE @PO_Number
+  AND FG_Tracing.Customer LIKE @Customer
+  AND FG_Tracing.PGI_Date &gt;= @PGI_Date_From
+  AND FG_Tracing.PGI_Date &lt;= @PGI_Date_Until</CommandText>
+      <rd:DesignerState>
+        <QueryDefinition xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+          <SelectedColumns>
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="UUID" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Year_Period" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Month_Period" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="SO" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Finish_Goods" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="FG_Name" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="FG_Batch" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Qty_Sales" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="UoM" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Raw_Material" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Material_Description" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Total_RM_Qty" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="RM_Batch_Sequence" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="RM_Batch" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="RM_Qty" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="PIB_Date" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Customer" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Name_1" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="NO_PEB" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="PEB_Date" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="PO_Number" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Country_Destination" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Description" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="FGperBatch_UUID" />
+            <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="PGI_Date" />
+          </SelectedColumns>
+          <Filters>
+            <Filter Operator="LIKE" Param="True">
+              <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="RM_Batch" />
+              <FilterValue>%%</FilterValue>
+            </Filter>
+            <Filter Operator="LIKE" Param="True">
+              <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="NO_PEB" />
+              <FilterValue>%%</FilterValue>
+            </Filter>
+            <Filter Operator="LIKE" Param="True">
+              <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="PO_Number" />
+              <FilterValue>%%</FilterValue>
+            </Filter>
+            <Filter Operator="LIKE" Param="True">
+              <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="Customer" />
+              <FilterValue>%%</FilterValue>
+            </Filter>
+            <Filter Operator="&gt;=" Param="True">
+              <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="PGI_Date" />
+              <FilterValue>01/01/2023 00:00:00</FilterValue>
+            </Filter>
+            <Filter Operator="&lt;=" Param="True">
+              <ColumnExpression ColumnOwner="FG_Tracing" ColumnName="PGI_Date" />
+              <FilterValue>12/31/2023 00:00:00</FilterValue>
+            </Filter>
+          </Filters>
+        </QueryDefinition>
+      </rd:DesignerState>
+    </Query>
+    <Fields>
+      <Field Name="UUID">
+        <DataField>UUID</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Year_Period">
+        <DataField>Year_Period</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Month_Period">
+        <DataField>Month_Period</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="SO">
+        <DataField>SO</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Finish_Goods">
+        <DataField>Finish_Goods</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FG_Name">
+        <DataField>FG_Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FG_Batch">
+        <DataField>FG_Batch</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Qty_Sales">
+        <DataField>Qty_Sales</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="UoM">
+        <DataField>UoM</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Raw_Material">
+        <DataField>Raw_Material</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Material_Description">
+        <DataField>Material_Description</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Total_RM_Qty">
+        <DataField>Total_RM_Qty</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="RM_Batch_Sequence">
+        <DataField>RM_Batch_Sequence</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="RM_Batch">
+        <DataField>RM_Batch</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="RM_Qty">
+        <DataField>RM_Qty</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="PIB_Date">
+        <DataField>PIB_Date</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="Customer">
+        <DataField>Customer</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Name_1">
+        <DataField>Name_1</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="NO_PEB">
+        <DataField>NO_PEB</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="PEB_Date">
+        <DataField>PEB_Date</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="PO_Number">
+        <DataField>PO_Number</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Country_Destination">
+        <DataField>Country_Destination</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Description">
+        <DataField>Description</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FGperBatch_UUID">
+        <DataField>FGperBatch_UUID</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="PGI_Date">
+        <DataField>PGI_Date</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+  <rd:ReportServerUrl>http://himawarithie:88/ReportServer</rd:ReportServerUrl>
+</SharedDataSet>

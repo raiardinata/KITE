@@ -483,6 +483,7 @@
     <Content Include="Pages\ContentPages\DistributeConsumptionBMandRS.aspx" />
     <Content Include="Pages\ContentPages\DistributeFGTracing.aspx" />
     <Content Include="Pages\ContentPages\ExportSalesUpload.aspx" />
+    <Content Include="Pages\ContentPages\FG_Tracing_Report_Page.aspx" />
     <Content Include="Pages\ContentPages\GIRawMaterialUpload.aspx" />
     <Content Include="Pages\ContentPages\GRFinishGoodsUpload.aspx" />
     <Content Include="Pages\ContentPages\Input_KITEA.aspx" />
@@ -785,6 +786,13 @@
     </Compile>
     <Compile Include="Pages\ContentPages\ExportSalesUpload.aspx.designer.cs">
       <DependentUpon>ExportSalesUpload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ContentPages\FG_Tracing_Report_Page.aspx.cs">
+      <DependentUpon>FG_Tracing_Report_Page.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ContentPages\FG_Tracing_Report_Page.aspx.designer.cs">
+      <DependentUpon>FG_Tracing_Report_Page.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\ContentPages\GIRawMaterialUpload.aspx.cs">
       <DependentUpon>GIRawMaterialUpload.aspx</DependentUpon>
