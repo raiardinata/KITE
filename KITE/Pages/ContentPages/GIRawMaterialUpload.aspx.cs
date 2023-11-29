@@ -1,4 +1,5 @@
 ﻿using KITE.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -221,6 +222,22 @@ namespace KITE.Pages.ContentPages
 
             try
             {
+                Tuple<DataTable, Exception> checkRMperBatch = new DatabaseModel().SelectTableIntoDataTable("UUID", "RM_per_Batch", "", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (checkRMperBatch.Item1.Rows.Count > 0)
+                {
+                    loadCsvException = new Exception("Periode yang anda pilih sudah memiliki kalkulasi RM per Batch. Upload file tidak dapat dilakukan. Silahkan menghubungi KITE support untuk bantuan lebih lanjut.");
+                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                    return;
+                }
+
+                Tuple<DataTable, Exception> checkFGperBatch = new DatabaseModel().SelectTableIntoDataTable("UUID", "FG_per_Batch", "", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (checkFGperBatch.Item1.Rows.Count > 0)
+                {
+                    loadCsvException = new Exception("Periode yang anda pilih sudah memiliki kalkulasi FG per Batch. Upload file tidak dapat dilakukan. Silahkan menghubungi KITE support untuk bantuan lebih lanjut.");
+                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                    return;
+                }
+
                 LoadCsvData();
                 GIRawMaterialFunctionModel csvDataProcess = new GIRawMaterialFunctionModel();
                 Tuple<string, ArrayList> columnNameAndData = csvDataProcess.GIRawMaterialGenerateColumnAndCsvData(CsvDataList);
@@ -267,6 +284,17 @@ namespace KITE.Pages.ContentPages
                         }
                     }
 
+                    object[] param = new[] { yearPeriod.ToString(), monthPeriod.ToString(), (Session["FullName"].ToString() != "") ? Session["FullName"].ToString(): "Failed to Get Session FullName" };
+
+                    Exception masterBatchProcess = new DatabaseModel().ExecStoreProcedure("Master_Batch_Process", param, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                    if (masterBatchProcess != null)
+                    {
+                        UtilityModel errorHandler = new UtilityModel();
+                        loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses Master_Batch_Process. Detail : {masterBatchProcess.Message}");
+                        errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                        return;
+                    }
+
                     if (File.Exists(Session["FilePath"].ToString()))
                     {
                         File.Delete(Session["FilePath"].ToString());
@@ -275,6 +303,7 @@ namespace KITE.Pages.ContentPages
                     string script = $"alert('Upload CSV berhasil.'); window.location.href = '{ResolveUrl("~/Pages/ContentPages/GIRawMaterialUpload.aspx")}';";
                     ClientScript.RegisterStartupScript(this.GetType(), "SuccessAlert", script, true);
                 }
+
             }
             catch (Exception ex)
             {

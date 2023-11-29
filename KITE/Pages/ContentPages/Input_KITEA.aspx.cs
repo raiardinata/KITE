@@ -4,8 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-//using Microsoft.Reporting.WebForms;
-//using PRJ_REPORT_SCM.SQLConnect;
+using Microsoft.Reporting.WebForms;
 
 namespace KITE.Pages.ContentPages
 {
@@ -450,7 +449,7 @@ namespace KITE.Pages.ContentPages
         private void show()
         {
             MonthYear();
-            ReportViewer1.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote;
+            ReportViewer1.ProcessingMode = ProcessingMode.Remote;
             ReportViewer1.ServerReport.ReportServerUrl = new Uri(Setting.ReportServerUrls); // Report Server URL
             ReportViewer1.ServerReport.ReportPath = "/ReportKITE/KITE_A"; // Report Name 
             ReportViewer1.ShowParameterPrompts = false;

@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace KITE.Models
 {
-    public class DistributeConsumptionFGTracingModel
+    public class DistributeConsumptionFGTracingFunctionModel
     {
         public Exception ExecCreatingFGTracingProcedure(SqlCommand command, object[] param)
         {

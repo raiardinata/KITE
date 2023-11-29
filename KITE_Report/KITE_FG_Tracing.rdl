@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.8.34316.72</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2023-11-23T17:52:45.9408120Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2023-11-24T04:01:42.1980581Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -283,6 +283,9 @@ WHERE
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
+                  <Width>25mm</Width>
+                </TablixColumn>
+                <TablixColumn>
                   <Width>30.715mm</Width>
                 </TablixColumn>
                 <TablixColumn>
@@ -335,6 +338,41 @@ WHERE
                 <TablixRow>
                   <Height>6mm</Height>
                   <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>PGI Date</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox36">
@@ -902,6 +940,42 @@ WHERE
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="PGI_Date">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIf(Fields!PGI_Date.Value="1990/01/01", "", Fields!PGI_Date.Value)</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <Format>yyyy/MM/dd</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>PGI_Date</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="RM_Batch1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -944,10 +1018,10 @@ WHERE
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PIB_Date.Value</Value>
+                                  <Value>=IIf(Fields!PIB_Date.Value="1990/01/01", "", Fields!PIB_Date.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
-                                    <Format>d</Format>
+                                    <Format>yyyy/MM/dd</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1156,10 +1230,10 @@ WHERE
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PEB_Date.Value</Value>
+                                  <Value>=IIf(Fields!PEB_Date.Value="1900/01/01", "", Fields!PEB_Date.Value)</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
-                                    <Format>d</Format>
+                                    <Format>yyyy/MM/dd</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1487,6 +1561,7 @@ WHERE
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -1519,10 +1594,10 @@ WHERE
                 <Value>=Fields!RM_Batch_Sequence.Value</Value>
               </SortExpression>
             </SortExpressions>
-            <Top>22.575mm</Top>
+            <Top>13.05mm</Top>
             <Left>0mm</Left>
             <Height>12mm</Height>
-            <Width>579.91659mm</Width>
+            <Width>604.91659mm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -1543,7 +1618,7 @@ WHERE
           </Border>
         </Style>
       </Body>
-      <Width>579.91659mm</Width>
+      <Width>604.91659mm</Width>
       <Page>
         <PageFooter>
           <Height>11.43mm</Height>
@@ -1609,6 +1684,8 @@ WHERE
       </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>No. PIB</Prompt>
+      <Hidden>true</Hidden>
+      <UsedInQuery>True</UsedInQuery>
       <cl:ComponentMetadata>
         <cl:ComponentId>65a61bea-8af6-4b2a-8043-144000264d24</cl:ComponentId>
         <cl:SourcePath>/KITE_Report/RM_Batch</cl:SourcePath>
@@ -1624,6 +1701,8 @@ WHERE
       </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>No. PEB</Prompt>
+      <Hidden>true</Hidden>
+      <UsedInQuery>True</UsedInQuery>
       <cl:ComponentMetadata>
         <cl:ComponentId>2e936e4b-8ac3-44e6-8af9-f45abc1cca5e</cl:ComponentId>
         <cl:SourcePath>/KITE_Report/NO_PEB</cl:SourcePath>
@@ -1639,6 +1718,8 @@ WHERE
       </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>Invoice No.</Prompt>
+      <Hidden>true</Hidden>
+      <UsedInQuery>True</UsedInQuery>
       <cl:ComponentMetadata>
         <cl:ComponentId>f8cce703-be38-4fbe-aa2c-4ec1463797c0</cl:ComponentId>
         <cl:SourcePath>/KITE_Report/PO_Number</cl:SourcePath>
@@ -1654,6 +1735,8 @@ WHERE
       </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>Customer</Prompt>
+      <Hidden>true</Hidden>
+      <UsedInQuery>True</UsedInQuery>
       <cl:ComponentMetadata>
         <cl:ComponentId>4103b98c-a3b0-43a9-b3ec-e297ee00a538</cl:ComponentId>
         <cl:SourcePath>/KITE_Report/Customer</cl:SourcePath>
@@ -1668,6 +1751,8 @@ WHERE
         </Values>
       </DefaultValue>
       <Prompt>PGI Date From</Prompt>
+      <Hidden>true</Hidden>
+      <UsedInQuery>True</UsedInQuery>
       <cl:ComponentMetadata>
         <cl:ComponentId>6a61d548-2d55-4908-b633-21555901bf51</cl:ComponentId>
         <cl:SourcePath>/KITE_Report/PGI_Date_From</cl:SourcePath>
@@ -1682,6 +1767,8 @@ WHERE
         </Values>
       </DefaultValue>
       <Prompt>PGI Date Until</Prompt>
+      <Hidden>true</Hidden>
+      <UsedInQuery>True</UsedInQuery>
       <cl:ComponentMetadata>
         <cl:ComponentId>a8840ba3-c376-483a-ad88-df9fd9920581</cl:ComponentId>
         <cl:SourcePath>/KITE_Report/PGI_Date_Until</cl:SourcePath>

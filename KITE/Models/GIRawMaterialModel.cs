@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
@@ -11,6 +13,28 @@ namespace KITE.Models
 {
     public class GIRawMaterialFunctionModel : System.Web.UI.Page
     {
+        public Exception ExecMaster_Batch_ProcessProcedure(SqlCommand command, object[] param)
+        {
+            try
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                // Add parameters to the command
+                command.Parameters.Add(new SqlParameter("@Year_Period", SqlDbType.VarChar, 4)).Value = param[0];
+                command.Parameters.Add(new SqlParameter("@Month_Period", SqlDbType.VarChar, 2)).Value = param[1];
+                command.Parameters.Add(new SqlParameter("@User", SqlDbType.VarChar, 255)).Value = param[2];
+
+                // Execute the stored procedure
+                command.ExecuteNonQuery();
+                command.Dispose();
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
+            return null;
+        }
+
         public Tuple<string, ArrayList> GIRawMaterialGenerateColumnAndCsvData(List<GIRawMaterialWithConvertionViewModel> csvList)
         {
             List<string> listColumnName = new List<string>();

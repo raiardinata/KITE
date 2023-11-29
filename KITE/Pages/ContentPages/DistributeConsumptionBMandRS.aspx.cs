@@ -22,6 +22,11 @@ namespace KITE.Pages.ContentPages
             }
         }
 
+        protected void CloseButton_Click(object sender, EventArgs e)
+        {
+            confirmationPopUp.Hide();
+        }
+
         public void btnDownloadToCsv(object sender, EventArgs e)
         {
             // Load RM per Batch Data

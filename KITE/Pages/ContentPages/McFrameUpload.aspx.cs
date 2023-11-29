@@ -219,6 +219,22 @@ namespace KITE.Pages.ContentPages
 
             try
             {
+                Tuple<DataTable, Exception> checkRMperBatch = new DatabaseModel().SelectTableIntoDataTable("UUID", "RM_per_Batch", "", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (checkRMperBatch.Item1.Rows.Count > 0)
+                {
+                    loadCsvException = new Exception("Periode yang anda pilih sudah memiliki kalkulasi RM per Batch. Upload file tidak dapat dilakukan. Silahkan menghubungi KITE support untuk bantuan lebih lanjut.");
+                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                    return;
+                }
+
+                Tuple<DataTable, Exception> checkFGperBatch = new DatabaseModel().SelectTableIntoDataTable("UUID", "FG_per_Batch", "", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (checkFGperBatch.Item1.Rows.Count > 0)
+                {
+                    loadCsvException = new Exception("Periode yang anda pilih sudah memiliki kalkulasi FG per Batch. Upload file tidak dapat dilakukan. Silahkan menghubungi KITE support untuk bantuan lebih lanjut.");
+                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                    return;
+                }
+
                 LoadCsvData();
                 McFrameFunctionModel csvDataProcess = new McFrameFunctionModel();
                 Tuple<string, ArrayList> columnNameAndData = csvDataProcess.McFrameGenerateColumnAndCsvData(CsvDataList);

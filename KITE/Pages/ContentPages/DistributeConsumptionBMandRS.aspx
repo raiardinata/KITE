@@ -1,14 +1,33 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="DistributeConsumptionBMandRS.aspx.cs" Inherits="KITE.Pages.ContentPages.DistributeConsumptionBMandRS" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="BMandRSCalculate" ContentPlaceHolderID="MainContent" runat="server">
-    <script type="text/javascript">
-        function showWarning() {
-            alert('Semua data RM per Batch, FG per Batch dan FG Tracing Calculation periode yang dipilih akan didelete dan generate ulang.');
-        }
-    </script>
     <style>
         .custom-pager {
             display: none;
         }
+
+        .modalBackground {
+            background-color: #000;
+            filter: alpha(opacity=70);
+            opacity: 0.7;
+        }
+
+        .modalPopup {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 0 5px #999;
+            border-radius:15px;
+            color:#000;
+            min-width:400px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 20vh;
+
+        }
+
     </style>
     <div>
         <table style="padding-left: 10px; min-width: 1170px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 10px">
@@ -19,7 +38,7 @@
             <tr style="border: 1px solid #ccc;">
                 <td style="padding: 10px 5px 10px 20px; position: relative;">
                     <span style="position: absolute; top: -12px; left: 8px; background-color: white; z-index: 1; font-weight: bold; padding:0px 3px 0px 3px;">Distribute Consumption BM & RS</span>
-                    <asp:Button ID="btnCalculate" runat="server" Text="Calculate BM & RS" class="btn btn-primary" OnClick="btnCalculate_Click" OnClientClick="if (document.getElementById('MainContent_yearPeriodTxt').value != '' && document.getElementById('MainContent_monthPeriodTxt').value != '') {showWarning();}" style="display: inline-block; margin-right: 10px;" />
+                    <asp:Button ID="btnCalculate" runat="server" Text="Calculate BM & RS" class="btn btn-primary" style="display: inline-block; margin-right: 10px;" />
                     <asp:Label runat="server" ID="yearPeriodLbl" Text="Year Period : "></asp:Label>
                     <asp:TextBox ID="yearPeriodTxt" runat="server" style="display: inline-block; position: relative; top: 1px;"/>
                     <asp:Label runat="server" ID="monthPeriodLbl" Text="Month Period : "></asp:Label>
@@ -167,4 +186,28 @@
         </asp:UpdatePanel>
         <asp:Button ID="btnDownloadCsv" runat="server" OnClick="btnDownloadToCsv" Enabled="false" Text="Download Csv" class="btn btn-primary" style="display: inline-block; margin-right: 0px; float: right;padding-right: 12px;margin-top: 10px;" />
     </div>
+
+    <ajaxToolkit:ModalPopupExtender ID="confirmationPopUp" runat="server"
+        TargetControlID="btnCalculate"
+        PopupControlID="ModalPanel"
+        CancelControlID="CloseButton"
+        BackgroundCssClass="modalBackground">
+    </ajaxToolkit:ModalPopupExtender>
+
+    <asp:Panel ID="ModalPanel" runat="server" CssClass="modalPopup">
+        <table>
+            <tr">
+                <td>
+                    <p style="padding-right: 10px;">Semua data RM per Batch, FG per Batch dan FG Tracing Calculation periode yang dipilih akan didelete dan generate ulang.</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="display: flex; justify-content: center; align-items: center;">
+                    <asp:Button ID="confirmButton" OnClick="btnCalculate_Click" class="btn btn-secondary" runat="server" Text="Yes" BorderStyle="Solid" />
+                    <asp:Button ID="CloseButton" runat="server" class="btn btn-primary" Text="No" BorderStyle="Solid" />
+                </td>
+            </tr>
+        </table>
+    </asp:Panel>
+
 </asp:Content>

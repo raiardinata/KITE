@@ -30,6 +30,32 @@ namespace KITE.Models
             }
             return new Exception("null");
         }
+        public Exception UpdateTable(string tableName, string values, string dynamicCondition, string connectionString)
+        {
+            string query = $"UPDATE {tableName} SET {values} ";
+            if (dynamicCondition != "")
+            {
+                query += $" {dynamicCondition} ";
+            }
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                        command.Dispose();
+                    }
+                    catch (Exception ex)
+                    {
+                        return ex;
+                    }
+                }
+            }
+            return new Exception("null");
+        }
 
         public Exception PeriodCheck(string tableName, int yearPeriod, int monthPeriod, string connectionString)
         {
@@ -164,9 +190,13 @@ namespace KITE.Models
                     switchStoreProcedureResult = new DistributeConsumptionBM_RSFunctionModel().ExecCreatingBMandRSProcedure(command, param);
                     break;
                 case "CreatingTracingFG":
-                    switchStoreProcedureResult = new DistributeConsumptionFGTracingModel().ExecCreatingFGTracingProcedure(command, param);
+                    switchStoreProcedureResult = new DistributeConsumptionFGTracingFunctionModel().ExecCreatingFGTracingProcedure(command, param);
+                    break;
+                case "Master_Batch_Process":
+                    switchStoreProcedureResult = new GIRawMaterialFunctionModel().ExecMaster_Batch_ProcessProcedure(command, param);
                     break;
             }
+            
             return switchStoreProcedureResult;
         }
     }
