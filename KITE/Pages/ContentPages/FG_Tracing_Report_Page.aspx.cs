@@ -1,7 +1,6 @@
 ﻿using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace KITE.Pages.ContentPages
 {
@@ -9,8 +8,11 @@ namespace KITE.Pages.ContentPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            FG_Tracing_ReportViewer.ZoomMode = Microsoft.Reporting.WebForms.ZoomMode.Percent;
-            FG_Tracing_ReportViewer.ZoomPercent = 75;
+            if (!IsPostBack)
+            {
+                FG_Tracing_ReportViewer.ZoomMode = Microsoft.Reporting.WebForms.ZoomMode.Percent;
+                FG_Tracing_ReportViewer.ZoomPercent = 75;
+            }
         }
 
         public void GenerateReport(object sender, EventArgs e)

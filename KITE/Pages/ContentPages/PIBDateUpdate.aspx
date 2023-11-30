@@ -36,12 +36,13 @@
             </tr>
             <tr style="border: 1px solid #ccc;">
                 <td style="padding: 10px 5px 10px 20px; position: relative;">
-                    <span style="position: absolute; top: -12px; left: 8px; background-color: white; z-index: 1; font-weight: bold; padding:0px 3px 0px 3px;">Master Batch Page</span>
+                    <span style="position: absolute; top: -12px; left: 8px; background-color: white; z-index: 1; font-weight: bold; padding:0px 3px 0px 3px;">Master Batch</span>
                     <asp:Button ID="btnSubmit" runat="server" Text="Submit" class="btn btn-primary" style="display: inline-block; margin-right: 10px;" OnClick="SubmitData" />
                     <asp:Label runat="server" ID="rmLbl" Text="Raw Material : "></asp:Label>
                     <asp:TextBox ID="rmTxt" runat="server" style="display: inline-block; position: relative; top: 1px;"/>
                     <asp:Label runat="server" ID="batchLbl" Text="Batch : "></asp:Label>
                     <asp:TextBox ID="batchTxt" runat="server" style="display: inline-block; position: relative; top: 1px;"/>
+                    <asp:Label runat="server" ID="Label1" Text="Empty PIB Date : "></asp:Label>
                 </td>
             </tr>
         </table>

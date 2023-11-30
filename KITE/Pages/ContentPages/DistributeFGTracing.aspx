@@ -36,11 +36,12 @@
             <tr style="border: 1px solid #ccc;">
                 <td style="padding: 10px 5px 10px 20px; position: relative;">
                     <span style="position: absolute; top: -12px; left: 8px; background-color: white; z-index: 1; font-weight: bold; padding:0px 3px 0px 3px;">Distribute Consumption FG Tracing</span>
-                    <asp:Button ID="btnCalculate" runat="server" Text="Calculate BM & RS" class="btn btn-primary" style="display: inline-block; margin-right: 10px;" />
+                    <asp:Button ID="btnCalculate" runat="server" Text="Calculate Distribute to Sales" class="btn btn-primary" style="display: inline-block; margin-right: 10px;" />
                     <asp:Label runat="server" ID="yearPeriodLbl" Text="Year Period : "></asp:Label>
-                    <asp:TextBox ID="yearPeriodTxt" runat="server" style="display: inline-block; position: relative; top: 1px;"/>
+                    <asp:TextBox ID="yearPeriodTxt" runat="server" Width="50px" style="display: inline-block; position: relative; top: 1px;"/>
                     <asp:Label runat="server" ID="monthPeriodLbl" Text="Month Period : "></asp:Label>
-                    <asp:TextBox ID="monthPeriodTxt" runat="server" style="display: inline-block; position: relative; top: 1px;"/>
+                    <asp:TextBox ID="monthPeriodTxt" runat="server" Width="50px" style="display: inline-block; position: relative; top: 1px;"/>
+                    <asp:Button ID="viewFGCalculate" runat="server" Text="View" class="btn btn-primary" style="display: inline-block; margin-right: 10px;" />
                 </td>
             </tr>
         </table>

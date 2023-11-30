@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.8.34316.72</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2023-11-24T04:01:42.1980581Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2023-11-30T08:08:09.4713772Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -1082,14 +1082,14 @@ WHERE
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="FG_Name">
+                        <Textbox Name="Material_Description">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!FG_Name.Value</Value>
+                                  <Value>=Fields!Material_Description.Value</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                   </Style>
@@ -1100,7 +1100,7 @@ WHERE
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>FG_Name</rd:DefaultName>
+                          <rd:DefaultName>Material_Description</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
