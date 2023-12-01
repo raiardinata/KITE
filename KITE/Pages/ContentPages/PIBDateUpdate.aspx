@@ -42,7 +42,7 @@
                     <asp:TextBox ID="rmTxt" runat="server" style="display: inline-block; position: relative; top: 1px;"/>
                     <asp:Label runat="server" ID="batchLbl" Text="Batch : "></asp:Label>
                     <asp:TextBox ID="batchTxt" runat="server" style="display: inline-block; position: relative; top: 1px;"/>
-                    <asp:Label runat="server" ID="Label1" Text="Empty PIB Date : "></asp:Label>
+                    <asp:CheckBox runat="server" ID="chkEmptyPIBDate" Text="Empty PIB Date"/>
                 </td>
             </tr>
         </table>

@@ -15,15 +15,6 @@ namespace KITE.Pages.ContentPages
     {
 
         /// <summary>
-        /// btnCalculate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCalculate;
-
-        /// <summary>
         /// yearPeriodLbl control.
         /// </summary>
         /// <remarks>
@@ -67,6 +58,15 @@ namespace KITE.Pages.ContentPages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button viewFGCalculate;
+
+        /// <summary>
+        /// btnCalculate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCalculate;
 
         /// <summary>
         /// errorLabel control.

@@ -27,39 +27,32 @@
         }
     </style>
     <div>
-        <table style="padding-left: 10px; min-width: 1170px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 10px">
-            <tr>
-                <th>
-                    <span style="position: fixed; background-color: white; z-index: 1; font-weight: bold; padding:0px 3px 0px 3px;">Distribute Consumption BM & RS</span>
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Label runat="server" ID="Label1" Text="" Style="padding: 0px 5px 0px 15px;" />
-                </td>
-            </tr>
-            <tr style="border-right: 1px solid #ccc; border-top: 1px solid #ccc; border-left: 1px solid #ccc;">
-                <td>
+        <span style="position: relative; background-color: white; z-index: 1; font-weight: bold; padding: 0px 3px 0px 3px; top: 10px; left: 3px;">Distribute Consumption BM & RS</span>
+        <table style="padding-left: 10px; min-width: 250px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 5px;">
+            <tr style="border-right: 1px solid #ccc; border-top: 1px solid #ccc; border-left: 1px solid #ccc; height: 37px; vertical-align: bottom;">
+                <td style="width: 125px; text-align: right;">
                     <asp:Label runat="server" ID="yearPeriodLbl" Text="Year Period " Style="padding: 0px 5px 0px 15px;" />
                 </td>
                 <td>
-                    <asp:TextBox ID="yearPeriodTxt" runat="server" Width="50px" Style="padding: 0px 5px 0px 15px;" />
-                </td>
-                <td Style="width: 1000px;" >
-                    <asp:Button ID="btnCalculate" runat="server" Text="Calculate BM & RS" class="btn btn-primary" Style="margin: 3px 5px 0px 5px;" />
-                    <asp:Button ID="viewFGCalculate" runat="server" Text="View" class="btn btn-primary" Style="margin: 3px 5px 0px 5px;" />
+                    <asp:TextBox ID="yearPeriodTxt" runat="server" Width="100px" Style="padding: 0px 5px 0px 15px;" />
                 </td>
             </tr>
-            <tr style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; border-left: 1px solid #ccc;">
-                <td>
+            <tr style="border-right: 1px solid #ccc; border-left: 1px solid #ccc; height: 40px;">
+                <td style="text-align: right;">
                     <asp:Label runat="server" ID="monthPeriodLbl" Text="Month Period " Style="padding: 0px 5px 0px 15px;" />
                 </td>
                 <td>
-                    <asp:TextBox ID="monthPeriodTxt" runat="server" Width="50px" Style="padding: 0px 5px 0px 15px;" />
+                    <asp:TextBox ID="monthPeriodTxt" runat="server" Width="100px" Style="padding: 0px 5px 0px 15px;" />
+                </td>
+            </tr>
+            <tr style="border-right: 1px solid #ccc; border-left: 1px solid #ccc; height: 50px;">
+                <td colspan="2" style="text-align: right;">
+                    <asp:Button ID="viewFGCalculate" runat="server" Text="View" Width="85px" class="btn btn-primary" Style="margin: 3px;" OnClick="ViewData" />
+                    <asp:Button ID="btnCalculate" runat="server" Text="Calculate" Width="85px" class="btn btn-primary" Style="margin: 3px; margin-right: 5px;" />
                 </td>
             </tr>
         </table>
-        <asp:Label ID="errorLabel" runat="server" Enabled="false" style="color: red; position:relative; width:auto; height:auto;"></asp:Label>
+        <asp:Label ID="errorLabel" runat="server" Enabled="false" Style="color: red; position: relative; width: auto; height: auto;"></asp:Label>
 
         <asp:ScriptManager ID="BMandRSScriptManager" runat="server">
             <Scripts>

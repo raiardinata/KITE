@@ -13,6 +13,7 @@ namespace KITE.Pages.ContentPages
                 FG_Tracing_ReportViewer.ZoomMode = Microsoft.Reporting.WebForms.ZoomMode.Percent;
                 FG_Tracing_ReportViewer.ZoomPercent = 75;
             }
+
         }
 
         public void GenerateReport(object sender, EventArgs e)

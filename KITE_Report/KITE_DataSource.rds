@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<RptDataSource xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="KITE_DataSource">
-  <ConnectionProperties>
-    <Extension>SQL</Extension>
-    <ConnectString>Data Source=HIMAWARITHIE;Initial Catalog=KITE</ConnectString>
-  </ConnectionProperties>
-  <DataSourceID>5346ae2f-9a91-4ec5-9cdb-e7a2af3dee4c</DataSourceID>
-</RptDataSource>

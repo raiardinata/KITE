@@ -2,7 +2,7 @@
 <SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <DataSet Name="DataSet1">
     <Query>
-      <DataSourceReference>KITE_DataSource</DataSourceReference>
+      <DataSourceReference>DB_KITE</DataSourceReference>
       <DataSetParameters>
         <DataSetParameter Name="@RM_Batch">
           <DefaultValue>%%</DefaultValue>
@@ -26,7 +26,7 @@
           <rd:DbType>String</rd:DbType>
         </DataSetParameter>
         <DataSetParameter Name="@PGI_Date_From">
-          <DefaultValue>01/01/2023 00:00:00</DefaultValue>
+          <DefaultValue>01/01/2018 00:00:00</DefaultValue>
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
@@ -40,7 +40,7 @@
           <rd:DbType>String</rd:DbType>
         </DataSetParameter>
         <DataSetParameter Name="@PGI_Date_Until">
-          <DefaultValue>12/31/2023 00:00:00</DefaultValue>
+          <DefaultValue>12/31/2200 00:00:00</DefaultValue>
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
