@@ -57,7 +57,7 @@ namespace KITE.Pages.ContentPages
                         return;
                     }
 
-                    Tuple<DataTable, Exception> FGTracingDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_Tracing", $" WHERE Year_Period = '{yearPeriodTxt.Text}' AND Month_Period = '{monthPeriodTxt.Text}' ORDER BY Finish_Goods ASC, FG_Batch ASC, Raw_Material ASC, RM_Batch_Sequence ASC, RM_Batch ASC ", ConnectionString);
+                    Tuple<DataTable, Exception> FGTracingDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_Tracing", $" WHERE Year_Period = '{yearPeriodTxt.Text}' AND Month_Period = '{monthPeriodTxt.Text}' ORDER BY FG_Batch ASC, Finish_Goods ASC, Raw_Material ASC, RM_Batch_Sequence ASC, RM_Batch ASC ", ConnectionString);
                     if (FGTracingDataTable.Item2.Message != "null")
                     {
                         UtilityModel errorHandler = new UtilityModel();
@@ -222,7 +222,7 @@ namespace KITE.Pages.ContentPages
 
         private void LoadFGTracingData()
         {
-            Tuple<DataTable, Exception> FGTracingDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_Tracing", $" WHERE Year_Period = '{yearPeriodTxt.Text}' AND Month_Period = '{monthPeriodTxt.Text}' ORDER BY Finish_Goods ASC, FG_Batch ASC, Raw_Material ASC, RM_Batch_Sequence ASC, RM_Batch ASC ", ConnectionString);
+            Tuple<DataTable, Exception> FGTracingDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_Tracing", $" WHERE Year_Period = '{yearPeriodTxt.Text}' AND Month_Period = '{monthPeriodTxt.Text}' ORDER BY FG_Batch ASC, Finish_Goods ASC, Raw_Material ASC, RM_Batch_Sequence ASC, RM_Batch ASC ", ConnectionString);
             if (FGTracingDataTable.Item2.Message != "null")
             {
                 UtilityModel errorHandler = new UtilityModel();
