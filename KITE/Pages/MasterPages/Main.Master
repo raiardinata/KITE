@@ -21,11 +21,13 @@
     <script type="text/javascript" src="../../Script/jquery-3.1.1.js"></script>
     <script type="text/javascript" src="../../Script/jquery-3.1.1.min.js"></script>
 
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="../../Resources/CSS/bootstrap.min.css" rel="stylesheet">
+    <script src="../../Resources/JS/popper.min.js"></script>
+    <script src="../../Resources/JS/bootstrap.min.js"></script>
 
     <link href="../../CSS/uicss.css" rel="stylesheet" type="text/css" />
     <link href="../../CSS/Theme/jquery-ui.css" rel="stylesheet" type="text/css" />
-    <link href="../../CSS/NavMenu.css" rel="stylesheet" type="text/css" />
 
     <link href="../../CSS/MainMaster.css" rel="stylesheet" type="text/css" />
     <link href="../../CSS/GridView.css" rel="stylesheet" type="text/css" />
@@ -33,8 +35,6 @@
 
     <script type="text/javascript" src="../../Script/jquery-1.12.1-ui.js"></script>
     <script type="text/javascript" src="../../Script/jquery-1.12.1-ui.min.js"></script>
-    <script type="text/javascript" src="../../Script/NavMenu.js"></script>
-    <script src="../../Scripts/bootstrap.min.js"></script>
 
 
 
@@ -59,112 +59,75 @@
 </head>
 <body>
     <form runat="server">
-
-
-
-        <!-- FIx oNe -->
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" runat="server" href="../ContentPages/Home.aspx" style="font-weight: bold">Home</a>
-                    <%--<a class="navbar-brand" runat="server" href="~/" style="font-weight: bold">Report</a>--%>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown" runat="server">
-                            <a class="dropdown-toggle" id="master" visible="false" runat="server" data-toggle="dropdown">Master
-                            <span class="caret"></span></a>
-
-                            <ul class="dropdown-menu">
-                                <li><a href="../ContentPages/Master_UserApp2.aspx" id="master_userapp" visible="false" runat="server">User App</a></li>
-                                <li><a href="../ContentPages/MaterialConfiguration.aspx" id="master_matcon" visible="false" runat="server">Material Configuration</a></li>
-                                <li><a href="../ContentPages/SlocConfiguration.aspx" id="A1" visible="false" runat="server">Storage Location Configuration</a></li>
-                                <li><a href="~" id="master_slocconf" visible="false" runat="server">Dummy Master_Cusgroup</a></li>
-                                <li><a href="~" id="master_cusgroup" visible="false" runat="server">Dummy Master_Cusgroup</a></li>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" runat="server" href="../ContentPages/Home.aspx" style="font-weight: bold">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown" runat="server">
+                            <a class="nav-link dropdown-toggle" href="#" id="master" role="button" data-bs-toggle="dropdown" aria-expanded="false" visible="false" runat="server">Master</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="../ContentPages/Master_UserApp2.aspx" id="master_userapp" visible="false" runat="server">User App</a></li>
+                                <li><a class="dropdown-item" href="../ContentPages/MaterialConfiguration.aspx" id="master_matcon" visible="false" runat="server">Material Configuration</a></li>
+                                <li><a class="dropdown-item" href="../ContentPages/SlocConfiguration.aspx" id="master_slocconf" visible="false" runat="server">Storage Location Configuration</a></li>
+                                <li><a class="dropdown-item" href="~" id="master_cusgroup" visible="false" runat="server">Dummy Master_Cusgroup</a></li>
 
                             </ul>
-
                         </li>
-
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" id="report" visible="false" data-toggle="dropdown" runat="server">Report
-                            <span class="caret"></span></a>
-
-                            <ul class="dropdown-menu">
-                                <li><a href="../ContentPages/Input_KITEA.aspx" id="report_kitea" visible="false" runat="server">A. Laporan Pemasukan Bahan Baku</a></li>
-                                <li><a href="../ContentPages/Input_KITEB.aspx" id="report_kiteb" visible="false" runat="server">B. Laporan Pemakaian Bahan Baku</a></li>
-                                <li><a href="../ContentPages/Input_KITEC.aspx" id="report_kitec" visible="false" runat="server">C. Laporan Pemakaian Barang Dalam Proses Dalam Rangka Kegiatan Subkontrak</a></li>
-                                <li><a href="../ContentPages/Input_KITED.aspx" id="report_kited" visible="false" runat="server">D. Laporan Pemasukan Hasil Produksi</a></li>
-                                <li><a href="../ContentPages/Input_KITEE.aspx" id="report_kitee" visible="false" runat="server">E. Laporan Pengeluaran Hasil Produksi</a></li>
-                                <li><a href="../ContentPages/Input_KITEF.aspx" id="report_kitef" visible="false" runat="server">F. Laporan Mutasi Bahan Baku</a></li>
-                                <li><a href="../ContentPages/Input_KITEG.aspx" id="report_kiteg" visible="false" runat="server">G. Laporan Mutasi Hasil Produksi</a></li>
-                                <li><a href="../ContentPages/Input_KITEH.aspx" id="report_kiteh" visible="false" runat="server">H. Laporan Penyelesaian Waste/Scrap</a></li>
-                                <li><a href="../ContentPages/Input_KITEB2.aspx" id="report_kiteb2" visible="false" runat="server">B. Laporan Pemakaian Bahan Baku</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="report" role="button" data-bs-toggle="dropdown" aria-expanded="false" visible="false" runat="server">Report</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="../ContentPages/Input_KITEA.aspx" id="report_kitea" visible="false" runat="server">A. Laporan Pemasukan Bahan Baku</a></li>
+                                <li><a class="dropdown-item" href="../ContentPages/Input_KITEB.aspx" id="report_kiteb" visible="false" runat="server">B. Laporan Pemakaian Bahan Baku</a></li>
+                                <li><a class="dropdown-item" href="../ContentPages/Input_KITEC.aspx" id="report_kitec" visible="false" runat="server">C. Laporan Pemakaian Barang Dalam Proses Dalam Rangka Kegiatan Subkontrak</a></li>
+                                <li><a class="dropdown-item" href="../ContentPages/Input_KITED.aspx" id="report_kited" visible="false" runat="server">D. Laporan Pemasukan Hasil Produksi</a></li>
+                                <li><a class="dropdown-item" href="../ContentPages/Input_KITEE.aspx" id="report_kitee" visible="false" runat="server">E. Laporan Pengeluaran Hasil Produksi</a></li>
+                                <li><a class="dropdown-item" href="../ContentPages/Input_KITEF.aspx" id="report_kitef" visible="false" runat="server">F. Laporan Mutasi Bahan Baku</a></li>
+                                <li><a class="dropdown-item" href="../ContentPages/Input_KITEG.aspx" id="report_kiteg" visible="false" runat="server">G. Laporan Mutasi Hasil Produksi</a></li>
+                                <li><a class="dropdown-item" href="../ContentPages/Input_KITEH.aspx" id="report_kiteh" visible="false" runat="server">H. Laporan Penyelesaian Waste/Scrap</a></li>
+                                <li><a class="dropdown-item" href="../ContentPages/Input_KITEB2.aspx" id="report_kiteb2" visible="false" runat="server">B. Laporan Pemakaian Bahan Baku</a></li>
                             </ul>
                         </li>
-
-                        <li class="dropdown" runat="server">
-                            <a class="dropdown-toggle" id="tracing" visible="false" runat="server" data-toggle="dropdown">Tracing
-                        <span class="caret"></span></a>
-
-                            <ul class="dropdown-menu">
-                                <li><a href="~/Pages/ContentPages/McFrameUpload.aspx" id="master_mcframeupload" visible="false" runat="server">McFrame Upload</a></li>
-                                <li><a href="~/Pages/ContentPages/GIRawMaterialUpload.aspx" id="master_girawmaterialupload" visible="false" runat="server">GI Raw Material Upload</a></li>
-                                <li><a href="~/Pages/ContentPages/GRFinishGoodsUpload.aspx" id="master_grfinishgoodsupload" visible="false" runat="server">GR Finish Goods Upload</a></li>
-                                <li><a href="~/Pages/ContentPages/ExportSalesUpload.aspx" id="master_exportsales" visible="false" runat="server">Export Sales Upload</a></li>
-                                <li><a href="~/Pages/ContentPages/DistributeConsumptionBMandRS.aspx" id="master_bmandrscalculation" visible="false" runat="server">BM and RS Calculation</a></li>
-                                <li><a href="~/Pages/ContentPages/DistributeFGTracing.aspx" id="master_fgtracing" visible="false" runat="server">FG Tracing Calculaton</a></li>
-                                <li><a href="~/Pages/ContentPages/FG_Tracing_Report_Page.aspx" id="master_fgtracingreportpage" visible="false" runat="server">FG Tracing Report</a></li>
-                                <li><a href="~/Pages/ContentPages/PIBDateUpdate.aspx" id="master_pibdateupdate" visible="false" runat="server">Master Batch</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="tracing" role="button" data-bs-toggle="dropdown" aria-expanded="false" visible="false" runat="server">Tracing</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="~/Pages/ContentPages/McFrameUpload.aspx" id="master_mcframeupload" visible="false" runat="server">McFrame Upload</a></li>
+                                <li><a class="dropdown-item" href="~/Pages/ContentPages/GIRawMaterialUpload.aspx" id="master_girawmaterialupload" visible="false" runat="server">GI Raw Material Upload</a></li>
+                                <li><a class="dropdown-item" href="~/Pages/ContentPages/GRFinishGoodsUpload.aspx" id="master_grfinishgoodsupload" visible="false" runat="server">GR Finish Goods Upload</a></li>
+                                <li><a class="dropdown-item" href="~/Pages/ContentPages/ExportSalesUpload.aspx" id="master_exportsales" visible="false" runat="server">Export Sales Upload</a></li>
+                                <li><a class="dropdown-item" href="~/Pages/ContentPages/DistributeConsumptionBMandRS.aspx" id="master_bmandrscalculation" visible="false" runat="server">BM and RS Calculation</a></li>
+                                <li><a class="dropdown-item" href="~/Pages/ContentPages/DistributeFGTracing.aspx" id="master_fgtracing" visible="false" runat="server">FG Tracing Calculaton</a></li>
+                                <li><a class="dropdown-item" href="~/Pages/ContentPages/FG_Tracing_Report_Page.aspx" id="master_fgtracingreportpage" visible="false" runat="server">FG Tracing Report</a></li>
+                                <li><a class="dropdown-item" href="~/Pages/ContentPages/PIBDateUpdate.aspx" id="master_pibdateupdate" visible="false" runat="server">Master Batch</a></li>
                             </ul>
-
                         </li>
-
-                        <li><a href="~/Pages/ContentPages/LogActivities.aspx" id="logactivities" visible="false" runat="server">Log Activities</a></li>
-
-                        &nbsp;&nbsp;
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown">
-                                <asp:Label ID="label1" runat="server" Text="">
-                                
-                                </asp:Label>
-                                <span class="glyphicon glyphicon-log-in"></span>
+                        <li></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Pages/ContentPages/LogActivities.aspx" id="logactivities" visible="false" runat="server">Log Activities</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="A1" role="button" data-bs-toggle="dropdown" aria-expanded="false" runat="server">
+                                <i class="bi bi-send"></i>
+                                <asp:Label ID="label1" runat="server" Text="" />
                             </a>
-                            <%--<button class=" dropdown-toggle btn  navbar-btn" data-toggle="dropdown">
-                                <asp:Label ID="label1" runat="server" Text="">
-                                
-                                </asp:Label>
-                                <span class="glyphicon glyphicon-log-in"></span>
-                            </button>--%>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                                 <li>
-                                    <asp:LinkButton ID="lnLogout" runat="server" CssClass="logoutLabel" OnClick="lnLogout_Click">Logout User</asp:LinkButton>
-                                    <a href="~/Pages/ContentPages/ChangePassword.aspx" runat="server">Change Password</a>
-
-                                    <%--PostBackUrl="~/Pages/ContentPages/Login"--%>
+                                    <asp:LinkButton ID="lnLogout" runat="server" CssClass="dropdown-item" OnClick="lnLogout_Click">Logout User</asp:LinkButton>
                                 </li>
-
-
+                                <li>
+                                    <a class="dropdown-item" href="~/Pages/ContentPages/ChangePassword.aspx" runat="server">Change Password</a>
+                                </li>
                             </ul>
-
-
                         </li>
-
                     </ul>
-
                 </div>
-
-
             </div>
-        </div>
+        </nav>
 
 
-        <br />
-        <br />
         <br />
         <!--coba tambah div -->
         <div id="main-content">

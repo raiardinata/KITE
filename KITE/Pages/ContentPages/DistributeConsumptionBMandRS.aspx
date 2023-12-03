@@ -8,7 +8,6 @@
 
         .modalBackground {
             background-color: #000;
-            filter: alpha(opacity=70);
             opacity: 0.7;
         }
 

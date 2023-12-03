@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web;
-//using System.Web.UI. 
 
 namespace KITE.Pages.MasterPages
 {
@@ -13,6 +12,8 @@ namespace KITE.Pages.MasterPages
         {
             if (!IsPostBack)
             {
+                label1.Text = HttpContext.Current.Session["FullName"].ToString();
+
                 if (!string.IsNullOrEmpty(Session["UserType"] + string.Empty))
                 {
                     //lblName.Text = ConfigurationManager.AppSettings["ServerName"].ToString();

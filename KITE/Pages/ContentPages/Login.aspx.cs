@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace KITE.Pages.ContentPages
 {
@@ -64,7 +60,7 @@ namespace KITE.Pages.ContentPages
             }
             if (!success)
             {
-                login.InsertLog("Login", "Login Report KITE", "2", "", txtUserName.Text);                
+                login.InsertLog("Login", "Login Report KITE", "2", "", txtUserName.Text);
             }
             //  lbError.Visible = true;
 
