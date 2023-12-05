@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KITE</RootNamespace>
     <AssemblyName>KITE</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
@@ -531,6 +531,7 @@
     <Content Include="Pages\ContentPages\Input_KITEANew.aspx" />
     <Content Include="Pages\ContentPages\McFrameUpload.aspx" />
     <Content Include="Resources\CSS\AjaxTabs.css" />
+    <Content Include="Resources\CSS\bootstrap-icons.css" />
     <Content Include="Resources\CSS\bootstrap.min.css" />
     <Content Include="Resources\CSS\fontawesome.min.css" />
     <Content Include="Resources\CSS\general-style.css" />
