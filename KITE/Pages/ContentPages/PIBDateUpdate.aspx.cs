@@ -1,11 +1,7 @@
 ﻿using KITE.Models;
-using Microsoft.Owin;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Globalization;
-using System.Threading;
 using System.Web.UI.WebControls;
 
 namespace KITE.Pages.ContentPages
@@ -41,19 +37,14 @@ namespace KITE.Pages.ContentPages
 
         public void SubmitData(object sender, EventArgs e)
         {
-            string condition = "";
-            if (rmTxt.Text != "" && batchTxt.Text != "") 
+
+            string condition = $" WHERE Raw_Material LIKE '%{rmTxt.Text}%' AND RM_Batch LIKE '%{batchTxt.Text}%' ";
+            if (chkEmptyPIBDate.Checked)
             {
-                condition = $" WHERE RM_Batch = '{batchTxt.Text}' AND Raw_Material = '{rmTxt.Text}' ORDER BY RM_Batch ASC, Raw_Material ASC ";
+                condition += $" AND PIB_Date IS NULL ";
             }
-            else if (rmTxt.Text != "" && batchTxt.Text == "")
-            {
-                condition = $" WHERE Raw_Material = '{rmTxt.Text}' ORDER BY RM_Batch ASC, Raw_Material ASC ";
-            }
-            else if (rmTxt.Text == "" && batchTxt.Text != "")
-            {
-                condition = $" WHERE RM_Batch = '{batchTxt.Text}' ORDER BY RM_Batch ASC, Raw_Material ASC ";
-            }
+
+            condition += " ORDER BY RM_Batch ASC, Raw_Material ASC ";
 
             Tuple<DataTable, Exception> MasterBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" UUID,Raw_Material,RM_Batch,PIB_Date ", "Master_Batch", condition, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             if (MasterBatchDataTable.Item2.Message != "null")
@@ -72,7 +63,7 @@ namespace KITE.Pages.ContentPages
         public string PIBDateInsertion(string PIBDate, string UUID)
         {
             Exception pibDateException = new DatabaseModel().UpdateTable(" Master_Batch ", $" PIB_Date = '{PIBDate}', Change_By = '{Session["Fullname"]}', Date_Modified = CURRENT_TIMESTAMP ", $" WHERE UUID = '{UUID}' ", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            if(pibDateException.Message != "null") 
+            if (pibDateException.Message != "null")
             {
                 UtilityModel errorHandler = new UtilityModel();
                 Exception loadCsvException = new Exception($"Update PIB Date Gagal. Detail : {pibDateException.Message}");

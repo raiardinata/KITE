@@ -15,22 +15,13 @@ namespace KITE.Pages.ContentPages
     {
 
         /// <summary>
-        /// btnSubmit control.
+        /// yearPeriodLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSubmit;
-
-        /// <summary>
-        /// rmLbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label rmLbl;
+        protected global::System.Web.UI.WebControls.Label yearPeriodLbl;
 
         /// <summary>
         /// rmTxt control.
@@ -69,13 +60,13 @@ namespace KITE.Pages.ContentPages
         protected global::System.Web.UI.WebControls.CheckBox chkEmptyPIBDate;
 
         /// <summary>
-        /// errorLabel control.
+        /// btnSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label errorLabel;
+        protected global::System.Web.UI.WebControls.Button btnSubmit;
 
         /// <summary>
         /// PIBScriptManager control.
@@ -229,5 +220,14 @@ namespace KITE.Pages.ContentPages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CloseButton;
+
+        /// <summary>
+        /// errorLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorLabel;
     }
 }

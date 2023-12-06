@@ -31,7 +31,7 @@ namespace KITE.Pages.ContentPages
 
             FG_Tracing_ReportViewer.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote;
             FG_Tracing_ReportViewer.ServerReport.ReportServerUrl = new Uri("http://127.0.0.1/ReportServer");
-            FG_Tracing_ReportViewer.ServerReport.ReportPath = "/KITE_Report/KITE_FG_Tracing";
+            FG_Tracing_ReportViewer.ServerReport.ReportPath = "/ReportKITE/KITE_FG_Tracing";
             FG_Tracing_ReportViewer.ServerReport.SetParameters(parameters);
             FG_Tracing_ReportViewer.ServerReport.Refresh();
         }

@@ -6,22 +6,55 @@
         }
     </style>
     <div>
-        <table style="padding-left: 10px; min-width: 1170px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 10px">
+
+        <table>
             <tr>
-                <th style ="font-weight: normal; text-align: left; background-color:white; top:9px; left: 5px; position: relative; width: 150px;">
-                </th>
+                <td style="padding: 5px; max-width: 240px;">
+                    <span style="position: relative; top: 10px; left: 3px; background-color: white; z-index: 1; font-weight: bold; padding: 0px 3px 0px 3px;">GI Raw Material Check Data</span>
+                    <table style="padding-left: 10px; width: 220px; min-height: 50px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 10px">
+                        <tr style="border-right: 1px solid #ccc; border-top: 1px solid #ccc; border-left: 1px solid #ccc; height: 37px; vertical-align: bottom;">
+                            <td style="width: 110px; text-align: right;">
+                                <asp:Label runat="server" ID="yearPeriodLbl" Text="Year Period " Style="padding: 0px 5px 0px 15px;" />
+                            </td>
+                            <td>
+                                <asp:TextBox ID="yearPeriodTxt" runat="server" Width="100px" Style="padding: 0px 5px 0px 15px;" />
+                            </td>
+                        </tr>
+                        <tr style="border-right: 1px solid #ccc; border-left: 1px solid #ccc; height: 37px; vertical-align: bottom;">
+                            <td style="text-align: right;">
+                                <asp:Label runat="server" ID="monthPeriodLbl" Text="Month Period " Style="padding: 0px 5px 0px 15px;" />
+                            </td>
+                            <td>
+                                <asp:TextBox ID="monthPeriodTxt" runat="server" Width="100px" Style="padding: 0px 5px 0px 15px;" />
+                            </td>
+                        </tr>
+                        <tr style="border-right: 1px solid #ccc; border-left: 1px solid #ccc; height: 50px;">
+                            <td colspan="2" style="text-align: right;">
+                                <asp:Button ID="viewButton" runat="server" Text="View" class="btn btn-primary" OnClick="btnView" Style="display: inline-block; margin-right: 10px;" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="padding: 5px; vertical-align: top; width: 100%;">
+                    <span style="position: relative; top: 10px; left: 3px; background-color: white; z-index: 1; font-weight: bold; padding: 0px 3px 0px 3px;">GI Raw Material Csv Upload</span>
+                    <table style="padding-left: 10px; width: 500px; min-height: 50px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 10px">
+                        <tr style="border-right: 1px solid #ccc; border-top: 1px solid #ccc; border-left: 1px solid #ccc; height: 37px; vertical-align: bottom;">
+                            <td style="padding: 10px 5px 10px 20px; position: relative;">
+                                <asp:Button ID="btnSubmit" runat="server" Text="Submit" class="btn btn-primary" OnClick="btnSubmit_Click" style="display: inline-block; margin-right: 10px;" />
+                                <asp:FileUpload ID="fileUpload" runat="server" style="display: inline-block; position: relative; top: 1px;" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
-            <tr style="border: 1px solid #ccc;">
-                <td style="padding: 10px 5px 10px 20px; position: relative;">
-                    <span style="position: absolute; top: -12px; left: 8px; background-color: white; z-index: 1; font-weight: bold; padding:0px 3px 0px 3px;">GI Raw Material Csv Upload</span>
-                    <asp:Button ID="btnSubmit" runat="server" Text="Submit" class="btn btn-primary" OnClick="btnSubmit_Click" style="display: inline-block; margin-right: 10px;" />
-                    <asp:FileUpload ID="fileUpload" runat="server" style="display: inline-block; position: relative; top: 1px;" />
+            <tr>
+                <td colspan="2">
+                    <asp:Label ID="errorLabel" runat="server" Enabled="false" style="color: red; position:relative; width:auto; height:auto;"></asp:Label>
+                    <asp:CheckBox ID="forcePushData" runat="server" Text="Overide data sebelumnya" /><br />
+                    <asp:Label ID="checkDataWarning" runat="server" Text="Pastikan untuk melakukan validasi ulang terhadap data yang di upload." />
                 </td>
             </tr>
         </table>
-        <asp:Label ID="errorLabel" runat="server" Enabled="false" style="color: red; position:relative; width:auto; height:auto;"></asp:Label>
-        <asp:CheckBox ID="forcePushData" runat="server" Text="Overide data sebelumnya" /><br />
-        <asp:Label ID="checkDataWarning" runat="server" Text="Pastikan untuk melakukan validasi ulang terhadap data yang di upload." />
 
         <asp:ScriptManager ID="CsvScriptManager" runat="server">
             <Scripts>

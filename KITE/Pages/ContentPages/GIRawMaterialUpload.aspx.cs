@@ -1,5 +1,4 @@
 ﻿using KITE.Models;
-using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +20,22 @@ namespace KITE.Pages.ContentPages
             {
                 btnUpload.Enabled = false;
             }
+        }
+
+        protected void btnView(object sender, EventArgs e)
+        {
+            Tuple<DataTable, Exception> dataTableRes = new UtilityModel().BindGridview("GI_Raw_Material", yearPeriodTxt.Text, monthPeriodTxt.Text, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            if (dataTableRes.Item2 != null)
+            {
+                new UtilityModel().UploadCsvErrorHandler(dataTableRes.Item2, new GridView[] { }, errorLabel);
+                CsvDataGridView.DataSource = null;
+                CsvDataGridView.DataBind();
+                btnDownloadCsv.Enabled = false;
+                return;
+            }
+            CsvDataGridView.DataSource = dataTableRes.Item1;
+            CsvDataGridView.DataBind();
+            btnDownloadCsv.Enabled = true;
         }
 
         public void btnDownloadToCsv(object sender, EventArgs e)
@@ -284,7 +299,7 @@ namespace KITE.Pages.ContentPages
                         }
                     }
 
-                    object[] param = new[] { yearPeriod.ToString(), monthPeriod.ToString(), (Session["FullName"].ToString() != "") ? Session["FullName"].ToString(): "Failed to Get Session FullName" };
+                    object[] param = new[] { yearPeriod.ToString(), monthPeriod.ToString(), (Session["FullName"].ToString() != "") ? Session["FullName"].ToString() : "Failed to Get Session FullName" };
 
                     Exception masterBatchProcess = new DatabaseModel().ExecStoreProcedure("Master_Batch_Process", param, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                     if (masterBatchProcess != null)

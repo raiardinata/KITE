@@ -21,6 +21,22 @@ namespace KITE.Pages.ContentPages
             }
         }
 
+        protected void btnView(object sender, EventArgs e)
+        {
+            Tuple<DataTable, Exception> dataTableRes = new UtilityModel().BindGridview("GR_Finish_Goods", yearPeriodTxt.Text, monthPeriodTxt.Text, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            if (dataTableRes.Item2 != null)
+            {
+                new UtilityModel().UploadCsvErrorHandler(dataTableRes.Item2, new GridView[] { }, errorLabel);
+                CsvDataGridView.DataSource = null;
+                CsvDataGridView.DataBind();
+                btnDownloadCsv.Enabled = false;
+                return;
+            }
+            CsvDataGridView.DataSource = dataTableRes.Item1;
+            CsvDataGridView.DataBind();
+            btnDownloadCsv.Enabled = true;
+        }
+
         public void btnDownloadToCsv(object sender, EventArgs e)
         {
             LoadCsvData();
