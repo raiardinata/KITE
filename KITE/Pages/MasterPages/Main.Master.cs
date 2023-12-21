@@ -15,14 +15,14 @@ namespace KITE.Pages.MasterPages
             {
                 if (!string.IsNullOrEmpty(Session["UserType"] + string.Empty))
                 {
-                    //lblName.Text = ConfigurationManager.AppSettings["ServerName"].ToString();
+                    label1.Text = HttpContext.Current.Session["FullName"].ToString();
                     foreach (var MenuLink in MC.Menu_Select(Session["UserType"].ToString()))
                     {
                         this.FindControl(MenuLink.MenuLink.ToLower()).Visible = true;
                     }
+
                 }
             }
-
         }
 
         protected void lnLogout_Click(object sender, EventArgs e)

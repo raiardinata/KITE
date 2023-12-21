@@ -78,13 +78,22 @@ namespace KITE.Pages.ContentPages
         protected global::System.Web.UI.WebControls.TextBox pgiDateUntil;
 
         /// <summary>
-        /// Button1 control.
+        /// errorLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Label errorLabel;
+
+        /// <summary>
+        /// generateReportBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button generateReportBtn;
 
         /// <summary>
         /// FG_Tracing_ReportViewer control.

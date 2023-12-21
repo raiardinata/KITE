@@ -32,8 +32,8 @@ namespace KITE.Pages.ContentPages
                 btnDownloadCsv.Enabled = false;
                 return;
             }
-            CsvDataGridView.DataSource = dataTableRes.Item1;
-            CsvDataGridView.DataBind();
+            CsvDataList = new McFrameFunctionModel().McFrameDatatableToList(dataTableRes.Item1);
+            McFrameBindGridView();
             btnDownloadCsv.Enabled = true;
         }
 
@@ -214,12 +214,22 @@ namespace KITE.Pages.ContentPages
                     errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
                 }
                 CsvDataList = (List<McFrameWithKilosConvertionViewModel>)readCsvResult.Item1;
+                return;
             }
             catch (Exception ex)
             {
-                UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("Terdapat masalah ketika memuat file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload McFrame process.<br/> Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                Tuple<DataTable, Exception> dataTableRes = new UtilityModel().BindGridview("McFrame_Cost_Table", yearPeriodTxt.Text, monthPeriodTxt.Text, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (dataTableRes.Item2 == null)
+                {
+                    CsvDataList = new McFrameFunctionModel().McFrameDatatableToList(dataTableRes.Item1);
+                    return;
+                }
+                else
+                {
+                    UtilityModel errorHandler = new UtilityModel();
+                    Exception loadCsvException = new Exception("Terdapat masalah ketika memuat file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload McFrame process.<br/> Detail : " + ex.Message);
+                    errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                }
             }
         }
 
@@ -235,22 +245,6 @@ namespace KITE.Pages.ContentPages
 
             try
             {
-                Tuple<DataTable, Exception> checkRMperBatch = new DatabaseModel().SelectTableIntoDataTable("UUID", "RM_per_Batch", "", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                if (checkRMperBatch.Item1.Rows.Count > 0)
-                {
-                    loadCsvException = new Exception("Periode yang anda pilih sudah memiliki kalkulasi RM per Batch. Upload file tidak dapat dilakukan. Silahkan menghubungi KITE support untuk bantuan lebih lanjut.");
-                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
-                    return;
-                }
-
-                Tuple<DataTable, Exception> checkFGperBatch = new DatabaseModel().SelectTableIntoDataTable("UUID", "FG_per_Batch", "", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                if (checkFGperBatch.Item1.Rows.Count > 0)
-                {
-                    loadCsvException = new Exception("Periode yang anda pilih sudah memiliki kalkulasi FG per Batch. Upload file tidak dapat dilakukan. Silahkan menghubungi KITE support untuk bantuan lebih lanjut.");
-                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
-                    return;
-                }
-
                 LoadCsvData();
                 McFrameFunctionModel csvDataProcess = new McFrameFunctionModel();
                 Tuple<string, ArrayList> columnNameAndData = csvDataProcess.McFrameGenerateColumnAndCsvData(CsvDataList);
@@ -259,6 +253,22 @@ namespace KITE.Pages.ContentPages
                     if (index == 0) { yearPeriod = (int)csvDataObject; }
                     if (index == 1) { monthPeriod = (int)csvDataObject; break; }
                     index++;
+                }
+
+                Tuple<DataTable, Exception> checkRMperBatch = new DatabaseModel().SelectTableIntoDataTable("UUID", "RM_per_Batch", $" WHERE Year_Period = '{yearPeriod}' AND Month_Period = '{monthPeriod}' ", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (checkRMperBatch.Item1.Rows.Count > 0)
+                {
+                    loadCsvException = new Exception("Periode yang anda pilih sudah memiliki kalkulasi RM per Batch. Upload file tidak dapat dilakukan. Silahkan menghubungi KITE support untuk bantuan lebih lanjut.");
+                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                    return;
+                }
+
+                Tuple<DataTable, Exception> checkFGperBatch = new DatabaseModel().SelectTableIntoDataTable("UUID", "FG_per_Batch", $" WHERE Year_Period = '{yearPeriod}' AND Month_Period = '{monthPeriod}' ", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (checkFGperBatch.Item1.Rows.Count > 0)
+                {
+                    loadCsvException = new Exception("Periode yang anda pilih sudah memiliki kalkulasi FG per Batch. Upload file tidak dapat dilakukan. Silahkan menghubungi KITE support untuk bantuan lebih lanjut.");
+                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                    return;
                 }
 
                 if (forcePushData.Checked)

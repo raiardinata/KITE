@@ -15,13 +15,13 @@ namespace KITE.Pages.ContentPages
     {
 
         /// <summary>
-        /// yearPeriodLbl control.
+        /// rawMaterialLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label yearPeriodLbl;
+        protected global::System.Web.UI.WebControls.Label rawMaterialLbl;
 
         /// <summary>
         /// rmTxt control.

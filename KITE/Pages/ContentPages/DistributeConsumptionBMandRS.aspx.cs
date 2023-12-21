@@ -26,6 +26,7 @@ namespace KITE.Pages.ContentPages
         {
             LoadRMperBatchData();
             LoadFGperBatchData();
+            btnDownloadCsv.Enabled = true;
         }
 
         protected void CloseButton_Click(object sender, EventArgs e)
@@ -42,7 +43,7 @@ namespace KITE.Pages.ContentPages
 
             // Load FG per Batch Data
             LoadFGperBatchData();
-            string fgFileName = $"{DateTime.Now:yyyyMMdd}KITE_FGTracing.csv";
+            string fgFileName = $"{DateTime.Now:yyyyMMdd}KITE_FGperBatch.csv";
             string fgCsvContent = new ReadCsvModel().DataTableToCsv(globalFGperBatchDataTable);
 
             // Create a memory stream to store the zip file

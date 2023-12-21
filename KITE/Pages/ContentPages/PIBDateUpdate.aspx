@@ -28,12 +28,12 @@
     <div>
         <table>
             <tr>
-                <td style="padding: 5px; width: 310px;">
+                <td style="padding: 5px; width: 310px; vertical-align: top;">
                     <span style="position: relative; background-color: white; z-index: 1; font-weight: bold; padding: 0px 3px 0px 3px; top: 10px; left: 3px;">Master Batch</span>
                     <table style="padding-left: 10px; min-width: max-content; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 10px">
                         <tr style="border-right: 1px solid #ccc; border-top: 1px solid #ccc; border-left: 1px solid #ccc; height: 37px; vertical-align: bottom;">
                             <td style="width: 100px; text-align: right;">
-                                <asp:Label runat="server" ID="yearPeriodLbl" Text="Year Period " Style="padding: 0px 5px 0px 10px;" />
+                                <asp:Label runat="server" ID="rawMaterialLbl" Text="Raw Material " Style="padding: 0px 5px 0px 10px;" />
                             </td>
                             <td>
                                 <asp:TextBox ID="rmTxt" runat="server" Style="display: inline-block; position: relative; top: 1px; margin-right: 10px;" />

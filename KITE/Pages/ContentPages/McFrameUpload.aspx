@@ -6,7 +6,6 @@
         }
     </style>
     <div>
-
         <table>
             <tr>
                 <td style="padding: 5px; max-width: 240px;">
@@ -141,6 +140,7 @@
                             <asp:ListItem Text="100" Value="100" />
                             <asp:ListItem Text="250" Value="250" />
                             <asp:ListItem Text="1000" Value="1000" />
+                            <asp:ListItem Text="1000" Value="10000" />
                         </asp:DropDownList>
                         &nbsp; Page
                         <asp:TextBox ID="txtGoToPage" runat="server" AutoPostBack="true" OnTextChanged="GoToPage_TextChanged"

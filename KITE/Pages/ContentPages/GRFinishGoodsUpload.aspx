@@ -36,11 +36,8 @@
                 </td>
                 <td style="padding: 5px; vertical-align: top; width: 100%;">
                     <span style="position: relative; top: 10px; left: 3px; background-color: white; z-index: 1; font-weight: bold; padding: 0px 3px 0px 3px;">GR Finish Goods Csv Upload</span>
-                    <table style="padding-left: 10px; min-width: 1170px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 10px">
-                        <tr>
-                            <th style="font-weight: normal; text-align: left; background-color: white; top: 9px; left: 5px; position: relative; width: 150px;"></th>
-                        </tr>
-                        <tr style="border: 1px solid #ccc;">
+                    <table style="padding-left: 10px; width: 500px; min-height: 50px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 10px">
+                        <tr style="border-right: 1px solid #ccc; border-top: 1px solid #ccc; border-left: 1px solid #ccc; height: 37px; vertical-align: bottom;">
                             <td style="padding: 10px 5px 10px 20px; position: relative;">
                                 <asp:Button ID="btnSubmit" runat="server" Text="Submit" class="btn btn-primary" OnClick="btnSubmit_Click" Style="display: inline-block; margin-right: 10px;" />
                                 <asp:FileUpload ID="fileUpload" runat="server" Style="display: inline-block; position: relative; top: 1px;" />

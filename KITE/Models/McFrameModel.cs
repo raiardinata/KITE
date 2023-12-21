@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -10,6 +12,42 @@ namespace KITE.Models
 {
     public class McFrameFunctionModel : System.Web.UI.Page
     {
+        public List<McFrameWithKilosConvertionViewModel> McFrameDatatableToList(DataTable datatable)
+        {
+            return datatable.AsEnumerable()
+            .Select(row => new McFrameWithKilosConvertionViewModel
+            {
+                Calc_No = row.Field<string>("Calc_No"),
+                Mgmt_dept_CD = row.Field<string>("Mgmt_dept_CD"),
+                Management_Dept_Name = row.Field<string>("Management_Dept_Name"),
+                YM = row.Field<DateTime>("YM"),
+                Lvl = row.Field<int>("Lvl"),
+                Target_item_CD = row.Field<string>("Target_item_CD"),
+                Item_CD = row.Field<string>("Item_CD"),
+                Item_name = row.Field<string>("Item_name"),
+                Item_type_name = row.Field<string>("Item_type_name"),
+                Unit = row.Field<string>("Unit"),
+                Quantity = row.Field<decimal>("Quantity").ToString(),
+                STD_Qty = row.Field<decimal>("STD_Qty").ToString(),
+                Total = row.Field<decimal>("Total").ToString(),
+                STD_Total = row.Field<decimal>("STD_Total").ToString(),
+                Variable_Cost = row.Field<decimal>("Variable_Cost").ToString(),
+                STD_Variable_Cost = row.Field<decimal>("STD_Variable_Cost").ToString(),
+                Labour_Cost = row.Field<decimal>("Labour_Cost").ToString(),
+                STD_Labour_Cost = row.Field<decimal>("STD_Labour_Cost").ToString(),
+                Depreciation = row.Field<decimal>("Depreciation").ToString(),
+                STD_Depreciation = row.Field<decimal>("STD_Depreciation").ToString(),
+                Repair_Maintenance = row.Field<decimal>("Repair_Maintenance").ToString(),
+                STD_Repair_Maintenance = row.Field<decimal>("STD_Repair_Maintenance").ToString(),
+                Overhead_Cost = row.Field<decimal>("Overhead_Cost").ToString(),
+                STD_Overhead_Cost = row.Field<decimal>("STD_Overhead_Cost").ToString(),
+                Retur_Cost = row.Field<decimal>("Retur_Cost").ToString(),
+                STD_Retur_Cost = row.Field<decimal>("STD_Retur_Cost").ToString(),
+                Kilos_Convertion = row.Field<decimal>("Kilos_Convertion").ToString(),
+            })
+            .ToList();
+        }
+
         public Tuple<string, ArrayList> McFrameGenerateColumnAndCsvData(List<McFrameWithKilosConvertionViewModel> csvList)
         {
             List<string> listColumnName = new List<string>();

@@ -21,6 +21,22 @@ namespace KITE.Pages.ContentPages
             }
         }
 
+        protected void btnView(object sender, EventArgs e)
+        {
+            Tuple<DataTable, Exception> dataTableRes = new UtilityModel().BindGridview("Export_Sales", yearPeriodTxt.Text, monthPeriodTxt.Text, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            if (dataTableRes.Item2 != null)
+            {
+                new UtilityModel().UploadCsvErrorHandler(dataTableRes.Item2, new GridView[] { }, errorLabel);
+                CsvDataGridView.DataSource = null;
+                CsvDataGridView.DataBind();
+                btnDownloadCsv.Enabled = false;
+                return;
+            }
+            CsvDataList = new ExportSalesFunctionModel().ExportSalesDatatableToList(dataTableRes.Item1);
+            ExportSalesBindGridView();
+            btnDownloadCsv.Enabled = true;
+        }
+
         public void btnDownloadToCsv(object sender, EventArgs e)
         {
             LoadCsvData();
@@ -198,12 +214,22 @@ namespace KITE.Pages.ContentPages
                     errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
                 }
                 CsvDataList = (List<ExportSalesWithKilosConvertionViewModel>)readCsvResult.Item1;
+                return;
             }
             catch (Exception ex)
             {
-                UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("Terdapat masalah ketika memuat file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload ExportSales process.<br/> Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                Tuple<DataTable, Exception> dataTableRes = new UtilityModel().BindGridview("Export_Sales", yearPeriodTxt.Text, monthPeriodTxt.Text, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (dataTableRes.Item2 == null)
+                {
+                    CsvDataList = new ExportSalesFunctionModel().ExportSalesDatatableToList(dataTableRes.Item1);
+                    return;
+                }
+                else
+                {
+                    UtilityModel errorHandler = new UtilityModel();
+                    Exception loadCsvException = new Exception("Terdapat masalah ketika memuat file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload ExportSales process.<br/> Detail : " + ex.Message);
+                    errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                }
             }
         }
 
@@ -219,14 +245,6 @@ namespace KITE.Pages.ContentPages
 
             try
             {
-                Tuple<DataTable, Exception> checkFGperBatch = new DatabaseModel().SelectTableIntoDataTable("UUID", "FG_per_Batch", "", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                if (checkFGperBatch.Item1.Rows.Count > 0)
-                {
-                    loadCsvException = new Exception("Periode yang anda pilih sudah memiliki kalkulasi FG per Batch. Upload file tidak dapat dilakukan. Silahkan menghubungi KITE support untuk bantuan lebih lanjut.");
-                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
-                    return;
-                }
-
                 LoadCsvData();
                 ExportSalesFunctionModel csvDataProcess = new ExportSalesFunctionModel();
                 Tuple<string, ArrayList> columnNameAndData = csvDataProcess.ExportSalesGenerateColumnAndCsvData(CsvDataList);
@@ -235,6 +253,14 @@ namespace KITE.Pages.ContentPages
                     if (index == 0) { yearPeriod = (int)csvDataObject; }
                     if (index == 1) { monthPeriod = (int)csvDataObject; break; }
                     index++;
+                }
+
+                Tuple<DataTable, Exception> checkFGperBatch = new DatabaseModel().SelectTableIntoDataTable("UUID", "FG_per_Batch", $" WHERE Year_Period = '{yearPeriod}' AND Month_Period = '{monthPeriod}' ", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                if (checkFGperBatch.Item1.Rows.Count > 0)
+                {
+                    loadCsvException = new Exception("Periode yang anda pilih sudah memiliki kalkulasi FG per Batch. Upload file tidak dapat dilakukan. Silahkan menghubungi KITE support untuk bantuan lebih lanjut.");
+                    utility.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
+                    return;
                 }
 
                 if (forcePushData.Checked)

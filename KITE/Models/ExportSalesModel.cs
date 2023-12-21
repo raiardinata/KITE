@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -10,6 +12,52 @@ namespace KITE.Models
 {
     public class ExportSalesFunctionModel : System.Web.UI.Page
     {
+        public List<ExportSalesWithKilosConvertionViewModel> ExportSalesDatatableToList(DataTable datatable)
+        {
+            return datatable.AsEnumerable()
+            .Select(row => new ExportSalesWithKilosConvertionViewModel
+            {
+                Posting_Date = row.Field<DateTime>("Posting_Date"),
+                Document_Date = row.Field<DateTime>("Document_Date"),
+                Document_Header_Text = row.Field<string>("Document_Header_Text"),
+                Purchase_Order = row.Field<string>("Purchase_Order"),
+                Reference = row.Field<string>("Reference"),
+                Material = row.Field<string>("Material"),
+                Material_Description = row.Field<string>("Material_Description"),
+                Plant = row.Field<string>("Plant"),
+                Storage_Location = row.Field<string>("Storage_Location"),
+                Movement_Type = row.Field<string>("Movement_Type"),
+                Material_Document = row.Field<string>("Material_Document"),
+                Batch = row.Field<string>("Batch"),
+                Qty_in_Un_of_Entry = row.Field<Decimal>("Qty_in_Un_of_Entry"),
+                Unit_of_Entry = row.Field<string>("Unit_of_Entry"),
+                Entry_Date = row.Field<DateTime>("Entry_Date"),
+                Time_of_Entry = row.Field<TimeSpan>("Time_of_Entry").ToString(),
+                User_Name = row.Field<string>("User_name"),
+                Base_Unit_of_Measure = row.Field<string>("Base_Unit_of_Measure"),
+                Quantity = row.Field<Decimal>("Quantity"),
+                Debit_Credit_Ind = row.Field<string>("Debit_Credit_Ind"),
+                Amount_in_LC = row.Field<Decimal>("Amount_in_LC"),
+                Sales_Order = row.Field<string>("Sales_Order"),
+                Text = row.Field<string>("Text"),
+                Customer = row.Field<string>("Customer"),
+                Vendor = row.Field<string>("Vendor"),
+                Vendor_Name = row.Field<string>("Vendor_Name"),
+                Goods_recipient = row.Field<string>("Goods_recipient"),
+                SO = row.Field<string>("SO"),
+                SaType = row.Field<string>("SaType"),
+                Sold_to_party = row.Field<string>("Sold_to_party"),
+                Name_1 = row.Field<string>("Name_1"),
+                PO_Number = row.Field<string>("PO_Number"),
+                NO_PEB = row.Field<string>("NO_PEB"),
+                Tanggal_PEB = row.Field<DateTime>("Tanggal_PEB").ToString(),
+                Non_KITE = row.Field<string>("Non_KITE"),
+                Designated_Country = row.Field<string>("Designated_Country"),
+                KilosConvertion = row.Field<decimal>("KilosConvertion"),
+            })
+            .ToList();
+        }
+
         public Tuple<string, ArrayList> ExportSalesGenerateColumnAndCsvData(List<ExportSalesWithKilosConvertionViewModel> csvList)
         {
             List<string> listColumnName = new List<string>();
@@ -84,6 +132,8 @@ namespace KITE.Models
                 valuesList.Add(csvValues.NO_PEB);
                 valuesList.Add(csvValues.Tanggal_PEB);
                 valuesList.Add(csvValues.KilosConvertion);
+                valuesList.Add(csvValues.Non_KITE);
+                valuesList.Add(csvValues.Designated_Country);
                 valuesArray.Add(valuesList);
             }
             return Tuple.Create(columns, valuesArray);
@@ -229,6 +279,12 @@ namespace KITE.Models
 
         [Name("Tanggal PEB")]
         public string Tanggal_PEB { get; set; }
+
+        [Name("Non KITE")]
+        public string Non_KITE { get; set; }
+
+        [Name("Negara Tujuan")]
+        public string Designated_Country { get; set; }
     }
 
     public class ExportSalesWithKilosConvertionViewModel
@@ -328,6 +384,12 @@ namespace KITE.Models
 
         public decimal KilosConvertion { get; set; }
 
+        [Name("Non KITE")]
+        public string Non_KITE { get; set; }
+
+        [Name("Negara Tujuan")]
+        public string Designated_Country { get; set; }
+
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -368,7 +430,9 @@ namespace KITE.Models
                 Name_1 == other.Name_1 &&
                 PO_Number == other.PO_Number &&
                 NO_PEB == other.NO_PEB &&
-                Tanggal_PEB == other.Tanggal_PEB;
+                Tanggal_PEB == other.Tanggal_PEB &&
+                Non_KITE == other.Non_KITE &&
+                Designated_Country == other.Designated_Country;
         }
 
         public override int GetHashCode()
@@ -407,7 +471,9 @@ namespace KITE.Models
                 Name_1,
                 PO_Number,
                 NO_PEB,
-                Tanggal_PEB
+                Tanggal_PEB,
+                Non_KITE,
+                Designated_Country
              ).GetHashCode();
         }
     }

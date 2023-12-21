@@ -22,6 +22,7 @@ namespace KITE.Pages.ContentPages
         public void ViewData(object sender, EventArgs e)
         {
             LoadFGTracingData();
+            btnDownloadCsv.Enabled = true;
         }
 
         public void btnDownloadToCsv(object sender, EventArgs e)
@@ -52,7 +53,7 @@ namespace KITE.Pages.ContentPages
                     if (createFGTracingResult != null)
                     {
                         UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses ReturnFGTracingDistributedValue. Detail : {createFGTracingResult.Message}");
+                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses CreatingTracingFG. Detail : {createFGTracingResult.Message}");
                         errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
                         return;
                     }

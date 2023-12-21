@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
@@ -11,6 +13,35 @@ namespace KITE.Models
 {
     public class GRFinishGoodsFunctionModel : System.Web.UI.Page
     {
+        public List<GRFinishGoodsWithConvertionViewModel> GRFinishGoodsDatatableToList(DataTable datatable)
+        {
+            return datatable.AsEnumerable()
+            .Select(row => new GRFinishGoodsWithConvertionViewModel
+            {
+                Posting_Date = row.Field<DateTime>("Posting_Date"),
+                Document_Date = row.Field<DateTime>("Document_Date"),
+                Document_Header_Text = row.Field<string>("Document_Header_Text"),
+                Material = row.Field<string>("Material"),
+                Material_Description = row.Field<string>("Material_Description"),
+                Plant = row.Field<string>("Plant"),
+                Storage_Location = row.Field<string>("Storage_Location"),
+                Movement_Type = row.Field<string>("Movement_Type"),
+                Material_Document = row.Field<string>("Material_Document"),
+                Batch = row.Field<string>("Batch"),
+                Qty_in_Un_of_Entry = row.Field<Decimal>("Qty_in_Un_of_Entry").ToString(),
+                Kilos_Convertion = row.Field<Decimal>("Kilos_Convertion").ToString(),
+                Unit_of_Entry = row.Field<string>("Unit_of_Entry"),
+                Entry_Date = row.Field<DateTime>("Entry_Date"),
+                Time_of_Entry = row.Field<TimeSpan>("Time_of_Entry").ToString(),
+                User_name = row.Field<string>("User_name"),
+                Base_Unit_of_Measure = row.Field<string>("Base_Unit_of_Measure"),
+                Quantity = row.Field<Decimal>("Quantity").ToString(),
+                Amount_in_LC = row.Field<Decimal>("Amount_in_LC").ToString(),
+                Goods_recipient = row.Field<string>("Goods_recipient"),
+            })
+            .ToList();
+        }
+
         public Tuple<string, ArrayList, Exception> GRFinishGoodsGenerateColumnAndCsvData(List<GRFinishGoodsWithConvertionViewModel> csvList, string connectionString)
         {
             List<string> listColumnName = new List<string>();

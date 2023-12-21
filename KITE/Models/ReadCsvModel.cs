@@ -120,6 +120,11 @@ namespace KITE.Models
                                 KG = uomConvertionRow.Field<decimal>("KilosConvertion");
                             }
                         }
+                        //else
+                        //{
+                        //    return new Tuple<object, Exception>(null, new Exception($"Konversi UoM gagal. Mohon kontak tim support dan cek master konversi. Detail cek row dengan data : Target_item_CD = {csvData.Target_item_CD}, Item_CD = {csvData.Item_CD}, Unit = {csvData.Unit}, Quantity = {csvData.Quantity}"));
+                        //}
+
                         if (csvData.Quantity.Contains(','))
                         {
                             return new Tuple<object, Exception>(null, new Exception($"Terdapat kesalahan dalam konfigurasi csv comma separator menggunakan (','). Silahkan ganti konfigurasi csv comma separator menggunakan ('.')."));
@@ -171,6 +176,12 @@ namespace KITE.Models
 
                 foreach (GIRawMaterialViewModel csvData in (List<GIRawMaterialViewModel>)CsvDataList)
                 {
+                    if (csvData.Material.Substring(0, 3) != "121")
+                    {
+                        return new Tuple<object, Exception>(null, new Exception($"Sistem mendeteksi data yang anda upload bukan data untuk GIRawNaterial. Mohon cek kembali data yang anda upload."));
+
+                    }
+
                     KG = 1;
                     try
                     {
@@ -181,6 +192,22 @@ namespace KITE.Models
                             foreach (DataRow uomConvertionRow in uomConvertionRows) // but still need to iterate it. How to avoid iteration?
                             {
                                 KG = uomConvertionRow.Field<decimal>("KilosConvertion");
+                            }
+                        }
+                        else
+                        {
+                            insertResult = new DatabaseModel().SelectTableIntoDataTable("KG", "UOMandMaterial_Convertion", $" WHERE Material = '{csvData.Material}' AND Base_UOM = '{csvData.Unit_of_Entry}' ", connectionString);
+                            uomConvertionRows = insertResult.Item1.AsEnumerable(); // return only one line
+                            if (insertResult.Item2.Message == "null")
+                            {
+                                foreach (DataRow uomConvertionRow in uomConvertionRows) // but still need to iterate it. How to avoid iteration?
+                                {
+                                    KG = uomConvertionRow.Field<decimal>("KG");
+                                }
+                            }
+                            else
+                            {
+                                return new Tuple<object, Exception>(null, new Exception($"Konversi UoM gagal. Mohon kontak tim support dan cek master konversi. Detail cek row dengan data : Material = {csvData.Material}, Batch = {csvData.Batch}, Qty_in_Un_of_Entry = {csvData.Qty_in_Un_of_Entry}, Unit_of_Entry = {csvData.Unit_of_Entry}"));
                             }
                         }
                         if (csvData.Qty_in_Un_of_Entry.Contains(','))
@@ -227,16 +254,39 @@ namespace KITE.Models
 
                 foreach (GRFinishGoodsViewModel csvData in (List<GRFinishGoodsViewModel>)CsvDataList)
                 {
+                    if (csvData.Material.Substring(0, 3) != "124")
+                    {
+                        return new Tuple<object, Exception>(null, new Exception($"Sistem mendeteksi data yang anda upload bukan data untuk GRFinishGoodsViewModel. Mohon cek kembali data yang anda upload."));
+
+                    }
+
                     KG = 1;
                     try
                     {
-                        Tuple<DataTable, Exception> insertResult = new DatabaseModel().SelectTableIntoDataTable("KG", "UOMandMaterial_Convertion", $" WHERE Material = '{csvData.Material}' AND Base_UOM = '{csvData.Unit_of_Entry}' ", connectionString);
+
+                        Tuple<DataTable, Exception> insertResult = new DatabaseModel().SelectTableIntoDataTable("KilosConvertion", "UoM_To_Kilos_Convertion", $" WHERE BaseUoM = '{csvData.Unit_of_Entry}' ", connectionString);
                         EnumerableRowCollection<DataRow> uomConvertionRows = insertResult.Item1.AsEnumerable(); // return only one line
                         if (insertResult.Item2.Message == "null")
                         {
                             foreach (DataRow uomConvertionRow in uomConvertionRows) // but still need to iterate it. How to avoid iteration?
                             {
-                                KG = uomConvertionRow.Field<decimal>("KG");
+                                KG = uomConvertionRow.Field<decimal>("KilosConvertion");
+                            }
+                        }
+                        else
+                        {
+                            insertResult = new DatabaseModel().SelectTableIntoDataTable("KG", "UOMandMaterial_Convertion", $" WHERE Material = '{csvData.Material}' AND Base_UOM = '{csvData.Unit_of_Entry}' ", connectionString);
+                            uomConvertionRows = insertResult.Item1.AsEnumerable(); // return only one line
+                            if (insertResult.Item2.Message == "null")
+                            {
+                                foreach (DataRow uomConvertionRow in uomConvertionRows) // but still need to iterate it. How to avoid iteration?
+                                {
+                                    KG = uomConvertionRow.Field<decimal>("KG");
+                                }
+                            }
+                            else
+                            {
+                                return new Tuple<object, Exception>(null, new Exception($"Konversi UoM gagal. Mohon kontak tim support dan cek master konversi. Detail cek row dengan data : Material = {csvData.Material}, Material_Description = {csvData.Material_Description}, Batch = {csvData.Batch}, Qty_in_Un_of_Entry = {csvData.Qty_in_Un_of_Entry}, Unit_of_Entry = {csvData.Unit_of_Entry}"));
                             }
                         }
                         if (csvData.Qty_in_Un_of_Entry.Contains(','))
@@ -308,6 +358,10 @@ namespace KITE.Models
                                     KG = kilosUomConvertionRow.Field<decimal>("KilosConvertion");
                                 }
                             }
+                            else
+                            {
+                                return new Tuple<object, Exception>(null, new Exception($"Konversi UoM gagal. Mohon kontak tim support dan cek master konversi. Detail cek row dengan data : Material = {csvData.Material}, Material_Description = {csvData.Material_Description}, Batch = {csvData.Batch}, Qty_in_Un_of_Entry = {csvData.Qty_in_Un_of_Entry}, Unit_of_Entry = {csvData.Unit_of_Entry}"));
+                            }
                         }
                         if (csvData.Qty_in_Un_of_Entry.ToString().Contains(','))
                         {
@@ -351,6 +405,8 @@ namespace KITE.Models
                             PO_Number = csvData.PO_Number,
                             NO_PEB = csvData.NO_PEB,
                             Tanggal_PEB = csvData.Tanggal_PEB,
+                            Non_KITE = csvData.Non_KITE,
+                            Designated_Country = csvData.Designated_Country,
                         });
                     }
                     catch (Exception ex)

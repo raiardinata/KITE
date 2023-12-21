@@ -13,21 +13,21 @@
 
                 <table style="padding-left: 10px; min-width: 1170px; vertical-align: top; padding-top: 5px; padding-bottom: 10px; margin-bottom: 10px">
                     <tr>
-                        <td style="width: 60px;">
+                        <td style="width: 60px; text-align: right;">
                             <asp:Label runat="server" Text="No. PIB" Style="display: inline-block; position: relative; top: 5px;"></asp:Label>
                         </td>
                         <td style="width: 90px; padding-right: 10px;">
                             <asp:TextBox ID="noPIBTxt" runat="server" Style="display: inline-block; position: relative; top: 5px;" />
                         </td>
 
-                        <td style="width: 75px;">
+                        <td style="width: 75px; text-align: right;">
                             <asp:Label runat="server" Text="Invoice No." Style="display: inline-block; position: relative; top: 5px;"></asp:Label>
                         </td>
                         <td style="width: 70px; padding-right: 10px;">
                             <asp:TextBox ID="invoiceNoTxt" runat="server" Style="display: inline-block; position: relative; top: 5px;" />
                         </td>
 
-                        <td style="width: 100px;">
+                        <td style="width: 110px; text-align: right;">
                             <asp:Label runat="server" Text="PGI Date From" Style="display: inline-block; position: relative; top: 5px;"></asp:Label>
                         </td>
                         <td>
@@ -35,27 +35,32 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <asp:Label runat="server" Text="No. PEB" Style="display: inline-block; position: relative; top: 5px;"></asp:Label>
+                        <td style="text-align: right;">
+                            <asp:Label runat="server" Text="No. PEB" Style="display: inline-block; position: relative; top: 5px; text-align: right;"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="noPEBTxt" runat="server" Style="display: inline-block; position: relative; top: 5px;" />
                         </td>
-                        <td>
+                        <td style="text-align: right;">
                             <asp:Label runat="server" Text="Pembeli" Style="display: inline-block; position: relative; top: 5px;"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="customerTxt" runat="server" Style="display: inline-block; position: relative; top: 5px;" />
                         </td>
-                        <td>
+                        <td style="text-align: right;">
                             <asp:Label runat="server" Text="PGI Date Until" Style="display: inline-block; position: relative; top: 5px;"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="pgiDateUntil" type="date" runat="server" Style="display: inline-block; position: relative; top: 5px;" />
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="6">
+                            <asp:Label ID="errorLabel" runat="server" Enabled="false" Style="color: red; position: relative; width: auto; height: auto;"></asp:Label>
+                        </td>
+                    </tr>
                 </table>
-                <asp:Button ID="Button1" runat="server" Text="Generate Report" class="btn btn-primary" OnClick="GenerateReport" Style="display: inline-block; margin-right: 10px;" />
+                <asp:Button ID="generateReportBtn" runat="server" Text="Generate Report" class="btn btn-primary" OnClick="GenerateReport" Style="display: inline-block; margin-right: 10px;" />
             </td>
         </tr>
     </table>

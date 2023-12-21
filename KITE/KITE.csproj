@@ -582,7 +582,6 @@
     <Content Include="Resources\JS\Global.js" />
     <Content Include="Resources\JS\menu.js" />
     <Content Include="Resources\Pallet.rep" />
-    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Pages\ContentPages\Home.aspx" />
     <Content Include="Pages\ContentPages\Login.aspx" />
@@ -997,6 +996,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Client\Custom\Images\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Views\Company\" />
     <Folder Include="Views\Database\" />
