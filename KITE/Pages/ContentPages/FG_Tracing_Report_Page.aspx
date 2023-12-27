@@ -27,7 +27,7 @@
                             <asp:TextBox ID="invoiceNoTxt" runat="server" Style="display: inline-block; position: relative; top: 5px;" />
                         </td>
 
-                        <td style="width: 110px; text-align: right;">
+                        <td style="width: 100px; text-align: right;">
                             <asp:Label runat="server" Text="PGI Date From" Style="display: inline-block; position: relative; top: 5px;"></asp:Label>
                         </td>
                         <td>

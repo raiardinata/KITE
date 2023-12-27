@@ -82,8 +82,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="../ContentPages/Master_UserApp2.aspx" id="master_userapp" visible="false" runat="server">User App</a></li>
                                 <li><a href="../ContentPages/MaterialConfiguration.aspx" id="master_matcon" visible="false" runat="server">Material Configuration</a></li>
-                                <li><a href="../ContentPages/SlocConfiguration.aspx" id="A1" visible="false" runat="server">Storage Location Configuration</a></li>
-                                <li><a href="~" id="master_slocconf" visible="false" runat="server">Dummy Master_Cusgroup</a></li>
+                                <li><a href="../ContentPages/SlocConfiguration.aspx" id="master_slocconf" visible="false" runat="server">Storage Location Configuration</a></li>
                                 <li><a href="~" id="master_cusgroup" visible="false" runat="server">Dummy Master_Cusgroup</a></li>
 
                             </ul>
