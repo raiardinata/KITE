@@ -24,6 +24,7 @@ namespace KITE
 
         void Session_End(object sender, EventArgs e)
         {
+            Session.Remove("FullName");
             Response.Redirect("~\\Pages\\ContentPages\\Login.aspx");
         }
     }

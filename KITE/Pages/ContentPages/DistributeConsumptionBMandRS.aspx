@@ -28,7 +28,7 @@
     </style>
     <div>
         <span style="position: relative; background-color: white; z-index: 1; font-weight: bold; padding: 0px 3px 0px 3px; top: 10px; left: 3px;">Distribute Consumption BM & RS</span>
-        <table style="padding-left: 10px; min-width: 250px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 5px;">
+        <table style="padding-left: 10px; min-width: 250px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #7bfdf6; padding-bottom: 10px; margin-bottom: 5px;">
             <tr style="border-right: 1px solid #ccc; border-top: 1px solid #ccc; border-left: 1px solid #ccc; height: 37px; vertical-align: bottom;">
                 <td style="width: 125px; text-align: right;">
                     <asp:Label runat="server" ID="yearPeriodLbl" Text="Year Period " Style="padding: 0px 5px 0px 15px;" />
@@ -61,7 +61,7 @@
         <asp:UpdatePanel ID="BMandRSUpdatePanel" runat="server">
             <ContentTemplate>
 
-                <asp:Label runat="server" ID="RMperBatchLbl" Text="RMperBatch Data"></asp:Label>
+                <%--<asp:Label runat="server" ID="RMperBatchLbl" Text="RMperBatch Data"></asp:Label>
                 <div class="rounded-corners">
                     <asp:Panel ID="RMperBatchPanel" runat="Server" ScrollBars="Horizontal">
                         <asp:GridView class="GridView" ID="RMperBatchGridView" runat="server" AutoGenerateColumns="False" AllowPaging="true" OnRowDataBound="RMperBatchGridView_RowDataBound" OnPageIndexChanging="RMperBatchGridView_PageIndexChanging">
@@ -121,7 +121,7 @@
                             OnClick="RMperBatchbtnNext_OnClick" />
                     </div>
                 </div>
-                <br />
+                <br />--%>
 
 
                 <asp:Label runat="server" ID="FGperBatchLbl" Text="FGperBatch Data"></asp:Label>

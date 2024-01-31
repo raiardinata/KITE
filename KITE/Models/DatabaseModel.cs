@@ -195,8 +195,14 @@ namespace KITE.Models
                 case "Master_Batch_Process":
                     switchStoreProcedureResult = new GIRawMaterialFunctionModel().ExecMaster_Batch_ProcessProcedure(command, param);
                     break;
+                case "CreatingRepackReprocess":
+                    switchStoreProcedureResult = new RepackReprocessFunctionModel().ExecCreatingRepackReprocessProcedure(command, param);
+                    break;
+                case "CreatingTracingRepackReprocess":
+                    switchStoreProcedureResult = new DistributeConsumptionFGTracingFunctionModel().ExecCreatingFGTracingProcedure(command, param);
+                    break;
             }
-            
+
             return switchStoreProcedureResult;
         }
     }

@@ -10,7 +10,7 @@ namespace KITE.Pages.ContentPages
 {
     public partial class DistributeConsumptionBMandRS : System.Web.UI.Page
     {
-        private DataTable globalRMperBatchDataTable;
+        //private DataTable globalRMperBatchDataTable;
         private DataTable globalFGperBatchDataTable;
         private string ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
@@ -24,7 +24,7 @@ namespace KITE.Pages.ContentPages
 
         public void ViewData(object sender, EventArgs e)
         {
-            LoadRMperBatchData();
+            //LoadRMperBatchData();
             LoadFGperBatchData();
             btnDownloadCsv.Enabled = true;
         }
@@ -37,9 +37,9 @@ namespace KITE.Pages.ContentPages
         public void btnDownloadToCsv(object sender, EventArgs e)
         {
             // Load RM per Batch Data
-            LoadRMperBatchData();
-            string rmFileName = $"{DateTime.Now:yyyyMMdd}KITE_RMperBatch.csv";
-            string rmCsvContent = new ReadCsvModel().DataTableToCsv(globalRMperBatchDataTable);
+            //LoadRMperBatchData();
+            //string rmFileName = $"{DateTime.Now:yyyyMMdd}KITE_RMperBatch.csv";
+            //string rmCsvContent = new ReadCsvModel().DataTableToCsv(globalRMperBatchDataTable);
 
             // Load FG per Batch Data
             LoadFGperBatchData();
@@ -53,7 +53,7 @@ namespace KITE.Pages.ContentPages
                 using (ZipArchive zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Create, true))
                 {
                     // Add the RM CSV file to the archive
-                    new UtilityModel().AddFileToZip(zipArchive, rmCsvContent, rmFileName);
+                    //new UtilityModel().AddFileToZip(zipArchive, rmCsvContent, rmFileName);
 
                     // Add the FG CSV file to the archive
                     new UtilityModel().AddFileToZip(zipArchive, fgCsvContent, fgFileName);
@@ -74,7 +74,7 @@ namespace KITE.Pages.ContentPages
             object currentYear = yearPeriodTxt.Text;
             object currentMonth = monthPeriodTxt.Text;
             object[] param = new[] { currentYear, currentMonth };
-            GridView[] gridArray = new GridView[] { RMperBatchGridView, FGperBatchGridView };
+            GridView[] gridArray = new GridView[] { /*RMperBatchGridView,*/ FGperBatchGridView };
 
             if (yearPeriodTxt.Text != "" && monthPeriodTxt.Text != "")
             {
@@ -96,14 +96,14 @@ namespace KITE.Pages.ContentPages
                         errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
                         return;
                     }
-                    Exception rmperBatchResult = new DatabaseModel().ExecStoreProcedure("CreatingRMperBatch", param, ConnectionString);
-                    if (rmperBatchResult != null)
-                    {
-                        UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses CreatingRMperBatch. Detail : {rmperBatchResult.Message}");
-                        errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
-                        return;
-                    }
+                    //Exception rmperBatchResult = new DatabaseModel().ExecStoreProcedure("CreatingRMperBatch", param, ConnectionString);
+                    //if (rmperBatchResult != null)
+                    //{
+                    //    UtilityModel errorHandler = new UtilityModel();
+                    //    Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses CreatingRMperBatch. Detail : {rmperBatchResult.Message}");
+                    //    errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
+                    //    return;
+                    //}
                     Exception fgperBatchResult = new DatabaseModel().ExecStoreProcedure("CreatingFGperBatch", param, ConnectionString);
                     if (fgperBatchResult != null)
                     {
@@ -113,19 +113,19 @@ namespace KITE.Pages.ContentPages
                         return;
                     }
 
-                    Tuple<DataTable, Exception> RMperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "RM_per_Batch", $" WHERE Year_Period = '{yearPeriodTxt.Text}' AND Month_Period = '{monthPeriodTxt.Text}' ORDER BY Finish_Goods ASC, Raw_Material ASC, Batch_Sequence ASC ", ConnectionString);
-                    if (RMperBatchDataTable.Item2.Message != "null")
-                    {
-                        UtilityModel errorHandler = new UtilityModel();
-                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table RM_per_Batch. Detail : {RMperBatchDataTable.Item2.Message}");
-                        errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
-                        return;
-                    }
-                    else
-                    {
-                        globalRMperBatchDataTable = RMperBatchDataTable.Item1;
-                        RMperBatchBindGridView();
-                    }
+                    //Tuple<DataTable, Exception> RMperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "RM_per_Batch", $" WHERE Year_Period = '{yearPeriodTxt.Text}' AND Month_Period = '{monthPeriodTxt.Text}' ORDER BY Finish_Goods ASC, Raw_Material ASC, Batch_Sequence ASC ", ConnectionString);
+                    //if (RMperBatchDataTable.Item2.Message != "null")
+                    //{
+                    //    UtilityModel errorHandler = new UtilityModel();
+                    //    Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table RM_per_Batch. Detail : {RMperBatchDataTable.Item2.Message}");
+                    //    errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
+                    //    return;
+                    //}
+                    //else
+                    //{
+                    //    globalRMperBatchDataTable = RMperBatchDataTable.Item1;
+                    //    RMperBatchBindGridView();
+                    //}
 
                     Tuple<DataTable, Exception> FGperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_per_Batch", $" WHERE Year_Period = '{yearPeriodTxt.Text}' AND Month_Period = '{monthPeriodTxt.Text}' ORDER BY Finish_Goods ASC, FG_Batch ASC, Raw_Material ASC, RM_Batch_Sequence ASC ", ConnectionString);
                     if (FGperBatchDataTable.Item2.Message != "null")
@@ -160,151 +160,151 @@ namespace KITE.Pages.ContentPages
         }
 
         // RM per Batch Region
-        private void RMperBatchBindGridView()
-        {
-            ViewState["RMRow"] = 0;
-            RMperBatchGridView.DataSource = globalRMperBatchDataTable;
-            RMperBatchGridView.PageSize = int.Parse(RMperBatchPageSizeDropDown.SelectedValue);
-            RMperBatchGridView.DataBind();
+        //private void RMperBatchBindGridView()
+        //{
+        //    ViewState["RMRow"] = 0;
+        //    RMperBatchGridView.DataSource = globalRMperBatchDataTable;
+        //    RMperBatchGridView.PageSize = int.Parse(RMperBatchPageSizeDropDown.SelectedValue);
+        //    RMperBatchGridView.DataBind();
 
-            if (globalRMperBatchDataTable.Rows.Count > 0)
-            {
-                if (ViewState["RMRow"].ToString().Trim() == "0")
-                {
-                    ViewState["RMRow"] = 1;
-                    ViewState["RMgrandtotal"] = globalRMperBatchDataTable.Rows.Count;
-                    RMlblTotalRecords.Text = String.Format("Total Records : {0}", ViewState["RMgrandtotal"]);
+        //    if (globalRMperBatchDataTable.Rows.Count > 0)
+        //    {
+        //        if (ViewState["RMRow"].ToString().Trim() == "0")
+        //        {
+        //            ViewState["RMRow"] = 1;
+        //            ViewState["RMgrandtotal"] = globalRMperBatchDataTable.Rows.Count;
+        //            RMlblTotalRecords.Text = String.Format("Total Records : {0}", ViewState["RMgrandtotal"]);
 
-                    int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["RMgrandtotal"]) / RMperBatchGridView.PageSize));
-                    RMperBatchlblTotalNumberOfPages.Text = pageCount.ToString();
-                    RMperBatchGoToPageTxt.Text = (RMperBatchGridView.PageIndex + 1).ToString();
-                }
+        //            int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["RMgrandtotal"]) / RMperBatchGridView.PageSize));
+        //            RMperBatchlblTotalNumberOfPages.Text = pageCount.ToString();
+        //            RMperBatchGoToPageTxt.Text = (RMperBatchGridView.PageIndex + 1).ToString();
+        //        }
 
-            }
-            else
-            {
-                ViewState["RMgrandtotal"] = 0;
-            }
-        }
+        //    }
+        //    else
+        //    {
+        //        ViewState["RMgrandtotal"] = 0;
+        //    }
+        //}
 
-        protected void RMperBatchGridView_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                int pageSize = RMperBatchGridView.PageSize;
-                int pageIndex = RMperBatchGridView.PageIndex;
-                int sequenceNumber = pageIndex * pageSize + e.Row.RowIndex + 1;
+        //protected void RMperBatchGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        //{
+        //    if (e.Row.RowType == DataControlRowType.DataRow)
+        //    {
+        //        int pageSize = RMperBatchGridView.PageSize;
+        //        int pageIndex = RMperBatchGridView.PageIndex;
+        //        int sequenceNumber = pageIndex * pageSize + e.Row.RowIndex + 1;
 
-                Label lblSequence = (Label)e.Row.FindControl("RMperBatchlblSequenceNo");
-                lblSequence.Text = sequenceNumber.ToString();
-            }
-        }
+        //        Label lblSequence = (Label)e.Row.FindControl("RMperBatchlblSequenceNo");
+        //        lblSequence.Text = sequenceNumber.ToString();
+        //    }
+        //}
 
-        protected void RMperBatchGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            RMperBatchGridView.PageIndex = e.NewPageIndex;
-            LoadRMperBatchData();
-            RMperBatchBindGridView();
-        }
+        //protected void RMperBatchGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        //{
+        //    RMperBatchGridView.PageIndex = e.NewPageIndex;
+        //    LoadRMperBatchData();
+        //    RMperBatchBindGridView();
+        //}
 
-        protected void RMperBatchPageSizeDropDown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int selectedPageSize = Convert.ToInt32(RMperBatchPageSizeDropDown.SelectedValue);
-            RMperBatchGridView.PageSize = selectedPageSize;
+        //protected void RMperBatchPageSizeDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    int selectedPageSize = Convert.ToInt32(RMperBatchPageSizeDropDown.SelectedValue);
+        //    RMperBatchGridView.PageSize = selectedPageSize;
 
-            LoadRMperBatchData();
-            RMperBatchBindGridView();
-        }
+        //    LoadRMperBatchData();
+        //    RMperBatchBindGridView();
+        //}
 
-        protected void RMperBatchGoToPage_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int pageNumber;
-                int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["RMgrandtotal"]) / RMperBatchGridView.PageSize));
-                if (int.TryParse(RMperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber > 0 && pageNumber <= pageCount)
-                {
-                    RMperBatchLoadPage(pageNumber - 1);
-                }
-                else
-                {
-                    RMperBatchLoadPage(0);
-                }
-            }
-            catch (Exception ex)
-            {
-                UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("Terdapat masalah ketika mau membuka halaman " + RMperBatchGoToPageTxt.Text.Trim() + ". Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
-            }
-        }
+        //protected void RMperBatchGoToPage_TextChanged(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int pageNumber;
+        //        int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["RMgrandtotal"]) / RMperBatchGridView.PageSize));
+        //        if (int.TryParse(RMperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber > 0 && pageNumber <= pageCount)
+        //        {
+        //            RMperBatchLoadPage(pageNumber - 1);
+        //        }
+        //        else
+        //        {
+        //            RMperBatchLoadPage(0);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        UtilityModel errorHandler = new UtilityModel();
+        //        Exception loadCsvException = new Exception("Terdapat masalah ketika mau membuka halaman " + RMperBatchGoToPageTxt.Text.Trim() + ". Detail : " + ex.Message);
+        //        errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
+        //    }
+        //}
 
-        protected void RMperBatchbtnPrev_OnClick(object sender, EventArgs e)
-        {
-            try
-            {
-                int pageNumber;
-                if (int.TryParse(RMperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber > 1)
-                {
-                    RMperBatchLoadPage(pageNumber - 2);
-                }
-                else
-                {
-                    RMperBatchLoadPage(RMperBatchGridView.PageIndex);
-                }
-            }
-            catch (Exception ex)
-            {
-                UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("Terdapat masalah ketika tombol previous page berjalan. Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
-            }
-        }
+        //protected void RMperBatchbtnPrev_OnClick(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int pageNumber;
+        //        if (int.TryParse(RMperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber > 1)
+        //        {
+        //            RMperBatchLoadPage(pageNumber - 2);
+        //        }
+        //        else
+        //        {
+        //            RMperBatchLoadPage(RMperBatchGridView.PageIndex);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        UtilityModel errorHandler = new UtilityModel();
+        //        Exception loadCsvException = new Exception("Terdapat masalah ketika tombol previous page berjalan. Detail : " + ex.Message);
+        //        errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
+        //    }
+        //}
 
-        protected void RMperBatchbtnNext_OnClick(object sender, EventArgs e)
-        {
-            try
-            {
-                int pageNumber;
-                int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["RMgrandtotal"]) / RMperBatchGridView.PageSize));
-                if (int.TryParse(RMperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber < pageCount)
-                {
-                    RMperBatchLoadPage(pageNumber);
-                }
-                else
-                {
-                    RMperBatchLoadPage(RMperBatchGridView.PageIndex);
-                }
-            }
-            catch (Exception ex)
-            {
-                UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("Terdapat masalah ketika tombol next page berjalan. Detail : " + ex.Message);
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
-            }
-        }
+        //protected void RMperBatchbtnNext_OnClick(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int pageNumber;
+        //        int pageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(ViewState["RMgrandtotal"]) / RMperBatchGridView.PageSize));
+        //        if (int.TryParse(RMperBatchGoToPageTxt.Text.Trim(), out pageNumber) && pageNumber < pageCount)
+        //        {
+        //            RMperBatchLoadPage(pageNumber);
+        //        }
+        //        else
+        //        {
+        //            RMperBatchLoadPage(RMperBatchGridView.PageIndex);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        UtilityModel errorHandler = new UtilityModel();
+        //        Exception loadCsvException = new Exception("Terdapat masalah ketika tombol next page berjalan. Detail : " + ex.Message);
+        //        errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
+        //    }
+        //}
 
-        private void RMperBatchLoadPage(int pageNumber)
-        {
-            GridViewPageEventArgs e = new GridViewPageEventArgs(pageNumber);
-            RMperBatchGridView_PageIndexChanging(this, e);
-        }
+        //private void RMperBatchLoadPage(int pageNumber)
+        //{
+        //    GridViewPageEventArgs e = new GridViewPageEventArgs(pageNumber);
+        //    RMperBatchGridView_PageIndexChanging(this, e);
+        //}
 
-        private void LoadRMperBatchData()
-        {
-            Tuple<DataTable, Exception> RMperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "RM_per_Batch", $" WHERE Year_Period = '{yearPeriodTxt.Text}' AND Month_Period = '{monthPeriodTxt.Text}' ORDER BY Finish_Goods ASC, Raw_Material ASC, Batch_Sequence ASC ", ConnectionString);
-            if (RMperBatchDataTable.Item2.Message != "null")
-            {
-                UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table RM_per_Batch. Detail : {RMperBatchDataTable.Item2.Message}");
-                errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
-            }
-            else
-            {
-                globalRMperBatchDataTable = RMperBatchDataTable.Item1;
-                RMperBatchBindGridView();
-            }
-        }
+        //private void LoadRMperBatchData()
+        //{
+        //    Tuple<DataTable, Exception> RMperBatchDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "RM_per_Batch", $" WHERE Year_Period = '{yearPeriodTxt.Text}' AND Month_Period = '{monthPeriodTxt.Text}' ORDER BY Finish_Goods ASC, Raw_Material ASC, Batch_Sequence ASC ", ConnectionString);
+        //    if (RMperBatchDataTable.Item2.Message != "null")
+        //    {
+        //        UtilityModel errorHandler = new UtilityModel();
+        //        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses membaca table RM_per_Batch. Detail : {RMperBatchDataTable.Item2.Message}");
+        //        errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { RMperBatchGridView }, errorLabel);
+        //    }
+        //    else
+        //    {
+        //        globalRMperBatchDataTable = RMperBatchDataTable.Item1;
+        //        RMperBatchBindGridView();
+        //    }
+        //}
 
         // FG per Batch Region
         private void FGperBatchBindGridView()
@@ -380,7 +380,7 @@ namespace KITE.Pages.ContentPages
             catch (Exception ex)
             {
                 UtilityModel errorHandler = new UtilityModel();
-                Exception loadCsvException = new Exception("Terdapat masalah ketika mau membuka halaman " + RMperBatchGoToPageTxt.Text.Trim() + ". Detail : " + ex.Message);
+                Exception loadCsvException = new Exception("Terdapat masalah ketika mau membuka halaman " + FGperBatchGoToPageTxt.Text.Trim() + ". Detail : " + ex.Message);
                 errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { FGperBatchGridView }, errorLabel);
             }
         }

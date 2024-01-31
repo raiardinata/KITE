@@ -49,15 +49,15 @@
 {
 	font-size : large;
 	font-weight : bold;
-	background-color : #c4ceff;
+	background-color : #7bfdf6;
 	padding : 10px 10px 10px 10px;
 }
 
 .rc-bc
 {
 	font-size : 8pt;
-	border-top : solid 1pt #c4ceff;
-	border-bottom : solid 1pt #c4ceff;
+	border-top : solid 1pt #7bfdf6;
+	border-bottom : solid 1pt #7bfdf6;
 	padding : 2px 0px 2px 0px;
 }
 
@@ -246,7 +246,7 @@
 	padding-left	: 8px;
 	padding-bottom	: 3px;
 	margin-top		: -10px;
-	background-color: #c4ceff;
+	background-color: #7bfdf6;
 	color			: Black;
 }
 
@@ -259,7 +259,7 @@
 	padding-bottom	: 3px;
 	padding-right	: 8px;
 	margin-top		: -10px;
-	background-color: #c4ceff;
+	background-color: #7bfdf6;
 	color			: Black;
 }
 

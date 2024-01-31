@@ -58,6 +58,15 @@ namespace KITE.Pages.ContentPages
                         return;
                     }
 
+                    Exception createFGTracingRepackResult = new DatabaseModel().ExecStoreProcedure("CreatingTracingRepackReprocess", param, ConnectionString);
+                    if (createFGTracingRepackResult != null)
+                    {
+                        UtilityModel errorHandler = new UtilityModel();
+                        Exception loadCsvException = new Exception($"Terdapat masalah ketika menjalankan proses CreatingTracingRepackReprocess. Detail : {createFGTracingRepackResult.Message}");
+                        errorHandler.UploadCsvErrorHandler(loadCsvException, gridArray, errorLabel);
+                        return;
+                    }
+
                     Tuple<DataTable, Exception> FGTracingDataTable = new DatabaseModel().SelectTableIntoDataTable(" * ", "FG_Tracing", $" WHERE Year_Period = '{yearPeriodTxt.Text}' AND Month_Period = '{monthPeriodTxt.Text}' ORDER BY FG_Batch ASC, Finish_Goods ASC, Raw_Material ASC, RM_Batch_Sequence ASC, RM_Batch ASC ", ConnectionString);
                     if (FGTracingDataTable.Item2.Message != "null")
                     {

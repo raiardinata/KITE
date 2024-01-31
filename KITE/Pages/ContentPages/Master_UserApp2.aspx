@@ -114,7 +114,7 @@
         <ContentTemplate>
 
             <div id="inputarea">
-                <div id="header1" style="padding-left: 10px; min-width: 1170px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #c4ceff; padding-bottom: 10px; margin-bottom: 10px;">
+                <div id="header1" style="padding-left: 10px; min-width: 1170px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #7bfdf6; padding-bottom: 10px; margin-bottom: 10px;">
                     <asp:Label ID="lbl1" runat="server" Text="Master User App" Font-Size="X-Large" />
                     <br />
                     <asp:Label ID="lbl2" runat="server" Text="Master > Master User App" />

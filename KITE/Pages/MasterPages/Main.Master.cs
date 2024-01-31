@@ -13,6 +13,11 @@ namespace KITE.Pages.MasterPages
         {
             if (!IsPostBack)
             {
+                if (Session["FullName"] == null)
+                {
+                    Response.Redirect("~\\Pages\\ContentPages\\Login.aspx");
+                }
+
                 if (!string.IsNullOrEmpty(Session["UserType"] + string.Empty))
                 {
                     label1.Text = HttpContext.Current.Session["FullName"].ToString();
@@ -23,11 +28,19 @@ namespace KITE.Pages.MasterPages
 
                 }
             }
+            else
+            {
+                if (Session["FullName"] == null)
+                {
+                    Response.Redirect("~\\Pages\\ContentPages\\Login.aspx");
+                }
+            }
         }
 
         protected void lnLogout_Click(object sender, EventArgs e)
         {
             login.InsertLog("Logout", "Logout Report KITE", "1", HttpContext.Current.Session["UserAppID"].ToString(), HttpContext.Current.Session["FullName"].ToString());
+            Session.Remove("FullName");
             Response.Redirect("Login");
         }
     }

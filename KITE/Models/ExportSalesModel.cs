@@ -91,8 +91,8 @@ namespace KITE.Models
             ArrayList valuesArray = new ArrayList();
             foreach (ExportSalesWithKilosConvertionViewModel csvValues in csvList)
             {
-                int yearPeriod = csvValues.Entry_Date.Year;
-                int monthPeriod = csvValues.Entry_Date.Month;
+                int yearPeriod = csvValues.Posting_Date.Year;
+                int monthPeriod = csvValues.Posting_Date.Month;
 
                 List<object> valuesList = new List<object>();
                 valuesList.Add(yearPeriod);

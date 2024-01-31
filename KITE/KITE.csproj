@@ -461,6 +461,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\aji_logo.png" />
     <Content Include="Images\aji_logo_header.jpg" />
+    <Content Include="Images\Backgroud.png" />
     <Content Include="Images\button_next.png" />
     <Content Include="Images\button_previous.png" />
     <Content Include="Images\Footer.png" />
@@ -517,6 +518,7 @@
     <Content Include="Pages\ContentPages\Output_KITEB.aspx" />
     <Content Include="Pages\ContentPages\Output_KITEC.aspx" />
     <Content Include="Pages\ContentPages\PIBDateUpdate.aspx" />
+    <Content Include="Pages\ContentPages\RepackReprocess.aspx" />
     <Content Include="Pages\ContentPages\SlocConfiguration.aspx" />
     <Content Include="Pages\ContentPages\Input_KITEANew.aspx" />
     <Content Include="Pages\ContentPages\McFrameUpload.aspx" />
@@ -592,6 +594,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -741,6 +744,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\RepackReprocessModel.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\DatabaseModel.cs" />
     <Compile Include="Models\DistributeConsumptionBM&amp;RSModel.cs" />
@@ -952,6 +956,13 @@
     </Compile>
     <Compile Include="Pages\ContentPages\PIBDateUpdate.aspx.designer.cs">
       <DependentUpon>PIBDateUpdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ContentPages\RepackReprocess.aspx.cs">
+      <DependentUpon>RepackReprocess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ContentPages\RepackReprocess.aspx.designer.cs">
+      <DependentUpon>RepackReprocess.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\ContentPages\SlocConfiguration.aspx.cs">
       <DependentUpon>SlocConfiguration.aspx</DependentUpon>

@@ -125,7 +125,7 @@
                     </span>
                     <%--<input class="form-control" placeholder="Password" name="password" type="password" value="" required="">--%>
 
-                    <asp:TextBox ID="txtUserName" Text="admin" class="form-control" placeholder="User Name" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtUserName" class="form-control" placeholder="User Name" runat="server"></asp:TextBox>
 
                 </div>
 
@@ -162,7 +162,7 @@
 
             <br>
             <br>
-            <p style="width: 100%; display: block; background-color: red; color: whitesmoke; text-decoration-color: black; text-decoration-style: solid">PT AJINEX INTERNATIONAL @ 2019</p>
+            <p style="width: 100%; display: block; background-color: red; color: whitesmoke; text-decoration-color: black; text-decoration-style: solid">PT AJINEX INTERNATIONAL @ 2024</p>
 
         </footer>
 

@@ -474,5 +474,31 @@ namespace KITE.Models
             }
             return dataTable;
         }
+
+        public List<T> ConvertDataTabletoList<T>(DataTable dataTable) where T : new()
+        {
+            List<T> result = new List<T>();
+
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    T item = new T();
+
+                    // Use reflection to map DataTable columns to object properties
+                    foreach (DataColumn column in dataTable.Columns)
+                    {
+                        var property = typeof(T).GetProperty(column.ColumnName);
+                        if (property != null && row[column] != DBNull.Value)
+                        {
+                            property.SetValue(item, Convert.ChangeType(row[column], property.PropertyType));
+                        }
+                    }
+                    result.Add(item);
+                }
+                return result;
+            }
+            return new List<T>(null);
+        }
     }
 }
