@@ -115,7 +115,7 @@
                                 <asp:BoundField DataField="Name_1" SortExpression="Name_1" HeaderText="Name 1" />
                                 <asp:BoundField DataField="PO_Number" SortExpression="PO_Number" HeaderText="PO Number" />
                                 <asp:BoundField DataField="NO_PEB" SortExpression="NO_PEB" HeaderText="NO PEB" />
-                                <asp:BoundField DataField="Tanggal_PEB" SortExpression="Tanggal_PEB" HeaderText="Tanggal PEB" />
+                                <asp:BoundField DataField="Tanggal_PEB" SortExpression="Tanggal_PEB" HeaderText="Tanggal PEB" DataFormatString="{0:yyyy/MM/dd}" />
                                 <asp:BoundField DataField="Non_KITE" SortExpression="Non_KITE" HeaderText="Non KITE" />
                                 <asp:BoundField DataField="Designated_Country" SortExpression="Designated_Country" HeaderText="Negara Tujuan" />
                             </Columns>

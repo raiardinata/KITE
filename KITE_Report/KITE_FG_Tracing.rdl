@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.8.34330.188</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2024-01-30T02:58:40.3648961Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2024-02-19T02:47:54.0150789Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -73,10 +73,10 @@
 FROM
   FG_Tracing
 WHERE
-  FG_Tracing.RM_Batch LIKE @RM_Batch
-  AND FG_Tracing.NO_PEB LIKE @NO_PEB
-  AND FG_Tracing.PO_Number LIKE @PO_Number
-  AND FG_Tracing.Customer LIKE @Customer
+  FG_Tracing.RM_Batch LIKE '%'+@RM_Batch+'%'
+  AND FG_Tracing.NO_PEB LIKE '%'+@NO_PEB+'%'
+  AND FG_Tracing.PO_Number LIKE '%'+@PO_Number+'%'
+  AND FG_Tracing.Customer LIKE '%'+@Customer+'%'
   AND FG_Tracing.PGI_Date &gt;= @PGI_Date_From
   AND FG_Tracing.PGI_Date &lt;= @PGI_Date_Until</CommandText>
         <rd:DesignerState>
@@ -145,11 +145,11 @@ WHERE
         </Field>
         <Field Name="Year_Period">
           <DataField>Year_Period</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Month_Period">
           <DataField>Month_Period</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="SO">
           <DataField>SO</DataField>
@@ -1860,11 +1860,6 @@ WHERE
   <ReportParameters>
     <ReportParameter Name="RM_Batch">
       <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>%%</Value>
-        </Values>
-      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>No. PIB</Prompt>
       <Hidden>true</Hidden>
@@ -1877,11 +1872,6 @@ WHERE
     </ReportParameter>
     <ReportParameter Name="NO_PEB">
       <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>%%</Value>
-        </Values>
-      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>No. PEB</Prompt>
       <Hidden>true</Hidden>
@@ -1894,11 +1884,6 @@ WHERE
     </ReportParameter>
     <ReportParameter Name="PO_Number">
       <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>%%</Value>
-        </Values>
-      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>Invoice No.</Prompt>
       <Hidden>true</Hidden>
@@ -1911,11 +1896,6 @@ WHERE
     </ReportParameter>
     <ReportParameter Name="Customer">
       <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>%%</Value>
-        </Values>
-      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>Customer</Prompt>
       <Hidden>true</Hidden>
