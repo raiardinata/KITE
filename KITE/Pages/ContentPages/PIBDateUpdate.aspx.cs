@@ -118,7 +118,7 @@ namespace KITE.Pages.ContentPages
                 Label UUIDLbl = e.Row.FindControl("UUIDLbl") as Label;
 
                 // Attach client-side event (JavaScript) to trigger after mouse away
-                textBoxPIBDate.Attributes["onblur"] = $"updatePIBDateFunc('{textBoxPIBDate.ClientID}', '{UUIDLbl.ClientID}')";
+                //textBoxPIBDate.Attributes["onblur"] = $"updatePIBDateFunc('{textBoxPIBDate.ClientID}', '{UUIDLbl.ClientID}')";
             }
         }
 
@@ -127,6 +127,13 @@ namespace KITE.Pages.ContentPages
             if (e.CommandName == "UpdatePIB")
             {
                 int rowIndex = Convert.ToInt32(e.CommandArgument);
+                int pageIndex = PIBDataGridView.PageIndex;
+
+                if (pageIndex != 0)
+                {
+                    rowIndex = rowIndex - (pageIndex * 10);
+                }
+
                 GridViewRow row = PIBDataGridView.Rows[rowIndex];
 
                 string PIBDate = ((TextBox)row.FindControl("TextBoxPIBDate")).Text;
