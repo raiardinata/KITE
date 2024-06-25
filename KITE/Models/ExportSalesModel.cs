@@ -187,207 +187,225 @@ namespace KITE.Models
 
     public class ExportSalesViewModel
     {
-        [Name("Posting Date")]
+        [Name("posting date")]
         public DateTime Posting_Date { get; set; }
 
-        [Name("Document Date")]
+        [Name("document date")]
         public DateTime Document_Date { get; set; }
 
-        [Name("Document Header Text")]
+        [Name("document header text")]
         public string Document_Header_Text { get; set; }
 
-        [Name("Purchase Order")]
+        [Name("purchase order")]
         public string Purchase_Order { get; set; }
 
+        [Name("reference")]
         public string Reference { get; set; }
 
+        [Name("material")]
         public string Material { get; set; }
 
-        [Name("Material Description")]
+        [Name("material description")]
         public string Material_Description { get; set; }
 
+        [Name("plant")]
         public string Plant { get; set; }
 
-        [Name("Storage Location")]
+        [Name("storage location")]
         public string Storage_Location { get; set; }
 
-        [Name("Movement Type")]
+        [Name("movement type")]
         public string Movement_Type { get; set; }
 
-        [Name("Material Document")]
+        [Name("material document")]
         public string Material_Document { get; set; }
 
+        [Name("batch")]
         public string Batch { get; set; }
 
-        [Name("Qty in Un. of Entry")]
+        [Name("qty in unit of entry")]
         public Decimal Qty_in_Un_of_Entry { get; set; }
 
-        [Name("Unit of Entry")]
+        [Name("unit of entry")]
         public string Unit_of_Entry { get; set; }
 
-        [Name("Entry Date")]
+        [Name("entry date")]
         public DateTime Entry_Date { get; set; }
 
-        [Name("Time of Entry")]
+        [Name("time of entry")]
         public string Time_of_Entry { get; set; }
 
-        [Name("User name")]
+        [Name("user name")]
         public string User_Name { get; set; }
 
-        [Name("Base Unit of Measure")]
+        [Name("base unit of measure")]
         public string Base_Unit_of_Measure { get; set; }
 
+        [Name("quantity")]
         public Decimal Quantity { get; set; }
 
-        [Name("Debit/Credit Ind.")]
+        [Name("debit/credit ind")]
         public string Debit_Credit_Ind { get; set; }
 
-        [Name("Amount in LC")]
+        [Name("amt.in loc.cur.")]
         public Decimal Amount_in_LC { get; set; }
 
-        [Name("Sales Order")]
+        [Name("sales order")]
         public string Sales_Order { get; set; }
 
+        [Name("text")]
         public string Text { get; set; }
 
+        [Name("customer")]
         public string Customer { get; set; }
 
+        [Name("supplier")]
         public string Vendor { get; set; }
 
-        [Name("Vendor Name")]
+        [Name("vendor name")]
         public string Vendor_Name { get; set; }
 
-        [Name("Goods recipient")]
+        [Name("goods recipient")]
         public string Goods_recipient { get; set; }
 
-        [Name("SO")]
+        [Name("so")]
         public string SO { get; set; }
 
+        [Name("satype")]
         public string SaType { get; set; }
 
-        [Name("Sold to party")]
+        [Name("sold to party")]
         public string Sold_to_party { get; set; }
 
-        [Name("Name 1")]
+        [Name("name 1")]
         public string Name_1 { get; set; }
 
-        [Name("PO Number")]
+        [Name("po number")]
         public string PO_Number { get; set; }
 
-        [Name("NO PEB")]
+        [Name("no peb")]
         public string NO_PEB { get; set; }
 
-        [Name("Tanggal PEB")]
+        [Name("tanggal peb")]
         public string Tanggal_PEB { get; set; }
 
-        [Name("Non KITE")]
+        [Name("non KITE")]
         public string Non_KITE { get; set; }
 
-        [Name("Negara Tujuan")]
+        [Name("negara tujuan")]
         public string Designated_Country { get; set; }
     }
 
     public class ExportSalesWithKilosConvertionViewModel
     {
-        [Name("Posting Date")]
+        [Name("posting date")]
         public DateTime Posting_Date { get; set; }
 
-        [Name("Document Date")]
+        [Name("document date")]
         public DateTime Document_Date { get; set; }
 
-        [Name("Document Header Text")]
+        [Name("document header text")]
         public string Document_Header_Text { get; set; }
 
-        [Name("Purchase Order")]
+        [Name("purchase order")]
         public string Purchase_Order { get; set; }
 
+        [Name("reference")]
         public string Reference { get; set; }
 
+        [Name("material")]
         public string Material { get; set; }
 
-        [Name("Material Description")]
+        [Name("material description")]
         public string Material_Description { get; set; }
 
+        [Name("plant")]
         public string Plant { get; set; }
 
-        [Name("Storage Location")]
+        [Name("storage location")]
         public string Storage_Location { get; set; }
 
-        [Name("Movement Type")]
+        [Name("movement type")]
         public string Movement_Type { get; set; }
 
-        [Name("Material Document")]
+        [Name("material document")]
         public string Material_Document { get; set; }
 
+        [Name("batch")]
         public string Batch { get; set; }
 
-        [Name("Qty in Un. of Entry")]
+        [Name("qty in unit of entry")]
         public Decimal Qty_in_Un_of_Entry { get; set; }
 
-        [Name("Unit of Entry")]
+        [Name("unit of entry")]
         public string Unit_of_Entry { get; set; }
 
-        [Name("Entry Date")]
+        [Name("entry date")]
         public DateTime Entry_Date { get; set; }
 
-        [Name("Time of Entry")]
+        [Name("time of entry")]
         public string Time_of_Entry { get; set; }
 
-        [Name("User Name")]
+        [Name("user name")]
         public string User_Name { get; set; }
 
-        [Name("Base Unit of Measure")]
+        [Name("base unit of measure")]
         public string Base_Unit_of_Measure { get; set; }
 
+        [Name("quantity")]
         public Decimal Quantity { get; set; }
 
-        [Name("Debit/Credit Ind.")]
+        [Name("debit/credit ind")]
         public string Debit_Credit_Ind { get; set; }
 
-        [Name("Amount in LC")]
+        [Name("amt.in loc.cur.")]
         public Decimal Amount_in_LC { get; set; }
 
-        [Name("Sales Order")]
+        [Name("sales order")]
         public string Sales_Order { get; set; }
 
+        [Name("text")]
         public string Text { get; set; }
 
+        [Name("customer")]
         public string Customer { get; set; }
 
+        [Name("supplier")]
         public string Vendor { get; set; }
 
-        [Name("Vendor Name")]
+        [Name("vendor name")]
         public string Vendor_Name { get; set; }
 
-        [Name("Goods recipient")]
+        [Name("goods recipient")]
         public string Goods_recipient { get; set; }
 
-        [Name("SO")]
+        [Name("so")]
         public string SO { get; set; }
 
+        [Name("satype")]
         public string SaType { get; set; }
 
-        [Name("Sold to party")]
+        [Name("sold to party")]
         public string Sold_to_party { get; set; }
 
-        [Name("Name 1")]
+        [Name("name 1")]
         public string Name_1 { get; set; }
 
-        [Name("PO Number")]
+        [Name("po number")]
         public string PO_Number { get; set; }
 
-        [Name("NO PEB")]
+        [Name("no peb")]
         public string NO_PEB { get; set; }
 
-        [Name("Tanggal PEB")]
+        [Name("tanggal peb")]
         public string Tanggal_PEB { get; set; }
 
         public decimal KilosConvertion { get; set; }
 
-        [Name("Non KITE")]
+        [Name("non KITE")]
         public string Non_KITE { get; set; }
 
-        [Name("Negara Tujuan")]
+        [Name("negara tujuan")]
         public string Designated_Country { get; set; }
 
         public override bool Equals(object obj)

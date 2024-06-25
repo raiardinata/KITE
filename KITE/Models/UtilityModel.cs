@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
+using System.Threading;
 using System.Web.UI.WebControls;
 
 namespace KITE.Models
@@ -47,6 +49,19 @@ namespace KITE.Models
             {
                 return new Tuple<DataTable, Exception>(dataTableRes.Item1, null);
             }
+        }
+
+        public static void RefreshCurrentCulture()
+        {
+            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
+            Console.WriteLine("Current Culture before refresh: " + currentCulture.Name);
+
+            // Create a new CultureInfo object with the same culture name
+            CultureInfo refreshedCulture = new CultureInfo(currentCulture.Name);
+
+            // Set the current culture to the new CultureInfo object
+            Thread.CurrentThread.CurrentCulture = refreshedCulture;
+            Thread.CurrentThread.CurrentUICulture = refreshedCulture;
         }
     }
 }

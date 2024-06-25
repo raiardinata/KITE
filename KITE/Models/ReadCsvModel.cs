@@ -3,9 +3,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Web;
 
 namespace KITE.Models
@@ -15,6 +17,13 @@ namespace KITE.Models
         // Read csv function so it could be tested and reusable
         public Tuple<object, Exception> ReadCsvFunction(string processType, string filePath, string delimiter, string connectionString)
         {
+            UtilityModel.RefreshCurrentCulture();
+            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
+            if (currentCulture.NumberFormat.NumberDecimalSeparator != ".")
+            {
+                return new Tuple<object, Exception>(null, new Exception("Konfigurasi desimal point belum memakai '.'. Silahkan konfigurasikan desimal point anda ke '.' sesuai dengan WI."));
+            }
+
             using (CsvReader csvData = ReadCsvFile(filePath, delimiter))
             {
                 Tuple<object, Exception> uomConvertionObject = UomConvertion(csvData, processType, connectionString);
@@ -34,7 +43,8 @@ namespace KITE.Models
             // Read the content of the CSV file global function
             var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
             {
-                Delimiter = delimiter
+                Delimiter = delimiter,
+                PrepareHeaderForMatch = args => args.Header.ToLower(),
             };
             return new CsvReader(new StreamReader(filePath), config);
         }
@@ -120,10 +130,6 @@ namespace KITE.Models
                                 KG = uomConvertionRow.Field<decimal>("KilosConvertion");
                             }
                         }
-                        //else
-                        //{
-                        //    return new Tuple<object, Exception>(null, new Exception($"Konversi UoM gagal. Mohon kontak tim support dan cek master konversi. Detail cek row dengan data : Target_item_CD = {csvData.Target_item_CD}, Item_CD = {csvData.Item_CD}, Unit = {csvData.Unit}, Quantity = {csvData.Quantity}"));
-                        //}
 
                         if (csvData.Quantity.Contains(','))
                         {
@@ -172,7 +178,7 @@ namespace KITE.Models
             else if (type == "giRawMaterial")
             {
                 CsvDataList = csvDataRead.GetRecords<GIRawMaterialViewModel>().ToList();
-                List<GIRawMaterialWithConvertionViewModel> uomConvertionTempList = new List<GIRawMaterialWithConvertionViewModel>(); // this will help change McFrameViewModel form into McFrameWithKilosConvertionViewModel form
+                List<GIRawMaterialWithConvertionViewModel> uomConvertionTempList = new List<GIRawMaterialWithConvertionViewModel>(); // this will help change GIRawMaterialViewModel form into GIRawMaterialWithConvertionViewModel form
 
                 foreach (GIRawMaterialViewModel csvData in (List<GIRawMaterialViewModel>)CsvDataList)
                 {
@@ -289,10 +295,6 @@ namespace KITE.Models
                                 return new Tuple<object, Exception>(null, new Exception($"Konversi UoM gagal. Mohon kontak tim support dan cek master konversi. Detail cek row dengan data : Material = {csvData.Material}, Material_Description = {csvData.Material_Description}, Batch = {csvData.Batch}, Qty_in_Un_of_Entry = {csvData.Qty_in_Un_of_Entry}, Unit_of_Entry = {csvData.Unit_of_Entry}"));
                             }
                         }
-                        if (csvData.Qty_in_Un_of_Entry.Contains(','))
-                        {
-                            return new Tuple<object, Exception>(null, new Exception($"Terdapat kesalahan dalam konfigurasi csv comma separator menggunakan (','). Silahkan ganti konfigurasi csv comma separator menggunakan ('.')."));
-                        }
 
                         uomConvertionTempList.Add(new GRFinishGoodsWithConvertionViewModel
                         {
@@ -307,7 +309,7 @@ namespace KITE.Models
                             Material_Document = csvData.Material_Document,
                             Batch = csvData.Batch,
                             Qty_in_Un_of_Entry = csvData.Qty_in_Un_of_Entry,
-                            Kilos_Convertion = (KG != 1) ? (Convert.ToDecimal(csvData.Qty_in_Un_of_Entry) * KG).ToString("N4") : (Convert.ToDecimal(csvData.Qty_in_Un_of_Entry)).ToString("N4"),
+                            Kilos_Convertion = (KG != 1) ? (csvData.Qty_in_Un_of_Entry * KG) : (csvData.Qty_in_Un_of_Entry),
                             Unit_of_Entry = csvData.Unit_of_Entry,
                             Entry_Date = csvData.Entry_Date,
                             Time_of_Entry = csvData.Time_of_Entry,

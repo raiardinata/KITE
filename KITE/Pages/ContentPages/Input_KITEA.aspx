@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/MasterPages/Main.Master" AutoEventWireup="true" CodeBehind="Input_KITEA.aspx.cs" Inherits="KITE.Pages.ContentPages.Input_KITEA" %>
-<%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
+
+<%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -94,7 +95,7 @@
             $('#dialog-confirm').dialog('open');
             return false;
         }
-        
+
     </script>
 
     <script>
@@ -118,18 +119,16 @@
                 return false;
             }
         }
-   </script>
+    </script>
     <asp:ScriptManager ID="ScriptManager1" runat="server">
         <Scripts>
         </Scripts>
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-             <asp:Timer ID="Timer1" runat="server" OnTick="Timer1_Tick" Enabled="false">
-
+            <asp:Timer ID="Timer1" runat="server" OnTick="Timer1_Tick" Enabled="false">
             </asp:Timer>
             <asp:Timer ID="Timer2" runat="server" Interval="100" OnTick="Timer2_Tick" Enabled="false">
-
             </asp:Timer>
             <div id="inputarea">
                 <div id="header1" style="padding-left: 10px; min-width: 750px; vertical-align: top; padding-top: 5px; border-bottom: solid 5px #7bfdf6; padding-bottom: 10px; margin-bottom: 10px">
@@ -138,7 +137,7 @@
                     <asp:Label ID="lbl2" runat="server" Text="Report > A. Laporan Pemasukan Bahan Baku" />
                 </div>
 
-                
+
                 <asp:Label ID="lblerror" runat="server" Text="Label" Visible="false"></asp:Label>
                 <asp:Button ID="btnSearch" runat="Server" Text="Open Search" CssClass="ui-button" OnClick="btnSearch_Click" />
 
@@ -154,254 +153,241 @@
 
     <div id="Loading">
         <asp:UpdatePanel ID="UpdatePanel3" runat="server">
-              <ContentTemplate>
-                    <%--<a class="b-close">x<a/>--%>
-                    <div class="modal-dialog">
+            <ContentTemplate>
+                <%--<a class="b-close">x<a/>--%>
+                <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content" >
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"></button>
-                    <h4 class="modal-title">Loading Report</h4>
-                </div>
-                <div class="modal-body">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"></button>
+                            <h4 class="modal-title">Loading Report</h4>
+                        </div>
+                        <div class="modal-body">
 
-                    <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Always">
-                        <ContentTemplate>
+                            <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Always">
+                                <ContentTemplate>
 
-                            <fieldset class="fielset">
-                                <div class="card-body">
-                                    
-                                </div>
-                                <!-- /.card-body -->
-                            </fieldset>
-                        </ContentTemplate>
+                                    <fieldset class="fielset">
+                                        <div class="card-body">
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </fieldset>
+                                </ContentTemplate>
 
-                    </asp:UpdatePanel>
+                            </asp:UpdatePanel>
 
-                </div>
-                <asp:Label ID="LabelWaitingList" runat="server" Text="Label" Visible="false"></asp:Label>
-               <%-- <div class="modal-footer">
+                        </div>
+                        <asp:Label ID="LabelWaitingList" runat="server" Text="Label" Visible="false"></asp:Label>
+                        <%-- <div class="modal-footer">
                     <asp:Button runat="server" class="btn btn-primary" ID="Button9" Text="Submit" ValidationGroup="RegisterCheck" CausesValidation="true" OnClick="Button1_Click" />
 
                     <asp:Button runat="server" class="btn btn-default" ID="Button10" Text="Close" OnClick="Button2_Click" />
 
                 </div>--%>
-            </div>
+                    </div>
 
-        </div>
-                </ContentTemplate>
+                </div>
+            </ContentTemplate>
         </asp:UpdatePanel>
     </div>
-  
-    <div id="Insert" style="width:55%">
+
+    <div id="Insert" style="width: 55%">
         <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-              <ContentTemplate>
-                    <a class="b-close">x<a/>
-                    <div class="modal-dialog" style="width:100%">
+            <ContentTemplate>
+                <a class="b-close">x<a />
+                    <div class="modal-dialog" style="width: 100%">
 
-            <!-- Modal content-->
-            <div class="modal-content" style="width:100%">
-                <div class="modal-header" >
-                    <button type="button" class="close" data-dismiss="modal"></button>
-                    <h4 class="modal-title">Search Criteria</h4>
-                </div>
-                <div class="modal-body">
+                        <!-- Modal content-->
+                        <div class="modal-content" style="width: 100%">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"></button>
+                                <h4 class="modal-title">Search Criteria</h4>
+                            </div>
+                            <div class="modal-body">
 
-                    <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Always">
-                        <ContentTemplate>
+                                <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Always">
+                                    <ContentTemplate>
 
-                            <fieldset class="fielset">
-                                <div style="width:100%">
-                                    <table style="width:100%">                     
-                                            <tr>
-                                                <td style="width:17%" >
-                                                     <label id ="lblCC">Company Code</label>
-                                                    
-                                                    <%--<asp:Label ID="Label1" runat="server" Text="Company Code : " Style="text-align: left" />--%>
-                                                </td>
-                                                <td style="width:10%">
-                                                    <asp:DropDownList ID="ddlCompanyCode" AutoPostBack="true" CssClass="norm text string" runat="server" CausesValidation="false" OnSelectedIndexChanged="ddlCompanyCode_SelectedIndexChanged" >
-                                                    
-                                                    </asp:DropDownList>
-                                                </td>
-                                                <td style="width:40%">
-                                                    <asp:Label ID="lblcomcode" runat="server" CssClass="norm text string" ForeColor="Black"></asp:Label>
-                                                    
-                                                </td>
+                                        <fieldset class="fielset">
+                                            <div style="width: 100%">
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td style="width: 17%">
+                                                            <label id="lblCC">Company Code</label>
 
-                                                
-                                            </tr>
-                                       </table>
-                                    <table style="width:100%">
-                                            <tr>
-                                               
-                                                <td style="width:17%" >
-                                                     <label for="exampleInputUserName">Plant</label>
-                                                    
-                                                </td>
+                                                            <%--<asp:Label ID="Label1" runat="server" Text="Company Code : " Style="text-align: left" />--%>
+                                                        </td>
+                                                        <td style="width: 10%">
+                                                            <asp:DropDownList ID="ddlCompanyCode" AutoPostBack="true" CssClass="norm text string" runat="server" CausesValidation="false" OnSelectedIndexChanged="ddlCompanyCode_SelectedIndexChanged">
+                                                            </asp:DropDownList>
+                                                        </td>
+                                                        <td style="width: 40%">
+                                                            <asp:Label ID="lblcomcode" runat="server" CssClass="norm text string" ForeColor="Black"></asp:Label>
 
-                                                <td style="width:10%">
-                                                    <asp:DropDownList ID="ddlPlant" AutoPostBack="true" CssClass="norm text string" runat="server" CausesValidation="false" OnSelectedIndexChanged="ddlPlant_SelectedIndexChanged">
-                                                    
-                                                    </asp:DropDownList>
-                                                </td>
-                                                <td style="width:40%">
-                                                    <asp:Label ID="lblplant" runat="server" CssClass="norm text string" ForeColor="Black"></asp:Label>
-                                                </td>
-                                             
-                                            </tr>
-                                        </table>
-                                    <table style="width:100%">
-                                            <tr>
-                                               
-                                                <td style="width:100%">
-                                                     <label for="exampleInputUserName" style="width:150px">Material</label>
-                                                    
-                                                </td>
-                                                <td>
-                                                        <asp:ListBox ID ="lbMaterial" runat="server" SelectionMode="Multiple"  Width="200" Height="100">
+                                                        </td>
 
-                                                        </asp:ListBox>
-                                                </td>
-                                                <td>
-                                               
-                                                    <asp:Button ID="btnSelectmat" runat="Server" Text=">>" CssClass="ui-button" OnClick="btnSelectmat_Click"  />
-                                                    <br />
-                                                    <br />
-                                                    <asp:Button ID="btnDiselectmat" runat="Server" Text="<<" CssClass="ui-button" OnClick="btnDiselectmat_Click"  />
 
-                                                
-                                                </td>
-                                                <td>
-                                                    <asp:ListBox ID ="lbMaterial2" runat="server" SelectionMode="Multiple"  Width="200" Height="100">
+                                                    </tr>
+                                                </table>
+                                                <table style="width: 100%">
+                                                    <tr>
 
-                                                    </asp:ListBox>
-                                                </td>
-                                                <td>
-                                                    <asp:Label ID="lblerror2" runat="server" Text="Label" Visible="false" Font-Bold="true" ForeColor="Red"></asp:Label>
+                                                        <td style="width: 17%">
+                                                            <label for="exampleInputUserName">Plant</label>
 
-                                                </td>
-                                            </tr>
-                                    </table>
+                                                        </td>
 
-                                     <table style="width:100%">                                      
-                                        <tr>
-                                            <td style="width:100%">
-                                                 <label for="exampleInputUserName" style="width:150px">Storage Location</label>
-                                                <%--<asp:Label ID="Label4" runat="server" Text="Storage Location : " Style="text-align: left" />--%>
-                                            </td>
+                                                        <td style="width: 10%">
+                                                            <asp:DropDownList ID="ddlPlant" AutoPostBack="true" CssClass="norm text string" runat="server" CausesValidation="false" OnSelectedIndexChanged="ddlPlant_SelectedIndexChanged">
+                                                            </asp:DropDownList>
+                                                        </td>
+                                                        <td style="width: 40%">
+                                                            <asp:Label ID="lblplant" runat="server" CssClass="norm text string" ForeColor="Black"></asp:Label>
+                                                        </td>
 
-                                            <td >
-                                                <asp:ListBox ID ="lbSloc" runat="server" SelectionMode="Multiple" Width="200" Height="100">
-                                                  
-                                                </asp:ListBox>
-                                            </td>
+                                                    </tr>
+                                                </table>
+                                                <table style="width: 100%">
+                                                    <tr>
 
-                                            <td>
-                                                <asp:Button ID="btnselectsloc" runat="Server" Text=">>" CssClass="ui-button" OnClick="btnselectsloc_Click"  />
-                                                <br />
-                                                <br />
-                                                <asp:Button ID="btndiselectsloc" runat="Server" Text="<<" CssClass="ui-button" OnClick="btndiselectsloc_Click"  />
-                                            </td>
-                                            <td>
-                                                <asp:ListBox ID ="lbsloc2" runat="server" SelectionMode="Multiple"  Width="200" Height="100">
+                                                        <td style="width: 100%">
+                                                            <label for="exampleInputUserName" style="width: 150px">Material</label>
 
-                                                </asp:ListBox>
-                                            </td>
-                                            <td>
-                                                <asp:Label ID="lblErrorSloc" runat="server" Text="Label" Visible="false" Font-Bold="true" ForeColor="Red" Font-Underline="false"></asp:Label>
+                                                        </td>
+                                                        <td>
+                                                            <asp:ListBox ID="lbMaterial" runat="server" SelectionMode="Multiple" Width="200" Height="100"></asp:ListBox>
+                                                        </td>
+                                                        <td>
 
-                                            </td>
-                                        </tr>
-                                    </table>
-                                       
-                                    <table>
-                                      
-                                            <tr>
-                                            
-                                                <td style="width:150px">
-                                                <label id ="lblPeriod">Period</label>
-                                               
-                                                </td>
+                                                            <asp:Button ID="btnSelectmat" runat="Server" Text=">>" CssClass="ui-button" OnClick="btnSelectmat_Click" />
+                                                            <br />
+                                                            <br />
+                                                            <asp:Button ID="btnDiselectmat" runat="Server" Text="<<" CssClass="ui-button" OnClick="btnDiselectmat_Click" />
 
-                                            <td>
-                                                
-                                                 <asp:DropDownList ID="ddlPeriodFrom" AutoPostBack="false" CssClass="norm text string" runat="server" CausesValidation="false">
-                                                     <asp:ListItem>January</asp:ListItem>
-                                                     <asp:ListItem>February</asp:ListItem>
-                                                     <asp:ListItem>March</asp:ListItem>
-                                                     <asp:ListItem>April</asp:ListItem>
-                                                     <asp:ListItem>May</asp:ListItem>
-                                                     <asp:ListItem>June</asp:ListItem>
-                                                     <asp:ListItem>July</asp:ListItem>
-                                                     <asp:ListItem>August</asp:ListItem>
-                                                     <asp:ListItem>September</asp:ListItem>
-                                                     <asp:ListItem>October</asp:ListItem>
-                                                     <asp:ListItem>November</asp:ListItem>
-                                                     <asp:ListItem>December</asp:ListItem>
 
-                                                 </asp:DropDownList>
-                                             </td>
-                                             <td>
-                                                <asp:DropDownList ID="ddlYearFrom" AutoPostBack="false" CssClass="norm text string" runat="server" CausesValidation="false">
-                                                    
-                                                </asp:DropDownList>
-                                            </td>
-                                           
-                                            <td>
-                                                <label id ="lblid">To</label>
-                                            </td>
-                                            <td>
-                                                 
-                                                <asp:DropDownList ID="ddlPeriodTo" AutoPostBack="false" CssClass="norm text string" runat="server" CausesValidation="false" OnSelectedIndexChanged="ddlPeriodTo_SelectedIndexChanged">
-                                                     <asp:ListItem>January</asp:ListItem>
-                                                     <asp:ListItem>February</asp:ListItem>
-                                                     <asp:ListItem>March</asp:ListItem>
-                                                     <asp:ListItem>April</asp:ListItem>
-                                                     <asp:ListItem>May</asp:ListItem>
-                                                     <asp:ListItem>June</asp:ListItem>
-                                                     <asp:ListItem>July</asp:ListItem>
-                                                     <asp:ListItem>August</asp:ListItem>
-                                                     <asp:ListItem>September</asp:ListItem>
-                                                     <asp:ListItem>October</asp:ListItem>
-                                                     <asp:ListItem>November</asp:ListItem>
-                                                     <asp:ListItem>December</asp:ListItem>
+                                                        </td>
+                                                        <td>
+                                                            <asp:ListBox ID="lbMaterial2" runat="server" SelectionMode="Multiple" Width="200" Height="100"></asp:ListBox>
+                                                        </td>
+                                                        <td>
+                                                            <asp:Label ID="lblerror2" runat="server" Text="Label" Visible="false" Font-Bold="true" ForeColor="Red"></asp:Label>
 
-                                                 </asp:DropDownList>
-                                                </td>
-                                                <td>
-                                                <asp:DropDownList ID="ddlYearTo" AutoPostBack="false" CssClass="norm text string" runat="server" CausesValidation="false">
-                                                    
-                                                </asp:DropDownList>
-                                            </td>
-                                            <td>
-                                                                                            <asp:Label ID="LblErrorPeriod" runat="server" Text="Label" Visible="false" Font-Bold="true" ForeColor="Red"></asp:Label>
+                                                        </td>
+                                                    </tr>
+                                                </table>
 
-                                            </td>
-                                        </tr>
-                                       
-                                    
-                                    </table>
-                                </div>
-                                
-                                <!-- /.card-body -->
-                            </fieldset>
-                        </ContentTemplate>
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td style="width: 100%">
+                                                            <label for="exampleInputUserName" style="width: 150px">Storage Location</label>
+                                                            <%--<asp:Label ID="Label4" runat="server" Text="Storage Location : " Style="text-align: left" />--%>
+                                                        </td>
 
-                    </asp:UpdatePanel>
+                                                        <td>
+                                                            <asp:ListBox ID="lbSloc" runat="server" SelectionMode="Multiple" Width="200" Height="100"></asp:ListBox>
+                                                        </td>
 
-                </div>
-                <div class="modal-footer">
-                    <asp:Button runat="server" class="btn btn-primary" ID="Button1" Text="Submit" ValidationGroup="RegisterCheck" CausesValidation="true" OnClick="Button1_Click" />
+                                                        <td>
+                                                            <asp:Button ID="btnselectsloc" runat="Server" Text=">>" CssClass="ui-button" OnClick="btnselectsloc_Click" />
+                                                            <br />
+                                                            <br />
+                                                            <asp:Button ID="btndiselectsloc" runat="Server" Text="<<" CssClass="ui-button" OnClick="btndiselectsloc_Click" />
+                                                        </td>
+                                                        <td>
+                                                            <asp:ListBox ID="lbsloc2" runat="server" SelectionMode="Multiple" Width="200" Height="100"></asp:ListBox>
+                                                        </td>
+                                                        <td>
+                                                            <asp:Label ID="lblErrorSloc" runat="server" Text="Label" Visible="false" Font-Bold="true" ForeColor="Red" Font-Underline="false"></asp:Label>
 
-                    <asp:Button runat="server" class="btn btn-default" ID="Button2" Text="Close" OnClick="Button2_Click" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
 
-                </div>
-            </div>
+                                                <table>
+
+                                                    <tr>
+
+                                                        <td style="width: 150px">
+                                                            <label id="lblPeriod">Period</label>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            <asp:DropDownList ID="ddlPeriodFrom" AutoPostBack="false" CssClass="norm text string" runat="server" CausesValidation="false">
+                                                                <asp:ListItem>January</asp:ListItem>
+                                                                <asp:ListItem>February</asp:ListItem>
+                                                                <asp:ListItem>March</asp:ListItem>
+                                                                <asp:ListItem>April</asp:ListItem>
+                                                                <asp:ListItem>May</asp:ListItem>
+                                                                <asp:ListItem>June</asp:ListItem>
+                                                                <asp:ListItem>July</asp:ListItem>
+                                                                <asp:ListItem>August</asp:ListItem>
+                                                                <asp:ListItem>September</asp:ListItem>
+                                                                <asp:ListItem>October</asp:ListItem>
+                                                                <asp:ListItem>November</asp:ListItem>
+                                                                <asp:ListItem>December</asp:ListItem>
+
+                                                            </asp:DropDownList>
+                                                        </td>
+                                                        <td>
+                                                            <asp:DropDownList ID="ddlYearFrom" AutoPostBack="false" CssClass="norm text string" runat="server" CausesValidation="false">
+                                                            </asp:DropDownList>
+                                                        </td>
+
+                                                        <td>
+                                                            <label id="lblid">To</label>
+                                                        </td>
+                                                        <td>
+
+                                                            <asp:DropDownList ID="ddlPeriodTo" AutoPostBack="false" CssClass="norm text string" runat="server" CausesValidation="false" OnSelectedIndexChanged="ddlPeriodTo_SelectedIndexChanged">
+                                                                <asp:ListItem>January</asp:ListItem>
+                                                                <asp:ListItem>February</asp:ListItem>
+                                                                <asp:ListItem>March</asp:ListItem>
+                                                                <asp:ListItem>April</asp:ListItem>
+                                                                <asp:ListItem>May</asp:ListItem>
+                                                                <asp:ListItem>June</asp:ListItem>
+                                                                <asp:ListItem>July</asp:ListItem>
+                                                                <asp:ListItem>August</asp:ListItem>
+                                                                <asp:ListItem>September</asp:ListItem>
+                                                                <asp:ListItem>October</asp:ListItem>
+                                                                <asp:ListItem>November</asp:ListItem>
+                                                                <asp:ListItem>December</asp:ListItem>
+
+                                                            </asp:DropDownList>
+                                                        </td>
+                                                        <td>
+                                                            <asp:DropDownList ID="ddlYearTo" AutoPostBack="false" CssClass="norm text string" runat="server" CausesValidation="false">
+                                                            </asp:DropDownList>
+                                                        </td>
+                                                        <td>
+                                                            <asp:Label ID="LblErrorPeriod" runat="server" Text="Label" Visible="false" Font-Bold="true" ForeColor="Red"></asp:Label>
+
+                                                        </td>
+                                                    </tr>
+
+
+                                                </table>
+                                            </div>
+
+                                            <!-- /.card-body -->
+                                        </fieldset>
+                                    </ContentTemplate>
+
+                                </asp:UpdatePanel>
+
+                            </div>
+                            <div class="modal-footer">
+                                <asp:Button runat="server" class="btn btn-primary" ID="Button1" Text="Submit" ValidationGroup="RegisterCheck" CausesValidation="true" OnClick="Button1_Click" />
+
+                                <asp:Button runat="server" class="btn btn-default" ID="Button2" Text="Close" OnClick="Button2_Click" />
+
+                            </div>
+                        </div>
 
                     </div>
-                </ContentTemplate>
+            </ContentTemplate>
         </asp:UpdatePanel>
     </div>
 

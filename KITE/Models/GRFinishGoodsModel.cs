@@ -28,15 +28,15 @@ namespace KITE.Models
                 Movement_Type = row.Field<string>("Movement_Type"),
                 Material_Document = row.Field<string>("Material_Document"),
                 Batch = row.Field<string>("Batch"),
-                Qty_in_Un_of_Entry = row.Field<Decimal>("Qty_in_Un_of_Entry").ToString(),
-                Kilos_Convertion = row.Field<Decimal>("Kilos_Convertion").ToString(),
+                Qty_in_Un_of_Entry = row.Field<Decimal>("Qty_in_Un_of_Entry"),
+                Kilos_Convertion = row.Field<Decimal>("Kilos_Convertion"),
                 Unit_of_Entry = row.Field<string>("Unit_of_Entry"),
                 Entry_Date = row.Field<DateTime>("Entry_Date"),
                 Time_of_Entry = row.Field<TimeSpan>("Time_of_Entry").ToString(),
                 User_name = row.Field<string>("User_name"),
                 Base_Unit_of_Measure = row.Field<string>("Base_Unit_of_Measure"),
-                Quantity = row.Field<Decimal>("Quantity").ToString(),
-                Amount_in_LC = row.Field<Decimal>("Amount_in_LC").ToString(),
+                Quantity = row.Field<Decimal>("Quantity"),
+                Amount_in_LC = row.Field<Decimal>("Amount_in_LC"),
                 Goods_recipient = row.Field<string>("Goods_recipient"),
             })
             .ToList();
@@ -151,115 +151,123 @@ namespace KITE.Models
 
     public class GRFinishGoodsViewModel
     {
-        [Name("Posting Date")]
+        [Name("posting date")]
         public DateTime Posting_Date { get; set; }
 
-        [Name("Document Date")]
+        [Name("document date")]
         public DateTime Document_Date { get; set; }
 
-        [Name("Document Header Text")]
+        [Name("document header text")]
         public string Document_Header_Text { get; set; }
 
+        [Name("material")]
         public string Material { get; set; }
 
-        [Name("Material Description")]
+        [Name("material description")]
         public string Material_Description { get; set; }
 
+        [Name("plant")]
         public string Plant { get; set; }
 
-        [Name("Storage Location")]
+        [Name("storage location")]
         public string Storage_Location { get; set; }
 
-        [Name("Movement Type")]
+        [Name("movement type")]
         public string Movement_Type { get; set; }
 
-        [Name("Material Document")]
+        [Name("material document")]
         public string Material_Document { get; set; }
 
+        [Name("batch")]
         public string Batch { get; set; }
 
-        [Name("Qty in Un. of Entry")]
-        public string Qty_in_Un_of_Entry { get; set; }
+        [Name("qty in unit of entry")]
+        public decimal Qty_in_Un_of_Entry { get; set; }
 
-        [Name("Unit of Entry")]
+        [Name("unit of entry")]
         public string Unit_of_Entry { get; set; }
 
-        [Name("Entry Date")]
+        [Name("entry date")]
         public DateTime Entry_Date { get; set; }
 
-        [Name("Time of Entry")]
+        [Name("time of entry")]
         public string Time_of_Entry { get; set; }
 
-        [Name("User name")]
+        [Name("user name")]
         public string User_name { get; set; }
 
-        [Name("Base Unit of Measure")]
+        [Name("base unit of measure")]
         public string Base_Unit_of_Measure { get; set; }
 
-        public string Quantity { get; set; }
+        [Name("quantity")]
+        public decimal Quantity { get; set; }
 
-        [Name("Amount in LC")]
-        public string Amount_in_LC { get; set; }
+        [Name("amt.in loc.cur.")]
+        public decimal Amount_in_LC { get; set; }
 
-        [Name("Goods recipient")]
+        [Name("goods recipient")]
         public string Goods_recipient { get; set; }
     }
 
     public class GRFinishGoodsWithConvertionViewModel
     {
-        [Name("Posting Date")]
+        [Name("posting date")]
         public DateTime Posting_Date { get; set; }
 
-        [Name("Document Date")]
+        [Name("document date")]
         public DateTime Document_Date { get; set; }
 
-        [Name("Document Header Text")]
+        [Name("document header text")]
         public string Document_Header_Text { get; set; }
 
+        [Name("material")]
         public string Material { get; set; }
 
-        [Name("Material Description")]
+        [Name("material description")]
         public string Material_Description { get; set; }
 
+        [Name("plant")]
         public string Plant { get; set; }
 
-        [Name("Storage Location")]
+        [Name("storage location")]
         public string Storage_Location { get; set; }
 
-        [Name("Movement Type")]
+        [Name("movement type")]
         public string Movement_Type { get; set; }
 
-        [Name("Material Document")]
+        [Name("material document")]
         public string Material_Document { get; set; }
 
+        [Name("batch")]
         public string Batch { get; set; }
 
-        [Name("Qty in Un. of Entry")]
-        public string Qty_in_Un_of_Entry { get; set; }
+        [Name("qty in unit of entry")]
+        public decimal Qty_in_Un_of_Entry { get; set; }
 
-        public string Kilos_Convertion { get; set; }
+        public decimal Kilos_Convertion { get; set; }
 
-        [Name("Unit of Entry")]
+        [Name("unit of entry")]
         public string Unit_of_Entry { get; set; }
 
-        [Name("Entry Date")]
+        [Name("entry date")]
         public DateTime Entry_Date { get; set; }
 
-        [Name("Time of Entry")]
+        [Name("time of entry")]
         public string Time_of_Entry { get; set; }
 
-        [Name("User name")]
+        [Name("user name")]
         public string User_name { get; set; }
 
-        [Name("Base Unit of Measure")]
+        [Name("base unit of measure")]
         public string Base_Unit_of_Measure { get; set; }
 
-        public string Quantity { get; set; }
+        [Name("quantity")]
+        public decimal Quantity { get; set; }
 
-        [Name("Amount in LC")]
-        public string Amount_in_LC { get; set; }
+        [Name("amt.in loc.cur.")]
+        public decimal Amount_in_LC { get; set; }
 
-        [Name("Goods recipient")]
+        [Name("goods recipient")]
         public string Goods_recipient { get; set; }
 
         public override bool Equals(object obj)

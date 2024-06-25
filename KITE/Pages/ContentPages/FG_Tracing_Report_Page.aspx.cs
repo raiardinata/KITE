@@ -21,21 +21,6 @@ namespace KITE.Pages.ContentPages
 
         public void GenerateReport(object sender, EventArgs e)
         {
-            //if (pgiDateFrom.Text == "")
-            //{
-            //    UtilityModel errorHandler = new UtilityModel();
-            //    Exception loadCsvException = new Exception($"Mohon isi terlebih dahulu PGI Date From dan PGI Date Until.");
-            //    errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { }, errorLabel);
-            //    return;
-            //}
-            //if (pgiDateUntil.Text == "")
-            //{
-            //    UtilityModel errorHandler = new UtilityModel();
-            //    Exception loadCsvException = new Exception($"Mohon isi terlebih dahulu PGI Date From dan PGI Date Until.");
-            //    errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { }, errorLabel);
-            //    return;
-            //}
-
             // Update PIB date
             Exception updateException = new DatabaseModel().UpdateTable(" FG_Tracing ", " PIB_Date = (SELECT PIB_Date FROM Master_Batch b WHERE b.Raw_Material = FG_Tracing.Raw_Material AND b.RM_Batch = FG_Tracing.RM_Batch) ", "", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             if (updateException.Message != "null")

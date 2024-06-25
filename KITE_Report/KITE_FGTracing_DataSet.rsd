@@ -76,10 +76,10 @@
 FROM
   FG_Tracing
 WHERE
-  FG_Tracing.RM_Batch LIKE @RM_Batch
-  AND FG_Tracing.NO_PEB LIKE @NO_PEB
-  AND FG_Tracing.PO_Number LIKE @PO_Number
-  AND FG_Tracing.Customer LIKE @Customer
+  (FG_Tracing.RM_Batch LIKE @RM_Batch OR FG_Tracing.RM_Batch IS NULL)
+  AND (FG_Tracing.NO_PEB LIKE @NO_PEB OR FG_Tracing.NO_PEB IS NULL)
+  AND (FG_Tracing.PO_Number LIKE @PO_Number OR FG_Tracing.PO_Number IS NULL)
+  AND (FG_Tracing.Customer LIKE @Customer OR FG_Tracing.Customer IS NULL)
   AND FG_Tracing.PGI_Date &gt;= @PGI_Date_From
   AND FG_Tracing.PGI_Date &lt;= @PGI_Date_Until</CommandText>
       <rd:DesignerState>

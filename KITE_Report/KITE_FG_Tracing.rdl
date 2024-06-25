@@ -1,16 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
-  <am:AuthoringMetadata>
-    <am:CreatedBy>
-      <am:Name>SSDTRS</am:Name>
-      <am:Version>17.8.34316.72</am:Version>
-    </am:CreatedBy>
-    <am:UpdatedBy>
-      <am:Name>SSDTRS</am:Name>
-      <am:Version>17.8.34330.188</am:Version>
-    </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2024-02-19T02:47:54.0150789Z</am:LastModifiedTimestamp>
-  </am:AuthoringMetadata>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -246,6 +235,42 @@ WHERE
     <ReportSection>
       <Body>
         <ReportItems>
+          <Textbox Name="ReportTitle">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>FG Tracing Report</Value>
+                    <Style>
+                      <FontFamily>Segoe UI Light</FontFamily>
+                      <FontSize>28pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:WatermarkTextbox>Title</rd:WatermarkTextbox>
+            <rd:DefaultName>ReportTitle</rd:DefaultName>
+            <Top>3.175mm</Top>
+            <Left>0cm</Left>
+            <Height>12.7mm</Height>
+            <Width>635.20826mm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
           <Tablix Name="KITE_FGTracing_Tablix">
             <TablixBody>
               <TablixColumns>
@@ -277,7 +302,7 @@ WHERE
                   <Width>26.05831mm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>25mm</Width>
+                  <Width>30.29167mm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>25mm</Width>
@@ -659,7 +684,7 @@ WHERE
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>PGI Date</Value>
+                                  <Value>Tanggal Ekspor</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -1285,6 +1310,7 @@ WHERE
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1333,7 +1359,7 @@ WHERE
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIf(Fields!PGI_Date.Value = "1990/01/01", "", FormatDateTime(Fields!PGI_Date.Value,2))</Value>
+                                  <Value>=IIf(Fields!PGI_Date.Value = "1990/01/01", "", FormatDateTime(Fields!PGI_Date.Value, 2))</Value>
                                   <Style>
                                     <FontFamily>Arial</FontFamily>
                                     <Format>yyyy/MM/dd</Format>
@@ -1687,7 +1713,6 @@ WHERE
               </TablixMembers>
             </TablixRowHierarchy>
             <RepeatColumnHeaders>true</RepeatColumnHeaders>
-            <RepeatRowHeaders>true</RepeatRowHeaders>
             <FixedColumnHeaders>true</FixedColumnHeaders>
             <FixedRowHeaders>true</FixedRowHeaders>
             <DataSetName>KITE_FGTracing_DataSet</DataSetName>
@@ -1711,7 +1736,8 @@ WHERE
             <Top>22.575mm</Top>
             <Left>0mm</Left>
             <Height>12mm</Height>
-            <Width>629.91659mm</Width>
+            <Width>635.20826mm</Width>
+            <ZIndex>1</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1723,42 +1749,6 @@ WHERE
               <cl:SyncDate>2023-11-23T23:32:41.4090139+07:00</cl:SyncDate>
             </cl:ComponentMetadata>
           </Tablix>
-          <Textbox Name="ReportTitle">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>FG Tracing Report</Value>
-                    <Style>
-                      <FontFamily>Segoe UI Light</FontFamily>
-                      <FontSize>28pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:WatermarkTextbox>Title</rd:WatermarkTextbox>
-            <rd:DefaultName>ReportTitle</rd:DefaultName>
-            <Top>3.175mm</Top>
-            <Height>12.7mm</Height>
-            <Width>629.91659mm</Width>
-            <ZIndex>1</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
           <Textbox Name="ReportTitle2">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
@@ -1774,7 +1764,9 @@ WHERE
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:WatermarkTextbox>Title</rd:WatermarkTextbox>
@@ -1794,7 +1786,7 @@ WHERE
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>85.19583mm</Height>
+        <Height>57.15mm</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1820,7 +1812,7 @@ WHERE
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Left</TextAlign>
+                    <TextAlign>Right</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
@@ -1908,11 +1900,6 @@ WHERE
     </ReportParameter>
     <ReportParameter Name="PGI_Date_From">
       <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>01/01/2019 00:00:00</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>PGI Date From</Prompt>
       <Hidden>true</Hidden>
       <UsedInQuery>True</UsedInQuery>
@@ -1924,11 +1911,6 @@ WHERE
     </ReportParameter>
     <ReportParameter Name="PGI_Date_Until">
       <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>12/31/2200 00:00:00</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>PGI Date Until</Prompt>
       <Hidden>true</Hidden>
       <UsedInQuery>True</UsedInQuery>

@@ -31,7 +31,6 @@
                             <asp:Label runat="server" Text="PGI Date From" Style="display: inline-block; position: relative; top: 5px;"></asp:Label>
                         </td>
                         <td>
-                            <%--<asp:TextBox ID="pgiDateFrom" runat="server" Style="display: inline-block; position: relative; top: 5px;" TextMode="Date" />--%>
                             <asp:TextBox ID="pgiDateFrom" type="date" runat="server" Style="display: inline-block; position: relative; top: 5px;" />
                         </td>
                     </tr>
@@ -67,7 +66,7 @@
     </table>
     <div class="rounded-corners" style="position: relative; width: 102.2%;">
         <rsweb:ReportViewer ID="FG_Tracing_ReportViewer" runat="server" ProcessingMode="Remote" Style="width: auto;">
-            <%--<ServerReport ReportPath="/KITE_Report/KITE_FG_Tracing" ReportServerUrl="http://127.0.0.1/ReportServer" />--%>
+
         </rsweb:ReportViewer>
     </div>
 </asp:Content>

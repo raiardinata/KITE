@@ -1191,7 +1191,8 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=right(Fields!TANGGAL.Value,2)&amp;"."&amp;mid(Fields!TANGGAL.Value,5,2)&amp;"."&amp;left(Fields!TANGGAL.Value,4)</Value>
+                                  <Value>=IIF(Fields!NOMOR.Value="","",
+right(Fields!TANGGAL.Value,2)&amp;"."&amp;mid(Fields!TANGGAL.Value,5,2)&amp;"."&amp;left(Fields!TANGGAL.Value,4))</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -1227,6 +1228,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>

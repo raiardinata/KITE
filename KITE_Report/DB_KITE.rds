@@ -4,5 +4,5 @@
     <Extension>SQL</Extension>
     <ConnectString>Data Source=RAI-KGP\MSSQLSERVER01;Initial Catalog=KITE</ConnectString>
   </ConnectionProperties>
-  <DataSourceID>5346ae2f-9a91-4ec5-9cdb-e7a2af3dee4c</DataSourceID>
+  <DataSourceID>b4dca12d-4c3c-4372-92ee-a7f2f51e237f</DataSourceID>
 </RptDataSource>

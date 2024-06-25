@@ -104,10 +104,10 @@
                                 <li><a href="../ContentPages/Input_KITEB2.aspx" id="report_kiteb2" visible="false" runat="server" >B. Laporan Pemakaian Bahan Baku</a></li>
                             </ul>
                         </li>
-
+                        
                         <li class="dropdown" runat="server">
                             <a class="dropdown-toggle" id="tracing" visible="false" runat="server" data-toggle="dropdown" style="color: white;">Tracing
-                        <span class="caret" style="border-top-color: white; border-bottom-color: white;"></span></a>
+                            <span class="caret" style="border-top-color: white; border-bottom-color: white;"></span></a>
 
                             <ul class="dropdown-menu">
                                 <li><a href="~/Pages/ContentPages/McFrameUpload.aspx" id="master_mcframeupload" visible="false" runat="server" >McFrame Upload</a></li>
@@ -119,6 +119,16 @@
                                 <li><a href="~/Pages/ContentPages/FG_Tracing_Report_Page.aspx" id="master_fgtracingreportpage" visible="false" runat="server" >FG Tracing Report</a></li>
                                 <li><a href="~/Pages/ContentPages/PIBDateUpdate.aspx" id="master_pibdateupdate" visible="false" runat="server" >Master Batch</a></li>
                                 <li><a href="~/Pages/ContentPages/RepackReprocess.aspx" id="master_repack" visible="false" runat="server" >Repack / Reprocess</a></li>
+                            </ul>
+
+                        </li>
+
+                        <li class="dropdown" runat="server">
+                            <a class="dropdown-toggle" id="document" visible="false" runat="server" data-toggle="dropdown" style="color: white;">Document
+                            <span class="caret" style="border-top-color: white; border-bottom-color: white;"></span></a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href="~/Pages/ContentPages/WorkInstruction.aspx" id="workInstruction" visible="false" runat="server" >Work Instruction</a></li>
                             </ul>
 
                         </li>
@@ -192,8 +202,6 @@
             <p style="width: 100%; display: block; background-color: red; color: whitesmoke; text-decoration-color: white; text-decoration-style: solid">PT AJINEX INTERNATIONAL @ 2024 - KITE PORTAL - Support Application</p>
 
         </footer>
-
-
     </form>
 </body>
 </html>

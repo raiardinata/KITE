@@ -12,6 +12,8 @@ namespace KITE.Pages.ContentPages
 {
     public partial class GRFinishGoodsUpload : System.Web.UI.Page
     {
+        UtilityModel errorHandler = new UtilityModel();
+
         private List<GRFinishGoodsWithConvertionViewModel> CsvDataList;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,7 +28,7 @@ namespace KITE.Pages.ContentPages
             Tuple<DataTable, Exception> dataTableRes = new UtilityModel().BindGridview("GR_Finish_Goods", yearPeriodTxt.Text, monthPeriodTxt.Text, ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             if (dataTableRes.Item2 != null)
             {
-                new UtilityModel().UploadCsvErrorHandler(dataTableRes.Item2, new GridView[] { }, errorLabel);
+                errorHandler.UploadCsvErrorHandler(dataTableRes.Item2, new GridView[] { }, errorLabel);
                 CsvDataGridView.DataSource = null;
                 CsvDataGridView.DataBind();
                 btnDownloadCsv.Enabled = false;
@@ -58,7 +60,7 @@ namespace KITE.Pages.ContentPages
             Tuple<Exception, string, List<GRFinishGoodsWithConvertionViewModel>> fileResult = grFinishGoodsFunction.GRFinishGoodsReadCsvFile(fileUpload);
             if (fileResult.Item1.Message != "null")
             {
-                UtilityModel errorHandler = new UtilityModel();
+
                 Exception loadCsvException = new Exception("Terdapat masalah ketika mensubmit file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload GR Finish Goods.<br/> Detail : " + fileResult.Item1.Message);
                 errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
             }
@@ -145,7 +147,7 @@ namespace KITE.Pages.ContentPages
             }
             catch (Exception ex)
             {
-                UtilityModel errorHandler = new UtilityModel();
+
                 Exception loadCsvException = new Exception("Terdapat masalah ketika mau membuka halaman " + txtGoToPage.Text.Trim() + ". Detail : " + ex.Message);
                 errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
             }
@@ -167,7 +169,7 @@ namespace KITE.Pages.ContentPages
             }
             catch (Exception ex)
             {
-                UtilityModel errorHandler = new UtilityModel();
+
                 Exception loadCsvException = new Exception("Terdapat masalah ketika tombol previous page berjalan. Detail : " + ex.Message);
                 errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
             }
@@ -190,7 +192,7 @@ namespace KITE.Pages.ContentPages
             }
             catch (Exception ex)
             {
-                UtilityModel errorHandler = new UtilityModel();
+
                 Exception loadCsvException = new Exception("Terdapat masalah ketika tombol next page berjalan. Detail : " + ex.Message);
                 errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
             }
@@ -202,14 +204,14 @@ namespace KITE.Pages.ContentPages
             CsvDataGridView_PageIndexChanging(this, e);
         }
 
-        private void LoadCsvData()
+        public void LoadCsvData()
         {
             try
             {
                 Tuple<object, Exception> readCsvResult = new ReadCsvModel().ReadCsvFunction("grFinishGoods", (string)Session["FilePath"], ";", ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 if (readCsvResult.Item2.Message != "null")
                 {
-                    UtilityModel errorHandler = new UtilityModel();
+
                     Exception loadCsvException = new Exception("Terdapat masalah ketika memuat file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload McFrame process.<br/> Detail : " + readCsvResult.Item2.Message);
                     errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
                 }
@@ -226,7 +228,7 @@ namespace KITE.Pages.ContentPages
                 }
                 else
                 {
-                    UtilityModel errorHandler = new UtilityModel();
+
                     Exception loadCsvException = new Exception("Terdapat masalah ketika memuat file csv. Mohon untuk cek kembali apakah data file csv cocok dengan format upload GR Finish Goods.<br/> Detail : " + ex.Message);
                     errorHandler.UploadCsvErrorHandler(loadCsvException, new GridView[] { CsvDataGridView }, errorLabel);
                 }

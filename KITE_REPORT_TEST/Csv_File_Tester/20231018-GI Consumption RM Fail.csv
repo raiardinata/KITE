@@ -1,2 +1,2 @@
-Document Date;Document Header Text;Material;Material Description;Plant;Storage Location;Movement Type;Material Document;Batch;Qty in Un. of Entry;Unit of Entry;Entry Date;Time of Entry;User name;Base Unit of Measure;Quantity;Amount in LC;Goods recipient
-2023/03/31;RS Dill 31.03.2023;121001071;Raw Sugar (F);2201;2018;Z03;4048920061;R20220916;-24,600;MT;2023/04/01;11:32:44;ID0857;MT;-24,600;0,00;211000076
+Document Date;Document Header Text;Material;Material Description;Plant;Storage Location;Movement Type;Material Document;Batch;Qty in unit of entry;Unit of Entry;Entry Date;Time of Entry;User Name;Base Unit of Measure;Quantity;Amt.in Loc.Cur.;Goods Recipient
+2024/04/30;RS Dill 30.04.2024;121001071;Raw Sugar (F);2201;2018;Z03;4054669952;103625/094;-23.960;MT;2024/05/02;14:58:59;ID0857;MT;-23.960;0.00;211000076
